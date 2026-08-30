@@ -1,5 +1,6 @@
 (function() {
       const STORAGE_KEY = 'gunplaset_user_collection_v2';
+      const IMAGE_OVERRIDES = {};
       let KITS = [];
 
       let state = {
@@ -1356,9 +1357,12 @@
           return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-200 ' + cardBorderClass + '" onclick="window.openKitModal(\'' + kit.id + '\')">' +
             '<div class="relative w-full pt-[90%] bg-gradient-to-b from-slate-900/90 to-slate-950/95 overflow-hidden flex items-center justify-center p-3 skeleton-box">' +
               '<img src="' + imgUrl + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300 z-[1]" onload="this.parentElement.classList.remove(\'skeleton-box\')" onerror="this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); this.parentElement.classList.remove(\'skeleton-box\');">' +
-              '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-2 text-center z-0">' +
-                '<span class="text-3xl mb-1">🤖</span>' +
-                '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (kit.name || '') + '</span>' +
+              '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-[#0b1329] p-3 text-center z-0">' +
+                '<div class="w-10 h-10 rounded-xl bg-cyan-950/70 border border-cyan-500/40 flex items-center justify-center mb-1.5 text-cyan-400 shadow-lg shadow-cyan-500/10">' +
+                  '<svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>' +
+                '</div>' +
+                '<span class="text-[11px] font-bold text-cyan-300 tracking-wide">공식 박스아트 공개 예정</span>' +
+                '<span class="text-[9px] text-slate-400 font-mono mt-0.5">' + (kit.year >= 2026 ? '2026 PREVIEW' : 'OFFICIAL ARCHIVE') + '</span>' +
               '</div>' +
               '<div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10 max-w-[calc(100%-110px)]">' +
                 '<span class="px-2 py-0.5 rounded-md text-[11px] font-bold tracking-wide ' + badgeClass + '">' + dispGrade + '</span>' +

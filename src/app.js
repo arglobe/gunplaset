@@ -1681,10 +1681,10 @@
               gallery.map((g, idx) => {
                 const isSelected = idx === state.activeImageIndex;
                 const isBoxart = g.is_boxart || (idx === gallery.length - 1 && kit.boxart_url === g.url && gallery.length > 1);
-                const thumbUrl = g.url || kit.product_url;
-                const thumbCdn = g.cdn_url || thumbUrl;
+                const rawThumb = g.url || g.cdn_url || kit.product_url;
+                const thumbUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(rawThumb) + '&w=140&output=webp&q=80';
                 return '<button class="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-slate-900 transition-all ' + (isSelected ? 'border-2 border-cyan-400 ring-2 ring-cyan-400/30 shadow-md shadow-cyan-500/20' : 'border border-slate-800/80 opacity-60 hover:opacity-100 hover:border-slate-600') + '" onclick="window.setModalImageIndex(' + idx + ')">' +
-                  '<img src="' + thumbUrl + '" data-fallback="' + thumbCdn + '" class="w-full h-full object-cover" alt="thumb ' + (idx + 1) + '" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+                  '<img src="' + thumbUrl + '" data-fallback="' + rawThumb + '" class="w-full h-full object-cover" alt="thumb ' + (idx + 1) + '" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
                   (isBoxart ? '<span class="absolute bottom-0 inset-x-0 bg-slate-950/90 text-[9px] text-cyan-300 font-bold text-center leading-tight py-0.5">BOX</span>' : '') +
                 '</button>';
               }).join('') +

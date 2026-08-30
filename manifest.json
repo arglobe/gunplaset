@@ -1,7 +1,7 @@
 {
-  "name": "GunplaSet (????) - ??? ??? ???",
+  "name": "GunplaSet (건프라셋) - 건프라 컬렉션 매니저",
   "short_name": "GunplaSet",
-  "description": "2,716? ??? ? ?? ??? ?? ?? ???? ? ??? ??/?? ?? ??",
+  "description": "2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 수집/조립 관리 도구",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#030712",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>??</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>",
       "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"

@@ -4,25 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="referrer" content="no-referrer">
-  <title>GunplaSet (????) - ??? ??? ???? & ??? ??</title>
+  <title>GunplaSet (건프라셋) - 마스터 건프라 아카이브 & 컬렉션 도감</title>
   
   <!-- SEO & Social Sharing Meta Tags -->
-  <meta name="description" content="GunplaSet (????) - 2,716? ??? ? ?? ??? ?? ?? ???? ? ??? ???? ??/??/?? ?? ??">
-  <meta name="keywords" content="????, GunplaSet, ???, ??, ???, ?????, ??G, PG, MG, RG, HG, ??? ??, ??? ??, ??? ??">
+  <meta name="description" content="GunplaSet (건프라셋) - 2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 프라모델 수집/조립/자산 관리 도구">
+  <meta name="keywords" content="건프라셋, GunplaSet, 건프라, 건담, 반다이, 건담베이스, 클럽G, PG, MG, RG, HG, 건프라 정가, 건프라 시세, 건프라 도감">
   <meta name="author" content="GunplaSet Team">
   <meta name="theme-color" content="#030712">
   
   <!-- OpenGraph (KakaoTalk, Discord, Facebook, etc.) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="GunplaSet">
-  <meta property="og:title" content="GunplaSet (????) - ??? ??? ???? & ??? ??">
-  <meta property="og:description" content="2,716? ??? ? ?? ??? ?? ?? ???? ? ??? ???? ??/??/?? ?? ??">
+  <meta property="og:title" content="GunplaSet (건프라셋) - 마스터 건프라 아카이브 & 컬렉션 도감">
+  <meta property="og:description" content="2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 프라모델 수집/조립/자산 관리 도구">
   <meta property="og:image" content="https://gunpla.fyi/images/boxarts/1097.jpeg">
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="GunplaSet (????) - ??? ??? ????">
-  <meta name="twitter:description" content="2,716? ??? ? ?? ??? ?? ?? ???? ? ??? ??? ??">
+  <meta name="twitter:title" content="GunplaSet (건프라셋) - 마스터 건프라 아카이브">
+  <meta name="twitter:description" content="2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 컬렉션 관리">
   <meta name="twitter:image" content="https://gunpla.fyi/images/boxarts/1097.jpeg">
   
   <!-- PWA & Mobile Web App Settings -->
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="GunplaSet">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>??</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -166,35 +166,35 @@ body {
         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 text-xs">
           <!-- Currency Selector Tabs -->
           <div class="flex items-center bg-slate-950 p-0.5 rounded-xl border border-slate-800 text-[11px] font-bold font-mono shrink-0 shadow-inner">
-            <button id="curr-btn-KRW" onclick="window.setCurrency('KRW')" class="px-2.5 py-1 rounded-lg transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" title="?????? ??? ?? (?? 12? / ?? 14.3?)">
-              ???? KRW
+            <button id="curr-btn-KRW" onclick="window.setCurrency('KRW')" class="px-2.5 py-1 rounded-lg transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" title="반다이코리아 공식가 기준 (일반 12배 / 한정 14.3배)">
+              🇰🇷 KRW
             </button>
-            <button id="curr-btn-JPY" onclick="window.setCurrency('JPY')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="??? ?? ?? ??(MSRP) ??">
-              ???? JPY
+            <button id="curr-btn-JPY" onclick="window.setCurrency('JPY')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="반다이 일본 공식 엔화(MSRP) 기준">
+              🇯🇵 JPY
             </button>
-            <button id="curr-btn-USD" onclick="window.setCurrency('USD')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="??? ????(BNTCA) ?? ?? ??">
-              ???? USD
+            <button id="curr-btn-USD" onclick="window.setCurrency('USD')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="반다이 아메리카(BNTCA) 공식 달러 기준">
+              🇺🇸 USD
             </button>
           </div>
 
           <!-- Utilities (Sync, Backup, Restore, CSV) -->
           <div class="flex items-center gap-1.5">
-            <button id="btn-cloud-sync" onclick="window.initOrToggleAutoSync()" class="px-2.5 py-1 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 text-cyan-300 text-xs font-semibold border border-cyan-500/40 transition-all flex items-center gap-1.5 shadow-sm" title="?? ???? ??? my_collection.js/json? ??? ?? ???">
+            <button id="btn-cloud-sync" onclick="window.initOrToggleAutoSync()" class="px-2.5 py-1 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 text-cyan-300 text-xs font-semibold border border-cyan-500/40 transition-all flex items-center gap-1.5 shadow-sm" title="구글 드라이브 폴더의 my_collection.js/json과 실시간 자동 동기화">
               <span id="sync-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span id="sync-status-text">?? ???? ????</span>
+              <span id="sync-status-text">☁️ 드라이브 자동연동</span>
             </button>
 
-            <button id="btn-backup" onclick="window.exportJSON()" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1" title="JSON ?? ?? ????">
-              <span id="btn-text-backup">?? ??</span>
+            <button id="btn-backup" onclick="window.exportJSON()" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1" title="JSON 수동 백업 다운로드">
+              <span id="btn-text-backup">💾 백업</span>
             </button>
             
-            <label id="btn-restore" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all cursor-pointer flex items-center gap-1" title="?? ?? ?? ????">
-              <span id="btn-text-restore">?? ??</span>
+            <label id="btn-restore" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all cursor-pointer flex items-center gap-1" title="수동 백업 파일 불러오기">
+              <span id="btn-text-restore">📂 복원</span>
               <input type="file" accept=".json" class="hidden" onchange="window.importJSON(event)">
             </label>
 
-            <button id="btn-csv" onclick="window.exportCSV()" class="px-2.5 py-1 rounded-xl bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 text-xs font-semibold border border-emerald-800/40 transition-all flex items-center gap-1" title="?? CSV ?? ????">
-              <span id="btn-text-csv">?? ??</span>
+            <button id="btn-csv" onclick="window.exportCSV()" class="px-2.5 py-1 rounded-xl bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 text-xs font-semibold border border-emerald-800/40 transition-all flex items-center gap-1" title="엑셀 CSV 파일 다운로드">
+              <span id="btn-text-csv">📊 엑셀</span>
             </button>
           </div>
         </div>
@@ -203,32 +203,32 @@ body {
         <div class="flex flex-nowrap items-center justify-start md:justify-end gap-1.5 md:gap-2 text-xs font-mono overflow-x-auto md:overflow-x-visible scrollbar-none">
           <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
             <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-            <span class="text-slate-400" id="header-label-total">? ??:</span>
-            <span class="text-white font-bold" id="header-total-all">0 ?</span>
+            <span class="text-slate-400" id="header-label-total">총 보유:</span>
+            <span class="text-white font-bold" id="header-total-all">0 개</span>
           </div>
 
           <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
             <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span class="text-slate-400" id="header-label-backlog">??(???):</span>
-            <span class="text-cyan-400 font-bold" id="header-backlog-count">0 ??</span>
+            <span class="text-slate-400" id="header-label-backlog">새것(미개봉):</span>
+            <span class="text-cyan-400 font-bold" id="header-backlog-count">0 박스</span>
           </div>
 
           <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
             <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-            <span class="text-slate-400" id="header-label-inprogress">???/??:</span>
-            <span class="text-amber-400 font-bold" id="header-inprogress-count">0 ?</span>
+            <span class="text-slate-400" id="header-label-inprogress">조립중/부품:</span>
+            <span class="text-amber-400 font-bold" id="header-inprogress-count">0 개</span>
           </div>
 
           <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span class="text-slate-400" id="header-label-built">????:</span>
-            <span class="text-emerald-400 font-bold" id="header-built-count">0 ?</span>
+            <span class="text-slate-400" id="header-label-built">조립완료:</span>
+            <span class="text-emerald-400 font-bold" id="header-built-count">0 개</span>
           </div>
 
           <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
             <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-            <span class="text-slate-400" id="header-label-value">??? ??:</span>
-            <span class="text-yellow-400 font-bold font-mono" id="header-total-value">?0</span>
+            <span class="text-slate-400" id="header-label-value">미개봉 가치:</span>
+            <span class="text-yellow-400 font-bold font-mono" id="header-total-value">₩0</span>
           </div>
         </div>
 
@@ -241,22 +241,22 @@ body {
   <nav class="bg-slate-950/60 border-b border-slate-800 px-4 lg:px-8 py-2">
     <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto pb-1">
       <button id="nav-tab-all" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-cyan-500/40 bg-cyan-500/20 text-cyan-400 flex items-center gap-1.5 whitespace-nowrap" data-view="all" onclick="window.switchView('all')">
-        ?? ?? ??
+        🔍 전체 탐색
       </button>
       <button id="nav-tab-backlog" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="backlog" onclick="window.switchView('backlog')">
-        ?? ?? / ???
+        📦 새것 / 미개봉
       </button>
       <button id="nav-tab-inprogress" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="inprogress" onclick="window.switchView('inprogress')">
-        ?? ?? ? / ??
+        ⚙️ 조립 중 / 부품
       </button>
       <button id="nav-tab-built" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="built" onclick="window.switchView('built')">
-        ?? ?? ??
+        🔨 조립 완료
       </button>
       <button id="nav-tab-wishlist" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="wishlist" onclick="window.switchView('wishlist')">
-        ?? ?????
+        💖 위시리스트
       </button>
       <button id="nav-tab-analytics" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="analytics" onclick="window.switchView('analytics')">
-        ?? ??? ??
+        📊 컬렉션 통계
       </button>
     </div>
   </nav>
@@ -270,10 +270,10 @@ body {
       <div class="mb-4 glass-card p-3 rounded-2xl border border-slate-800/90">
         <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-1.5">
-            <span id="label-year-title">?? ?? ? ??? ?? ??</span>
-            <span id="label-year-sub" class="text-[11px] text-cyan-400/80 font-normal font-sans">(10? ?? ? & ?? ?? ?? ?? ??)</span>
+            <span id="label-year-title">📅 시대 및 연도별 발매 탐색</span>
+            <span id="label-year-sub" class="text-[11px] text-cyan-400/80 font-normal font-sans">(10년 단위 탭 & 여러 연도 복수 선택 가능)</span>
           </div>
-          <span class="text-[11px] text-cyan-400 font-mono" id="filtered-count">0 ?? ??? ????</span>
+          <span class="text-[11px] text-cyan-400 font-mono" id="filtered-count">0 개의 건프라 카탈로그</span>
         </div>
         
         <!-- Decade Tabs Row -->
@@ -287,18 +287,18 @@ body {
       <div class="mb-5 glass-card p-3.5 rounded-2xl border border-slate-800/90">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-800/80 mb-2.5">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-slate-300" id="label-quickfilter-title">? ?? ??:</span>
+            <span class="text-xs font-bold text-slate-300" id="label-quickfilter-title">⚡ 빠른 필터:</span>
             <div class="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
               <button id="subfacet-btn-grade" class="subfacet-mode-btn active px-3 py-1 rounded-lg text-xs font-bold transition-all" onclick="window.switchSubfacetMode('grade')">
-                ??? ???
+                🏷️ 등급별
               </button>
               <button id="subfacet-btn-series" class="subfacet-mode-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all" onclick="window.switchSubfacetMode('series')">
-                ?? ????
+                🎬 시리즈별
               </button>
             </div>
           </div>
           <div class="text-[11px] text-slate-400 font-mono" id="label-quickfilter-sub">
-            ?? + ?? + ??? ?? ?? ?? ??
+            연도 + 등급 + 시리즈 복수 선택 결합 가능
           </div>
         </div>
 
@@ -307,10 +307,10 @@ body {
 
         <!-- Active Compound Filter Chips -->
         <div id="active-filters-bar" class="flex flex-wrap items-center gap-2 pt-2.5 mt-2.5 border-t border-slate-800/60 hidden">
-          <span class="text-[11px] text-slate-400 font-medium" id="label-applied-filters">??? ??:</span>
+          <span class="text-[11px] text-slate-400 font-medium" id="label-applied-filters">적용된 조건:</span>
           <div id="active-filter-chips" class="flex flex-wrap items-center gap-1.5"></div>
           <button id="btn-reset-filters" onclick="window.resetAllFilters()" class="ml-auto text-[11px] text-rose-400 hover:text-rose-300 font-semibold underline flex items-center gap-1">
-            ? ?? ?? ???
+            ↺ 전체 필터 초기화
           </button>
         </div>
       </div>
@@ -320,7 +320,7 @@ body {
         
         <!-- Search Input -->
         <div class="relative w-full md:w-80">
-          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="?? ??, ??, ??? ?? (?: z, seed, mg)...">
+          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="건담 이름, 등급, 시리즈 검색 (예: z, seed, mg)...">
           <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
 
@@ -329,50 +329,50 @@ body {
           
           <!-- Image View Mode Switcher (Product / Boxart) -->
           <div class="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-800 text-xs">
-            <button id="img-mode-product" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center gap-1" onclick="window.setImageMode('product')" title="??? ?? ???? ???? ??">
-              ?? ??? ?
+            <button id="img-mode-product" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center gap-1" onclick="window.setImageMode('product')" title="완성품 전신 스튜디오 사진으로 보기">
+              🤖 완성품 뷰
             </button>
-            <button id="img-mode-boxart" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1" onclick="window.setImageMode('boxart')" title="?? ??? ????? ??">
-              ?? ???? ?
+            <button id="img-mode-boxart" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1" onclick="window.setImageMode('boxart')" title="박스 패키지 일러스트로 보기">
+              📦 박스아트 뷰
             </button>
           </div>
 
           <select id="filter-year-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">?? ?? (All Years)</option>
+            <option value="all">모든 연도 (All Years)</option>
           </select>
 
           <select id="filter-grade" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">?? ?? (All Grades)</option>
+            <option value="all">모든 등급 (All Grades)</option>
             <option value="HG">HG / HGUC (High Grade)</option>
             <option value="MG">MG / MGEX / MGSD (Master Grade)</option>
             <option value="RG">RG (Real Grade)</option>
             <option value="PG">PG (Perfect Grade)</option>
             <option value="EG">ENTRY GRADE (EG)</option>
             <option value="FM">Full Mechanics / RE/100</option>
-            <option value="SD">SD / SDCS / BB??</option>
+            <option value="SD">SD / SDCS / BB전사</option>
             <option value="Mega">Mega Size (1/48)</option>
             <option value="30MM">30 MINUTES (30MM/30MS)</option>
-            <option value="Pokemon">??? ????</option>
-            <option value="Other">?? ??? ??</option>
+            <option value="Pokemon">포켓몬 프라모델</option>
+            <option value="Other">기타 반다이 프라</option>
           </select>
 
           <select id="filter-series-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400 max-w-[150px] truncate">
-            <option value="all">?? ??? (All Series)</option>
+            <option value="all">모든 시리즈 (All Series)</option>
           </select>
 
           <select id="filter-run" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">?? ????</option>
-            <option value="Standard">?? ??? (Standard)</option>
-            <option value="P-Bandai">??? / ??G (P-Bandai)</option>
+            <option value="all">모든 발매구분</option>
+            <option value="Standard">일반 발매판 (Standard)</option>
+            <option value="P-Bandai">한정판 / 클럽G (P-Bandai)</option>
           </select>
 
           <select id="sort-by" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="release_desc">?? ??? (Newest)</option>
-            <option value="release_asc">??? ??? (Oldest)</option>
-            <option value="name_asc">?? ???? (A-Z)</option>
-            <option value="msrp_desc">?? ??? (Price: High)</option>
-            <option value="msrp_asc">?? ??? (Price: Low)</option>
-            <option value="owned_desc">? ?? ???</option>
+            <option value="release_desc">최신 출시순 (Newest)</option>
+            <option value="release_asc">오래된 출시순 (Oldest)</option>
+            <option value="name_asc">이름 가나다순 (A-Z)</option>
+            <option value="msrp_desc">가격 높은순 (Price: High)</option>
+            <option value="msrp_asc">가격 낮은순 (Price: Low)</option>
+            <option value="owned_desc">내 보유 많은순</option>
           </select>
         </div>
 
@@ -389,7 +389,7 @@ body {
     <!-- ANALYTICS SECTION -->
     <div id="analytics-section" class="hidden">
       <div class="mb-6">
-        <h2 class="text-xl font-bold text-white mb-1">?? ? ??? ??? & ?? ?? ??</h2>
+        <h2 class="text-xl font-bold text-white mb-1">📊 내 건프라 컬렉션 & 자산 가치 분석</h2>
         <p class="text-xs text-slate-400 font-mono">My Gunpla Portfolio & Valuation Dashboard</p>
       </div>
       <div id="analytics-view"></div>
@@ -400,18 +400,18 @@ body {
   <!-- KIT DETAIL MODAL -->
   <div id="kit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="glass-card max-w-4xl w-full rounded-3xl p-6 relative max-h-[92vh] overflow-y-auto border border-slate-700 shadow-2xl">
-      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closeKitModal()">?</button>
+      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closeKitModal()">✕</button>
       <div id="modal-body"></div>
     </div>
   </div>
 
   <!-- FULLSCREEN LIGHTBOX ZOOM MODAL -->
   <div id="lightbox-modal" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center p-4 hidden select-none" onclick="window.closeLightbox(event)">
-    <button class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-lg border border-slate-700 shadow-2xl z-20" onclick="window.closeLightbox(event)">?</button>
+    <button class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-lg border border-slate-700 shadow-2xl z-20" onclick="window.closeLightbox(event)">✕</button>
     <div class="relative max-w-[95vw] max-h-[85vh] flex items-center justify-center" onclick="event.stopPropagation()">
       <img id="lightbox-img" src="" alt="Zoomed Gunpla" class="max-w-[95vw] max-h-[85vh] object-contain rounded-xl shadow-2xl border border-slate-800/80">
-      <button id="lightbox-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(-1)"><</button>
-      <button id="lightbox-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(1)">></button>
+      <button id="lightbox-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(-1)">‹</button>
+      <button id="lightbox-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(1)">›</button>
     </div>
     <div class="mt-4 flex items-center gap-3">
       <span id="lightbox-counter" class="px-3 py-1 rounded-full bg-slate-900 text-cyan-400 text-xs font-mono border border-slate-800">1 / 1</span>
@@ -421,7 +421,7 @@ body {
 
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-500/40 text-cyan-300 text-xs font-semibold shadow-2xl shadow-cyan-500/20 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
-    ?? ???
+    알림 메시지
   </div>
 
   <!-- FOOTER -->
@@ -429,26 +429,26 @@ body {
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
         <div class="flex items-center gap-2">
-          <span class="text-base font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">GunplaSet (????)</span>
+          <span class="text-base font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">GunplaSet (건프라셋)</span>
           <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-mono">v2.0 Official</span>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 font-medium">
-          <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors">??? ??</button>
+          <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors">서비스 소개</button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors">????????</button>
+          <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors">개인정보처리방침</button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors">????</button>
+          <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors">이용약관</button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors">?? ? ?? ??</button>
+          <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors">문의 및 오류 제보</button>
         </div>
       </div>
       <div class="pt-6 text-center md:text-left space-y-2 text-[11px] text-slate-500">
         <p class="leading-relaxed">
-          &copy; 2026 GunplaSet. ? ????? ??? ? ? ???? ?? ??? ?? ?????? ?? ??? ?? ?????.<br class="hidden sm:inline">
-          ?? ?? ? ??? ?? ??, ????, ??? ???? ???? ???? <b>(?)????? ?????? (BANDAI SPIRITS CO., LTD.)</b> ? <b>&copy;SOTSU &bull; SUNRISE (?? &bull; ????)</b>? ?????.
+          &copy; 2026 GunplaSet. 본 웹사이트는 건프라 팬 및 수집가를 위한 비영리 정보 아카이브이자 개인 소장품 관리 도구입니다.<br class="hidden sm:inline">
+          모든 건담 및 건프라 관련 명칭, 박스아트, 패키지 디자인의 저작권과 상표권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속됩니다.
         </p>
         <p class="text-slate-600">
-          ??? ?? ?? ? ??? ???? ??? ??? ??? ? ?? ?????? ???? ???? ?????.
+          게재된 배너 광고 및 자발적 후원금은 서비스 호스팅 유지비 및 정기 데이터베이스 큐레이션 비용으로 사용됩니다.
         </p>
       </div>
     </div>
@@ -457,7 +457,7 @@ body {
   <!-- POLICY / ABOUT MODAL -->
   <div id="policy-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="glass-card max-w-2xl w-full rounded-3xl p-6 relative max-h-[85vh] overflow-y-auto border border-slate-700 shadow-2xl bg-slate-900/95 text-slate-300 text-xs leading-relaxed space-y-4">
-      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closePolicyModal()">?</button>
+      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closePolicyModal()">✕</button>
       <div id="policy-modal-content"></div>
     </div>
   </div>

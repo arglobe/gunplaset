@@ -873,10 +873,7 @@
         }
         if (!kit.run) {
           const rawName = (kit.name || kit.nameEn || kit.nameJp || '');
-          const idNum = parseInt(kit.id, 10);
-          const isDalongClubG = (idNum >= 2000 && idNum < 3000);
           const isL = kit.is_limited || 
-                      isDalongClubG ||
                       rawName.includes('プレミアムバンダイ') || 
                       rawName.includes('プレバン') || 
                       rawName.includes('ガンダムベース') || 

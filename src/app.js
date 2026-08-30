@@ -1,6 +1,5 @@
 (function() {
       const STORAGE_KEY = 'gunplaset_user_collection_v2';
-      const IMAGE_OVERRIDES = {};
       let KITS = [];
 
       let state = {

@@ -1,0 +1,12 @@
+# OS / Temp files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# Dev / Scratch / Backups
+backups/
+scratch/
+sync_logs/
+*.ps1
+*.jsonl

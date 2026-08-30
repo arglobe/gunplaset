@@ -199,7 +199,7 @@
         // Base Tax-Excluded Yen (일본 소비세 10% 제외 원가)
         const yenTaxEx = Math.round(yenTaxInc / 1.1);
 
-        // Check if item is Club G / Premium Bandai (excluding Gundam Base limited)
+        const nameUpper = ((kit.name || '') + ' ' + (kit.nameEn || '')).toUpperCase();
         const isGb = nameUpper.includes('GUNDAM BASE') || (kit.nameJp && kit.nameJp.includes('ガンダムベース'));
         const isClubG = (kit.run === 'Standard') ? false : ((kit.run === 'P-Bandai' || kit.run === 'Limited' || (kit.name && (kit.name.includes('한정') || nameUpper.includes('LIMITED') || nameUpper.includes('P-BANDAI')))) && !isGb);
 

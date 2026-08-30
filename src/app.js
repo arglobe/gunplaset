@@ -850,17 +850,27 @@
           kit.gradeKey = 'Other';
         }
 
-        // ULTRA-LIGHTWEIGHT DYNAMIC RESOLVER (ZERO 1.7MB OVERHEAD)
-        const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
-        const productCdn = boxartCdn;
-
-        kit.boxart_url = boxartCdn;
-        kit.product_url = productCdn;
-        kit.image_url = productCdn;
-        kit.gallery = [
-          { url: kit.product_url, cdn_url: productCdn, is_boxart: false },
-          { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
-        ];
+        // ULTRA-LIGHTWEIGHT DYNAMIC RESOLVER WITH MULTI-IMAGE GALLERY SUPPORT
+        const customGallery = (typeof window !== 'undefined' && window.GUNPLA_GALLERIES && window.GUNPLA_GALLERIES[kit.id]) || null;
+        if (customGallery && customGallery.length > 0) {
+          kit.gallery = customGallery.map((u, i) => ({
+            url: u,
+            cdn_url: u,
+            is_boxart: (i === customGallery.length - 1) || u.includes('boxart') || u.includes('packaging') || u.endsWith('.jpeg')
+          }));
+          kit.product_url = customGallery[0];
+          kit.boxart_url = customGallery[customGallery.length - 1];
+          kit.image_url = kit.product_url;
+        } else {
+          const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          kit.boxart_url = boxartCdn;
+          kit.product_url = boxartCdn;
+          kit.image_url = boxartCdn;
+          kit.gallery = [
+            { url: kit.product_url, cdn_url: boxartCdn, is_boxart: false },
+            { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
+          ];
+        }
 
         if (!kit.release_date) kit.release_date = kit.releaseDate || '2020-01-01';
         if (!kit.year) {

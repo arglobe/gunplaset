@@ -852,7 +852,7 @@
 
         // ULTRA-LIGHTWEIGHT DYNAMIC RESOLVER WITH MULTI-IMAGE GALLERY SUPPORT
         const customGallery = (typeof window !== 'undefined' && window.GUNPLA_GALLERIES && window.GUNPLA_GALLERIES[kit.id]) || null;
-        if (customGallery && customGallery.length > 0) {
+        if (customGallery && customGallery.length > 1) {
           kit.gallery = customGallery.map((u, i) => ({
             url: u,
             cdn_url: u,
@@ -867,8 +867,7 @@
           kit.product_url = boxartCdn;
           kit.image_url = boxartCdn;
           kit.gallery = [
-            { url: kit.product_url, cdn_url: boxartCdn, is_boxart: false },
-            { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
+            { url: boxartCdn, cdn_url: boxartCdn, is_boxart: true }
           ];
         }
 
@@ -1601,7 +1600,21 @@
         const counter = document.getElementById('lightbox-counter');
         const title = document.getElementById('lightbox-title');
         const rawGallery = kit.gallery && kit.gallery.length > 0 ? kit.gallery : [ { url: kit.product_url || kit.image_url } ];
-        const gallery = rawGallery.map(g => (typeof g === 'object' && g !== null && g.url) ? g : { url: (typeof g === 'string' ? g : kit.product_url), cdn_url: kit.product_url });
+        const uniqueUrls = new Set();
+        const gallery = [];
+        rawGallery.forEach(g => {
+          const u = (typeof g === 'object' && g !== null && g.url) ? g.url : (typeof g === 'string' ? g : kit.product_url);
+          if (u && !uniqueUrls.has(u)) {
+            uniqueUrls.add(u);
+            gallery.push({
+              url: u,
+              cdn_url: (typeof g === 'object' && g !== null && g.cdn_url) ? g.cdn_url : u,
+              is_boxart: (typeof g === 'object' && g !== null && g.is_boxart) || false
+            });
+          }
+        });
+        if (gallery.length === 0) gallery.push({ url: kit.product_url || kit.boxart_url, cdn_url: kit.boxart_url });
+
         const cur = gallery[state.activeImageIndex] || gallery[0] || {};
         const curUrl = cur.url || kit.product_url || kit.boxart_url;
         const curCdn = cur.cdn_url || kit.boxart_url || curUrl;
@@ -1615,7 +1628,7 @@
             }
           };
         }
-        if (counter) counter.innerText = (state.activeImageIndex + 1) + ' / ' + gallery.length;
+        if (counter) counter.innerText = gallery.length > 1 ? ((state.activeImageIndex + 1) + ' / ' + gallery.length) : '';
         if (title) title.innerText = (kit.classification ? '[' + kit.classification + '] ' : '') + (kit.name || '');
         modal.classList.remove('hidden');
       };
@@ -1668,7 +1681,20 @@
         }
 
         const rawGallery = kit.gallery && kit.gallery.length > 0 ? kit.gallery : [ { url: kit.product_url || kit.image_url } ];
-        const gallery = rawGallery.map(g => (typeof g === 'object' && g !== null && g.url) ? g : { url: (typeof g === 'string' ? g : kit.product_url), cdn_url: kit.product_url });
+        const uniqueUrls = new Set();
+        const gallery = [];
+        rawGallery.forEach(g => {
+          const u = (typeof g === 'object' && g !== null && g.url) ? g.url : (typeof g === 'string' ? g : kit.product_url);
+          if (u && !uniqueUrls.has(u)) {
+            uniqueUrls.add(u);
+            gallery.push({
+              url: u,
+              cdn_url: (typeof g === 'object' && g !== null && g.cdn_url) ? g.cdn_url : u,
+              is_boxart: (typeof g === 'object' && g !== null && g.is_boxart) || false
+            });
+          }
+        });
+        if (gallery.length === 0) gallery.push({ url: kit.product_url || kit.boxart_url, cdn_url: kit.boxart_url });
 
         const currentImgObj = gallery[state.activeImageIndex] || gallery[0] || {};
         const currentImgUrl = currentImgObj.url || kit.product_url || kit.boxart_url;
@@ -1682,7 +1708,7 @@
               '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
-              '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' +
+              (gallery.length > 1 ? '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' : '') +
               '<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-xl text-[10px] bg-slate-900/90 text-slate-300 font-medium border border-slate-800/90 shadow-md flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity pointer-events-none">' +
                 '<span>' + zoomHint + '</span>' +
               '</div>' +

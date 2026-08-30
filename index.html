@@ -108,6 +108,16 @@ body {
 .badge-eg { background: linear-gradient(135deg, #a8ff78, #78ffd6); color: #000; font-weight: 800; }
 .badge-sd { background: linear-gradient(135deg, #f6d365, #fda085); color: #000; font-weight: 800; }
 .badge-fm { background: linear-gradient(135deg, #b224ef, #7579ff); color: #fff; font-weight: 800; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-box {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.9) 25%, rgba(30, 41, 59, 0.7) 50%, rgba(15, 23, 42, 0.9) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
 .badge-default { background: #334155; color: #fff; font-weight: 800; }
 
 .year-pill, .subfacet-pill {
@@ -455,8 +465,7 @@ body {
   <!-- LOAD AUTO-SYNCED USER COLLECTION SCRIPT -->
   <script src="my_collection.js"></script>
 
-  <!-- MODULAR HIGH-PERFORMANCE SCRIPTS (ZERO TRUNCATION ARCHITECTURE) -->
-  <script src="src/kit_image_db.js"></script>
+  <!-- ULTRA-LIGHTWEIGHT MODULAR SCRIPTS (TOTAL < 750KB) -->
   <script src="src/kit_price_db.js"></script>
   <script src="src/master_kits.js"></script>
   <script src="src/app.js"></script>

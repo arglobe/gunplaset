@@ -850,39 +850,17 @@
           kit.gradeKey = 'Other';
         }
 
-        const isWeb = typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http');
-        const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
-        const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
-        const boxartCdn = (dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn;
-        const productCdn = (dbEntry && dbEntry.product_cdn_url) || boxartCdn;
+        // ULTRA-LIGHTWEIGHT DYNAMIC RESOLVER (ZERO 1.7MB OVERHEAD)
+        const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+        const productCdn = boxartCdn;
 
-        // Proactively set high-speed global CDN as universal default for 0ms loading!
         kit.boxart_url = boxartCdn;
         kit.product_url = productCdn;
         kit.image_url = productCdn;
-
-        // Build gallery images array
-        if (dbEntry && dbEntry.gallery && Array.isArray(dbEntry.gallery) && dbEntry.gallery.length > 0) {
-          kit.gallery = dbEntry.gallery.map(g => {
-            if (typeof g === 'object' && g !== null && g.url) {
-              const u = isWeb && g.cdn_url ? g.cdn_url : (g.url || g.cdn_url || kit.product_url);
-              return { url: u, cdn_url: g.cdn_url || u, is_boxart: !!g.is_boxart };
-            }
-            if (typeof g === 'string') {
-              const m = g.match(/url=([^;\s]+)/);
-              const c = g.match(/cdn_url=([^;\s]+)/);
-              const rawUrl = m ? m[1] : g;
-              const rawCdn = c ? c[1] : (rawUrl.startsWith('http') ? rawUrl : defaultBoxartCdn);
-              return { url: isWeb ? rawCdn : rawUrl, cdn_url: rawCdn, is_boxart: g.includes('is_boxart=True') };
-            }
-            return { url: kit.product_url, cdn_url: kit.product_url, is_boxart: false };
-          });
-        } else {
-          kit.gallery = [
-            { url: kit.product_url, cdn_url: productCdn, is_boxart: false },
-            { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
-          ];
-        }
+        kit.gallery = [
+          { url: kit.product_url, cdn_url: productCdn, is_boxart: false },
+          { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
+        ];
 
         if (!kit.release_date) kit.release_date = kit.releaseDate || '2020-01-01';
         if (!kit.year) {
@@ -1359,15 +1337,7 @@
           const isPbandai = kit.run === 'Limited' || kit.run === 'P-Bandai' || kit.run === 'Exclusive';
           const badgeClass = getGradeBadgeClass(kit.classification);
           
-          const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
-          const isWeb = window.location.protocol.startsWith('http');
-          const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
-
-          const boxartUrl = isWeb ? ((dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn) : (kit.boxart_url || defaultBoxartCdn);
-          const productUrl = isWeb ? ((dbEntry && dbEntry.product_cdn_url) || boxartUrl) : (kit.product_url || boxartUrl);
-
-          const imgUrl = (state.cardImageMode === 'boxart' ? boxartUrl : productUrl) || boxartUrl;
-          const cdnFallback = (imgUrl !== boxartUrl) ? boxartUrl : defaultBoxartCdn;
+          const imgUrl = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
 
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -1384,8 +1354,8 @@
           const releaseYearText = t.released(kit.year);
 
           return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-200 ' + cardBorderClass + '" onclick="window.openKitModal(\'' + kit.id + '\')">' +
-            '<div class="relative w-full pt-[90%] bg-gradient-to-b from-slate-900/80 to-slate-950/90 overflow-hidden flex items-center justify-center p-3">' +
-              '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
+            '<div class="relative w-full pt-[90%] bg-gradient-to-b from-slate-900/90 to-slate-950/95 overflow-hidden flex items-center justify-center p-3 skeleton-box">' +
+              '<img src="' + imgUrl + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300 z-[1]" onload="this.parentElement.classList.remove(\'skeleton-box\')" onerror="this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); this.parentElement.classList.remove(\'skeleton-box\');">' +
               '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-2 text-center z-0">' +
                 '<span class="text-3xl mb-1">🤖</span>' +
                 '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (kit.name || '') + '</span>' +

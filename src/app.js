@@ -1371,8 +1371,8 @@
           const isPbandai = kit.run === 'Limited' || kit.run === 'P-Bandai' || kit.run === 'Exclusive';
           const badgeClass = getGradeBadgeClass(kit.classification);
           
-                    const rawBoxart = (kit.gallery && kit.gallery.length > 0 ? kit.gallery[0].url : null) || kit.image_url || kit.boxart_url || IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
-          const thumbUrl = (rawBoxart.startsWith('http') && !rawBoxart.includes('bandai-a.akamaihd.net')) ? ('https://images.weserv.nl/?url=' + encodeURIComponent(rawBoxart) + '&w=400&output=webp&q=82') : rawBoxart;
+                    const rawBoxart = (kit.gallery && kit.gallery.length > 0 ? (kit.gallery[0].url || kit.gallery[0]) : null) || kit.product_url || kit.image_url || kit.boxart_url || IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          const thumbUrl = rawBoxart.startsWith('http') ? ('https://images.weserv.nl/?url=' + encodeURIComponent(rawBoxart) + '&w=400&output=webp&q=82') : rawBoxart;
 
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -1701,7 +1701,7 @@
         modalBody.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">' +
           '<div class="flex flex-col">' +
             '<div class="relative w-full h-[420px] md:h-[460px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-800 group cursor-zoom-in" onclick="window.openLightbox()">' +
-              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+              '<img src="' + (currentImgUrl.startsWith('http') ? ('https://images.weserv.nl/?url=' + encodeURIComponent(currentImgUrl) + '&w=900&output=webp&q=88') : currentImgUrl) + '" data-fallback="' + currentCdnUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
               (gallery.length > 1 ? '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' : '') +

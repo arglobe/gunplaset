@@ -28512,7 +28512,7 @@ window.GUNPLA_MASTER_DATA = [
                       rawName.includes('클럽G');
           kit.run = isL ? 'P-Bandai' : 'Standard';
         }
-        if (!kit.msrp_jpy) kit.msrp_jpy = (window.KIT_PRICE_DB && window.KIT_PRICE_DB[kit.id]) || kit.msrp || 1760;
+        if (!kit.msrp_jpy) kit.msrp_jpy = (window.KIT_PRICE_DB && window.KIT_PRICE_DB[kit.id]) || kit.msrp || null;
         return kit;
       }
 

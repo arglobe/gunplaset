@@ -800,14 +800,10 @@
         }
       }
 
-      const IMAGE_OVERRIDES = {
-        '4918': 'https://gunpla.fyi/images/boxarts/248.jpeg',
-        '4919': 'https://gunpla.fyi/images/boxarts/2591.jpeg', // MG Sandrock EW Armadillo
-        '4920': 'https://gunpla.fyi/images/boxarts/2506.jpeg', // MG F90 Cluster Gundam Mission Pack
-        '4921': 'https://gunpla.fyi/images/boxarts/2734.jpeg', // HG Hazel Custom
-        '4922': 'https://gunpla.fyi/images/boxarts/4951.jpeg', // HG Strike Freedom Type II
-        '4923': 'https://gunpla.fyi/images/boxarts/1097.jpeg', // RG Gundam Epyon
-        '4924': 'https://bandai-a.akamaihd.net/bc/img/model/xl/1000235382_1.jpg'  // HG Ruka's Zaku
+            const IMAGE_OVERRIDES = {
+        '4924': 'https://bandai-a.akamaihd.net/bc/img/model/xl/1000235382_1.jpg',
+        '4923': '/images/4923_1.jpg',
+        '5089': '/images/5089_1.jpg'
       };
 
       function enrichKit(kit) {
@@ -852,7 +848,7 @@
 
         // ULTRA-LIGHTWEIGHT DYNAMIC RESOLVER WITH MULTI-IMAGE GALLERY SUPPORT
         const customGallery = (typeof window !== 'undefined' && window.GUNPLA_GALLERIES && window.GUNPLA_GALLERIES[kit.id]) || null;
-        if (customGallery && customGallery.length > 1) {
+        if (customGallery && customGallery.length > 0) {
           kit.gallery = customGallery.map((u, i) => ({
             url: u,
             cdn_url: u,
@@ -862,7 +858,7 @@
           kit.boxart_url = customGallery[customGallery.length - 1];
           kit.image_url = kit.product_url;
         } else {
-          const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          const boxartCdn = (kit.gallery && kit.gallery.length > 0 ? kit.gallery[0].url : null) || kit.image_url || kit.boxart_url || IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
           kit.boxart_url = boxartCdn;
           kit.product_url = boxartCdn;
           kit.image_url = boxartCdn;
@@ -1375,8 +1371,8 @@
           const isPbandai = kit.run === 'Limited' || kit.run === 'P-Bandai' || kit.run === 'Exclusive';
           const badgeClass = getGradeBadgeClass(kit.classification);
           
-          const rawBoxart = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
-          const thumbUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(rawBoxart) + '&w=400&output=webp&q=82';
+                    const rawBoxart = (kit.gallery && kit.gallery.length > 0 ? kit.gallery[0].url : null) || kit.image_url || kit.boxart_url || IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          const thumbUrl = (rawBoxart.startsWith('http') && !rawBoxart.includes('bandai-a.akamaihd.net')) ? ('https://images.weserv.nl/?url=' + encodeURIComponent(rawBoxart) + '&w=400&output=webp&q=82') : rawBoxart;
 
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -1507,7 +1503,7 @@
             is_boxart: (i === gList.length - 1) || u.includes('boxart') || u.includes('packaging') || u.endsWith('.jpeg')
           }));
         } else if (!kit.gallery || kit.gallery.length <= 1) {
-          const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          const boxartCdn = (kit.gallery && kit.gallery.length > 0 ? kit.gallery[0].url : null) || kit.image_url || kit.boxart_url || IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
           kit.gallery = [
             { url: boxartCdn, cdn_url: boxartCdn, is_boxart: true }
           ];

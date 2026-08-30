@@ -201,8 +201,7 @@
 
         // Check if item is Club G / Premium Bandai (excluding Gundam Base limited)
         const nameUpper = ((kit.name || '') + ' ' + (kit.nameEn || '')).toUpperCase();
-        const isGb = nameUpper.includes('GUNDAM BASE') || (kit.nameJp && kit.nameJp.includes('ガンダムベース'));
-        const isClubG = (kit.run === 'P-Bandai' || (kit.name && (kit.name.includes('한정') || nameUpper.includes('LIMITED') || nameUpper.includes('P-BANDAI')))) && !isGb;
+        const isClubG = (kit.run === 'Standard') ? false : ((kit.run === 'P-Bandai' || kit.run === 'Limited' || (kit.name && (kit.name.includes('한정') || nameUpper.includes('LIMITED') || nameUpper.includes('P-BANDAI')))) && !isGb);
 
         // Multiplier: Club G = 14.3x, Standard / Gundam Base = 12.0x
         const multiplier = isClubG ? 14.3 : 12.0;
@@ -1669,11 +1668,12 @@
         const lblScale = state.currency === 'USD' ? 'Scale' : (state.currency === 'JPY' ? 'スケール' : '스케일');
         const lblRelease = state.currency === 'USD' ? 'Release Date' : (state.currency === 'JPY' ? '発売日' : '출시일');
         const lblRun = state.currency === 'USD' ? 'Edition' : (state.currency === 'JPY' ? '販売区分' : '발매구분');
+        const isLimitedKit = kit.run === 'Limited' || kit.run === 'P-Bandai' || (kit.name && (kit.name.includes('한정') || kit.name.toUpperCase().includes('LIMITED') || kit.name.toUpperCase().includes('P-BANDAI')));
         let valRun = '';
-        if (kit.run === 'Standard') {
-          valRun = state.currency === 'USD' ? 'Standard' : (state.currency === 'JPY' ? '一般販売' : '일반판');
-        } else {
+        if (isLimitedKit) {
           valRun = state.currency === 'USD' ? 'Limited (PB)' : (state.currency === 'JPY' ? '限定品(プレバン)' : '한정판/클럽G');
+        } else {
+          valRun = state.currency === 'USD' ? 'Standard' : (state.currency === 'JPY' ? '一般販売' : '일반판');
         }
 
         const rawGallery = kit.gallery && kit.gallery.length > 0 ? kit.gallery : [ { url: kit.product_url || kit.image_url } ];
@@ -1694,14 +1694,16 @@
 
         const currentImgObj = gallery[state.activeImageIndex] || gallery[0] || {};
         const currentImgUrl = currentImgObj.url || kit.product_url || kit.boxart_url;
-        const currentCdnUrl = currentImgObj.cdn_url || kit.boxart_url || currentImgUrl;
+        const currentCdnUrl = currentImgObj.cdn_url || currentImgUrl;
 
         const zoomHint = state.currency === 'USD' ? '🔍 Click to view 1200px fullscreen HD zoom' : (state.currency === 'JPY' ? '🔍 クリックして1200px原寸全画面拡大' : '🔍 클릭하여 1200px 원본 전체화면 확대');
+
+        const compScale = kit.scale || ((kit.classification === 'MG' || kit.classification === 'MGEX' || (kit.name && kit.name.startsWith('MG '))) ? '1/100' : ((kit.classification === 'PG' || kit.classification === 'PGU' || (kit.name && kit.name.startsWith('PG '))) ? '1/60' : ((kit.classification === 'Mega Size') ? '1/48' : ((kit.classification === 'SD' || kit.classification === 'MGSD' || kit.classification === 'Figure') ? 'Non-scale' : '1/144'))));
 
         modalBody.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">' +
           '<div class="flex flex-col">' +
             '<div class="relative w-full h-[420px] md:h-[460px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-800 group cursor-zoom-in" onclick="window.openLightbox()">' +
-              '<img src="' + (currentImgUrl.startsWith('http') ? ('https://images.weserv.nl/?url=' + encodeURIComponent(currentImgUrl) + '&w=900&output=webp&q=88') : currentImgUrl) + '" data-fallback="' + currentCdnUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+              '<img src="' + (currentImgUrl.startsWith('http') ? ('https://images.weserv.nl/?url=' + encodeURIComponent(currentImgUrl) + '&w=900&output=webp&q=88') : currentImgUrl) + '" data-fallback="' + currentImgUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
               (gallery.length > 1 ? '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' : '') +
@@ -1733,7 +1735,7 @@
                 '<div>' + (krwInfo.isClubG ? '🔵 클럽G' : '🇰🇷 반코') + ' 정가: <span class="text-cyan-400 font-bold font-mono">' + krwInfo.formatted + '</span> <span class="text-[10px] ' + krwInfo.badgeColor + '">(' + krwInfo.orgNote + ')</span></div>' +
                 '<div>🇯🇵 반다이 일본: <span class="text-slate-200 font-bold font-mono">' + jpyInfo.formatted + (jpyInfo.isVerified ? ' <span class="text-[10px] text-slate-400 font-normal">(세별 ¥' + Math.round(jpyInfo.value / 1.1).toLocaleString() + ')</span>' : '') + '</span></div>' +
                 '<div>🇺🇸 반다이 US: <span class="text-slate-200 font-bold font-mono">' + usdInfo.formatted + '</span></div>' +
-                '<div>' + lblScale + ': <span class="font-mono text-white">' + (kit.scale || '1/144') + '</span></div>' +
+                '<div>' + lblScale + ': <span class="font-mono text-white">' + compScale + '</span></div>' +
                 '<div>' + lblRelease + ': <span class="font-mono text-white">' + (kit.release_date || kit.year) + '</span></div>' +
                 '<div>' + lblRun + ': <span class="text-white">' + valRun + '</span></div>' +
               '</div>' +

@@ -604,13 +604,38 @@
       function getLocalizedSeries(rawSeries, targetCurrency) {
         if (!rawSeries) return (targetCurrency || state.currency) === 'USD' ? 'Others' : ((targetCurrency || state.currency) === 'JPY' ? 'その他' : '기타');
         const curr = targetCurrency || state.currency || 'KRW';
-        const entry = SERIES_I18N[rawSeries.trim()];
+        const trimmed = (rawSeries || '').trim();
+        
+        const upper = trimmed.toUpperCase();
+        if (upper.includes('SEED FREEDOM')) return curr === 'USD' ? 'Mobile Suit Gundam SEED FREEDOM' : (curr === 'JPY' ? '機動戦士ガンダムSEED FREEDOM' : '기동전사 건담 SEED FREEDOM');
+        if (upper.includes('SEED DESTINY')) return curr === 'USD' ? 'Mobile Suit Gundam SEED DESTINY' : (curr === 'JPY' ? '機動戦士ガンダムSEED DESTINY' : '기동전사 건담 SEED DESTINY');
+        if (upper.includes('SEED')) return curr === 'USD' ? 'Mobile Suit Gundam SEED' : (curr === 'JPY' ? '機動戦士ガンダムSEED' : '기동전사 건담 SEED (시드)');
+        if (upper.includes('WITCH FROM MERCURY') || trimmed.includes('水星の魔女')) return curr === 'USD' ? 'The Witch from Mercury' : (curr === 'JPY' ? '機動戦士ガンダム 水星の魔女' : '기동전사 건담 수성의 마녀');
+        if (upper.includes('UNICORN') || trimmed.includes('UC') || trimmed.includes('ユニコーン')) return curr === 'USD' ? 'Mobile Suit Gundam Unicorn' : (curr === 'JPY' ? '機動戦士ガンダムUC' : '기동전사 건담 UC (유니콘)');
+        if (upper.includes('IRON-BLOODED') || trimmed.includes('鉄血のオルフェンズ')) return curr === 'USD' ? 'Iron-Blooded Orphans' : (curr === 'JPY' ? '機動戦士ガンダム 鉄血のオルフェンズ' : '기동전사 건담 철혈의 오펀스');
+        if (upper.includes('ORIGIN') || trimmed.includes('ジ・オリジン')) return curr === 'USD' ? 'The Origin' : (curr === 'JPY' ? '機動戦士ガンダム THE ORIGIN' : '기동전사 건담 디 오리진');
+        if (upper.includes('BUILD DIVERS') || trimmed.includes('ビルドダイバーズ')) return curr === 'USD' ? 'Gundam Build Divers' : (curr === 'JPY' ? 'ガンダムビルドダイバーズ' : '건담 빌드 다이버즈');
+        if (upper.includes('BUILD FIGHTERS') || trimmed.includes('ビルドファイターズ')) return curr === 'USD' ? 'Gundam Build Fighters' : (curr === 'JPY' ? 'ガンダムビルドファイターズ' : '건담 빌드 파이터즈');
+        if (upper.includes('00') || upper.includes('DOUBLE O') || trimmed.includes('ダブルオー')) return curr === 'USD' ? 'Mobile Suit Gundam 00' : (curr === 'JPY' ? '機動戦士ガンダム00' : '기동전사 건담 00 (더블오)');
+        if (upper.includes('WING') || trimmed.includes('ウイング')) return curr === 'USD' ? 'Mobile Suit Gundam Wing' : (curr === 'JPY' ? '新機動戦記ガンダムW' : '신기동전기 건담 W');
+        if (upper.includes('G GUNDAM') || trimmed.includes('Gガンダム')) return curr === 'USD' ? 'Mobile Fighter G Gundam' : (curr === 'JPY' ? '機動武闘伝Gガンダム' : '기동무투전 G건담');
+        if (upper.includes('Z GUNDAM') || trimmed.includes('Zガンダム') || trimmed.includes('ゼータ')) return curr === 'USD' ? 'Mobile Suit Zeta Gundam' : (curr === 'JPY' ? '機動戦士Ζガンダム' : '기동전사 Z 건담 (제타)');
+        if (upper.includes('ZZ') || trimmed.includes('ダブルゼータ')) return curr === 'USD' ? 'Mobile Suit Gundam ZZ' : (curr === 'JPY' ? '機動戦士ガンダムΖΖ' : '기동전사 건담 ZZ (더블제타)');
+        if (upper.includes('CCA') || trimmed.includes('逆襲のシャア')) return curr === 'USD' ? "Char's Counterattack" : (curr === 'JPY' ? '機動戦士ガンダム 逆襲のシャア' : '기동전사 건담 역습의 샤아');
+        if (upper.includes('HATHAWAY') || trimmed.includes('閃光のハサウェイ')) return curr === 'USD' ? 'Hathaway' : (curr === 'JPY' ? '機動戦士ガンダム 閃光のハサウェイ' : '기동전사 건담 섬광의 하사웨이');
+        if (upper.includes('30MM') || upper.includes('30 MINUTES MISSIONS')) return '30 MINUTES MISSIONS (30MM)';
+        if (upper.includes('30MS') || upper.includes('30 MINUTES SISTERS')) return '30 MINUTES SISTERS (30MS)';
+        if (upper.includes('POKEMON') || trimmed.includes('ポケプラ') || trimmed.includes('ポケモン')) return curr === 'USD' ? 'Pokemon Plamo' : (curr === 'JPY' ? 'ポケモンプラモコレクション' : '포켓몬 프라모델');
+
+        const entry = SERIES_I18N[trimmed];
         if (entry) {
           if (curr === 'KRW') return entry.kr;
           if (curr === 'USD') return entry.en;
           return entry.jp;
         }
-        return rawSeries;
+
+        const clean = trimmed.replace(/[^\x20-\x7E\uAC00-\uD7A3\u3040-\u30FF\u4E00-\u9FFF\s\-\:\(\)]/g, '').trim();
+        return clean || (curr === 'USD' ? 'Others' : (curr === 'JPY' ? 'その他' : '기타'));
       }
       window.getLocalizedSeries = getLocalizedSeries;
 

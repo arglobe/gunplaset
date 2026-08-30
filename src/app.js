@@ -2108,6 +2108,8 @@
 
       function init() {
         KITS = (window.GUNPLA_MASTER_DATA || []).map(enrichKit);
+        window.KITS = KITS;
+        window.appState = state;
         populateDropdownSelects();
         window.setCurrency(state.currency);
         renderYearSlider();

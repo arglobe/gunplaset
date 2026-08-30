@@ -1490,7 +1490,7 @@
       };
 
       window.openKitModal = function(id) {
-        const kit = KITS.find(k => k.id === id);
+        const kit = KITS.find(k => String(k.id) === String(id));
         if (!kit) return;
 
         // Dynamically load multi-image gallery if available in window.GUNPLA_GALLERIES

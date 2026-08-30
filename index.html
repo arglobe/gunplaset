@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="referrer" content="no-referrer">
   <title>GunplaSet (건프라셋) - 마스터 건프라 아카이브 & 컬렉션 도감</title>
   
   <!-- SEO & Social Sharing Meta Tags -->
@@ -25737,25 +25738,35 @@ window.GUNPLA_MASTER_DATA = [
         }
 
         const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
-        kit.boxart_url = IMAGE_OVERRIDES[kit.id] || (dbEntry && dbEntry.boxart_url) || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
-        kit.product_url = (dbEntry && dbEntry.product_url) || kit.image_url || kit.boxart_url;
-        kit.image_url = kit.product_url;
+        const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
+        const boxartCdn = (dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn;
+        const productCdn = (dbEntry && dbEntry.product_cdn_url) || boxartCdn;
 
-        // Build gallery images array (Pure types without localized string dependency)
+        // Proactively set high-speed global CDN as universal default for 0ms loading!
+        kit.boxart_url = boxartCdn;
+        kit.product_url = productCdn;
+        kit.image_url = productCdn;
+
+        // Build gallery images array
         if (dbEntry && dbEntry.gallery && Array.isArray(dbEntry.gallery) && dbEntry.gallery.length > 0) {
           kit.gallery = dbEntry.gallery.map(g => {
-            if (typeof g === 'object' && g !== null && g.url) return g;
+            if (typeof g === 'object' && g !== null && g.url) {
+              const u = isWeb && g.cdn_url ? g.cdn_url : (g.url || g.cdn_url || kit.product_url);
+              return { url: u, cdn_url: g.cdn_url || u, is_boxart: !!g.is_boxart };
+            }
             if (typeof g === 'string') {
               const m = g.match(/url=([^;\s]+)/);
               const c = g.match(/cdn_url=([^;\s]+)/);
-              return { url: m ? m[1] : g, cdn_url: c ? c[1] : g, is_boxart: g.includes('is_boxart=True') };
+              const rawUrl = m ? m[1] : g;
+              const rawCdn = c ? c[1] : (rawUrl.startsWith('http') ? rawUrl : defaultBoxartCdn);
+              return { url: isWeb ? rawCdn : rawUrl, cdn_url: rawCdn, is_boxart: g.includes('is_boxart=True') };
             }
             return { url: kit.product_url, cdn_url: kit.product_url, is_boxart: false };
           });
         } else {
           kit.gallery = [
-            { url: kit.product_url, cdn_url: (dbEntry && dbEntry.product_cdn_url) || kit.product_url, is_boxart: false },
-            { url: kit.boxart_url, cdn_url: (dbEntry && dbEntry.boxart_cdn_url) || kit.boxart_url, is_boxart: true }
+            { url: kit.product_url, cdn_url: productCdn, is_boxart: false },
+            { url: kit.boxart_url, cdn_url: boxartCdn, is_boxart: true }
           ];
         }
 
@@ -26234,11 +26245,15 @@ window.GUNPLA_MASTER_DATA = [
           const isPbandai = kit.run === 'Limited' || kit.run === 'P-Bandai' || kit.run === 'Exclusive';
           const badgeClass = getGradeBadgeClass(kit.classification);
           
+          const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
+          const isWeb = window.location.protocol.startsWith('http');
           const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
-          const boxartUrl = kit.boxart_url || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
-          const productUrl = kit.product_url || boxartUrl;
+
+          const boxartUrl = isWeb ? ((dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn) : (kit.boxart_url || defaultBoxartCdn);
+          const productUrl = isWeb ? ((dbEntry && dbEntry.product_cdn_url) || boxartUrl) : (kit.product_url || boxartUrl);
+
           const imgUrl = (state.cardImageMode === 'boxart' ? boxartUrl : productUrl) || boxartUrl;
-          const cdnFallback = state.cardImageMode === 'boxart' ? (dbEntry && dbEntry.boxart_cdn_url ? dbEntry.boxart_cdn_url : boxartUrl) : (dbEntry && dbEntry.product_cdn_url ? dbEntry.product_cdn_url : productUrl);
+          const cdnFallback = (imgUrl !== boxartUrl) ? boxartUrl : defaultBoxartCdn;
 
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -26256,7 +26271,7 @@ window.GUNPLA_MASTER_DATA = [
 
           return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-200 ' + cardBorderClass + '" onclick="window.openKitModal(\'' + kit.id + '\')">' +
             '<div class="relative w-full pt-[90%] bg-gradient-to-b from-slate-900/80 to-slate-950/90 overflow-hidden flex items-center justify-center p-3">' +
-              '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
+              '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
               '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-2 text-center z-0">' +
                 '<span class="text-3xl mb-1">🤖</span>' +
                 '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (kit.name || '') + '</span>' +

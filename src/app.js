@@ -968,13 +968,42 @@
             if (state.selectedRun === 'Standard' && kit.run !== 'Standard') return false;
           }
 
-          // 6. Search query
+          // 6. Search query with Korean Synonyms
           if (q) {
             const nameEn = (kit.nameEn || kit.name || '').toLowerCase();
             const nameJp = (kit.nameJp || '').toLowerCase();
             const series = (kit.series || '').toLowerCase();
+            const seriesKr = getLocalizedSeries(kit.series, 'KRW').toLowerCase();
             const grade = (kit.classification || '').toLowerCase();
-            if (!nameEn.includes(q) && !nameJp.includes(q) && !series.includes(q) && !grade.includes(q)) return false;
+            const gradeKey = (kit.gradeKey || '').toLowerCase();
+
+            const KOR_SYNONYMS = {
+              '사자비': ['sazabi'], '뉴건담': ['nu gundam', 'ν gundam', 'rx-93'], '뉴 건담': ['nu gundam', 'ν gundam'],
+              '퍼스트': ['rx-78', 'rx-78-2'], '퍼스트건담': ['rx-78', 'rx-78-2'], '퍼건': ['rx-78-2'],
+              '자쿠': ['zaku'], '구프': ['gouf'], '돔': ['dom', 'rick dom'], '겔구그': ['gelgoog'],
+              '지옹': ['zeong'], '백식': ['hyaku-shiki', 'hyaku shiki', 'msn-00100'],
+              '제타': ['zeta', 'msz-006'], '더블제타': ['zz', 'double zeta'], '역샤': ["char's counterattack"],
+              '유니콘': ['unicorn', 'rx-0'], '밴시': ['banshee'], '페넥스': ['phenex'], '시난주': ['sinanju'], '크샤트리아': ['kshatriya'],
+              '스트라이크': ['strike'], '프리덤': ['freedom'], '저스티스': ['justice'], '데스티니': ['destiny'], '임펄스': ['impulse'],
+              '스리덤': ['strike freedom'], '스트라이크 프리덤': ['strike freedom'], '마리덤': ['mighty strike freedom'],
+              '윙': ['wing'], '엑시아': ['exia'], '더블오': ['00', 'double o', '00 gundam', 'qan[t]'], '퀀터': ['qan[t]'],
+              '바르바토스': ['barbatos'], '에어리얼': ['aerial'], '캘리번': ['calibarn'], '파렉트': ['pharact'], '다릴바르데': ['darilbalde'],
+              '갓건담': ['god gundam', 'burning gundam'], '마스터건담': ['master gundam'], '샤이닝': ['shining'],
+              '포켓몬': ['pokemon', 'pikachu', 'rayquaza', 'charizard', 'mewtwo'], '피카츄': ['pikachu'], '레쿠쟈': ['rayquaza']
+            };
+
+            let matched = nameEn.includes(q) || nameJp.includes(q) || series.includes(q) || seriesKr.includes(q) || grade.includes(q) || gradeKey.includes(q);
+            if (!matched) {
+              for (const [kWord, synList] of Object.entries(KOR_SYNONYMS)) {
+                if (q.includes(kWord) || kWord.includes(q)) {
+                  if (synList.some(syn => nameEn.includes(syn) || nameJp.includes(syn) || series.includes(syn))) {
+                    matched = true;
+                    break;
+                  }
+                }
+              }
+            }
+            if (!matched) return false;
           }
 
           return true;

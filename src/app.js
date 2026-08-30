@@ -1488,6 +1488,22 @@
       window.openKitModal = function(id) {
         const kit = KITS.find(k => k.id === id);
         if (!kit) return;
+
+        // Dynamically load multi-image gallery if available in window.GUNPLA_GALLERIES
+        if (window.GUNPLA_GALLERIES && window.GUNPLA_GALLERIES[kit.id] && window.GUNPLA_GALLERIES[kit.id].length > 0) {
+          const gList = window.GUNPLA_GALLERIES[kit.id];
+          kit.gallery = gList.map((u, i) => ({
+            url: u,
+            cdn_url: u,
+            is_boxart: (i === gList.length - 1) || u.includes('boxart') || u.includes('packaging') || u.endsWith('.jpeg')
+          }));
+        } else if (!kit.gallery || kit.gallery.length <= 1) {
+          const boxartCdn = IMAGE_OVERRIDES[kit.id] || ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg');
+          kit.gallery = [
+            { url: boxartCdn, cdn_url: boxartCdn, is_boxart: true }
+          ];
+        }
+
         state.selectedKit = kit;
         state.activeImageIndex = 0;
         const modal = document.getElementById('kit-modal');

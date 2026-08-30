@@ -807,7 +807,7 @@
         '4921': 'https://gunpla.fyi/images/boxarts/2734.jpeg', // HG Hazel Custom
         '4922': 'https://gunpla.fyi/images/boxarts/4951.jpeg', // HG Strike Freedom Type II
         '4923': 'https://gunpla.fyi/images/boxarts/1097.jpeg', // RG Gundam Epyon
-        '4924': 'https://gunpla.fyi/images/boxarts/4924.jpeg'  // HG Ruka's Zaku
+        '4924': 'https://bandai-a.akamaihd.net/bc/img/model/xl/1000235382_1.jpg'  // HG Ruka's Zaku
       };
 
       function enrichKit(kit) {

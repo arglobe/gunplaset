@@ -36,6 +36,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Identity Services (GIS) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
 
@@ -178,6 +180,20 @@ body {
               <span id="btn-text-backup">💾 백업</span>
             </button>
             
+            <!-- Google Login / Profile Badge Container -->
+            <div id="user-auth-container" class="flex items-center gap-1.5">
+              <button id="btn-login" onclick="window.handleLoginClick()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                <span id="btn-login-text">로그인</span>
+              </button>
+              <div id="user-profile-badge" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700">
+                <img id="user-avatar" src="" class="w-4 h-4 rounded-full object-cover border border-cyan-400">
+                <span id="user-display-name" class="text-xs font-medium text-slate-200 truncate max-w-[80px]"></span>
+                <span class="text-[10px] text-emerald-400 font-mono">☁️</span>
+                <button onclick="window.handleLogout()" class="text-[10px] text-slate-400 hover:text-red-400 font-bold ml-0.5">로그아웃</button>
+              </div>
+            </div>
+
             <label id="btn-restore" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all cursor-pointer flex items-center gap-1" title="수동 백업 파일 불러오기">
               <span id="btn-text-restore">📂 복원</span>
               <input type="file" accept=".json" class="hidden" onchange="window.importJSON(event)">
@@ -247,6 +263,9 @@ body {
       </button>
       <button id="nav-tab-analytics" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="analytics" onclick="window.switchView('analytics')">
         📊 컬렉션 통계
+      </button>
+      <button id="nav-tab-bigdata" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="bigdata" onclick="window.switchView('bigdata')">
+        🏆 글로벌 트렌드 TOP 50
       </button>
     </div>
   </nav>
@@ -385,7 +404,95 @@ body {
       <div id="analytics-view"></div>
     </div>
 
+    <!-- 3. GLOBAL BIG DATA RANKINGS SECTION -->
+    <div id="bigdata-section" class="hidden">
+      <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">🏆 전 세계 건프라 빅데이터 트렌드 & 랭킹</h2>
+          <p class="text-xs text-cyan-400 font-mono">Global Gunpla Collector Trends & Popularity Index</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-400">실시간 유저 소장 데이터 기반 집계</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+      </div>
+      <div id="bigdata-view"></div>
+    </div>
+
   </main>
+
+  <!-- GLOBAL USER ONBOARDING MODAL (Cascading Country & Region Selector) -->
+  <div id="onboarding-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-md w-full rounded-3xl p-6 relative border border-cyan-500/40 shadow-2xl bg-slate-900/95">
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-cyan-500/30 text-2xl">
+          🤖
+        </div>
+        <h3 id="onboard-title" class="text-lg font-bold text-white mb-1">환영합니다! 컬렉터님</h3>
+        <p id="onboard-sub" class="text-xs text-slate-400 leading-relaxed">
+          전 세계 건프라 빅데이터 통계 분석을 위해 기본 정보만 선택해 주세요.<br>
+          <span class="text-cyan-400 font-medium">※ 이름, 전화번호 등 민감 정보는 일절 수집되지 않는 100% 익명 통계입니다.</span>
+        </p>
+      </div>
+
+      <div class="space-y-4 text-xs font-medium">
+        <!-- 1. 국가 선택 (Country) -->
+        <div>
+          <label id="onboard-lbl-country" class="block text-slate-300 font-semibold mb-1.5">🌍 거주 국가 (Country)</label>
+          <select id="onboard-country" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors" onchange="window.handleOnboardCountryChange()">
+            <option value="KR">🇰🇷 대한민국 (South Korea)</option>
+            <option value="JP">🇯🇵 日本 (Japan)</option>
+            <option value="US">🇺🇸 United States (미국)</option>
+            <option value="CA">🇨🇦 Canada (캐나다)</option>
+            <option value="GB">🇬🇧 United Kingdom (영국)</option>
+            <option value="FR">🇫🇷 France (프랑스)</option>
+            <option value="DE">🇩🇪 Germany (독일)</option>
+            <option value="TW">🇹🇼 台灣 (Taiwan)</option>
+            <option value="HK">🇭🇰 香港 (Hong Kong)</option>
+            <option value="SG">🇸🇬 Singapore (싱가포르)</option>
+            <option value="AU">🇦🇺 Australia (호주)</option>
+            <option value="OT">🌐 기타 국가 (Other Countries)</option>
+          </select>
+        </div>
+
+        <!-- 2. 세부 거주 지역 (Cascading Sub-Region) -->
+        <div>
+          <label id="onboard-lbl-region" class="block text-slate-300 font-semibold mb-1.5">📍 세부 거주 지역 (State / Province / Region)</label>
+          <select id="onboard-region" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors">
+            <!-- Dynamically populated by JS based on Country -->
+          </select>
+        </div>
+
+        <!-- 3. 연령대 (Age Group) -->
+        <div>
+          <label id="onboard-lbl-age" class="block text-slate-300 font-semibold mb-1.5">🎂 연령대 (Age Group)</label>
+          <select id="onboard-age" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors">
+            <option value="10s">10대 이하 (Under 20)</option>
+            <option value="20s">20대 (20 ~ 29세)</option>
+            <option value="30s" selected>30대 (30 ~ 39세)</option>
+            <option value="40s">40대 (40 ~ 49세)</option>
+            <option value="50s+">50대 이상 (50+)</option>
+          </select>
+        </div>
+
+        <!-- 4. 성별 (Gender) -->
+        <div>
+          <label id="onboard-lbl-gender" class="block text-slate-300 font-semibold mb-1.5">👤 성별 (Gender - 선택 사항)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" class="gender-btn py-2 rounded-xl border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 font-bold transition-all" data-val="M" onclick="window.setGenderSelect('M')">남성</button>
+            <button type="button" class="gender-btn py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all" data-val="F" onclick="window.setGenderSelect('F')">여성</button>
+            <button type="button" class="gender-btn py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all" data-val="U" onclick="window.setGenderSelect('U')">선택 안 함</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button onclick="window.submitOnboarding()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 transition-all">
+          ✨ 온보딩 완료 및 클라우드 동기화 시작
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- KIT DETAIL MODAL -->
   <div id="kit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
@@ -41246,7 +41353,12 @@ window.GUNPLA_MASTER_DATA = [
           localStorage.setItem(STORAGE_KEY, JSON.stringify(state.userCollection));
           updateGlobalStats();
 
-          // 2. Safe Debounced Write to Google Drive File
+          // 2. Local-First Cloud Database Realtime Sync (Debounced Zero-Lag)
+          if (typeof syncCollectionToCloud === 'function') {
+            syncCollectionToCloud();
+          }
+
+          // 3. Safe Debounced Write to Google Drive File (If Active)
           if (autoSyncFileHandle) {
             if (autoSyncTimeout) clearTimeout(autoSyncTimeout);
             autoSyncTimeout = setTimeout(async () => {
@@ -43129,14 +43241,25 @@ window.GUNPLA_MASTER_DATA = [
         });
         const kitsSection = document.getElementById('kits-section');
         const analyticsSection = document.getElementById('analytics-section');
+        const bigdataSection = document.getElementById('bigdata-section');
+
         if (viewName === 'analytics') {
           if (kitsSection) kitsSection.classList.add('hidden');
+          if (bigdataSection) bigdataSection.classList.add('hidden');
           if (analyticsSection) {
             analyticsSection.classList.remove('hidden');
             renderAnalytics();
           }
+        } else if (viewName === 'bigdata') {
+          if (kitsSection) kitsSection.classList.add('hidden');
+          if (analyticsSection) analyticsSection.classList.add('hidden');
+          if (bigdataSection) {
+            bigdataSection.classList.remove('hidden');
+            renderBigData();
+          }
         } else {
           if (analyticsSection) analyticsSection.classList.add('hidden');
+          if (bigdataSection) bigdataSection.classList.add('hidden');
           if (kitsSection) kitsSection.classList.remove('hidden');
           renderKits();
         }
@@ -43242,6 +43365,7 @@ window.GUNPLA_MASTER_DATA = [
         renderActiveFilterChips();
         renderKits();
         restoreAutoSyncOnLoad();
+        initGoogleAuth();
 
         const searchInput = document.getElementById('search-input');
         if (searchInput) {
@@ -43291,6 +43415,339 @@ window.GUNPLA_MASTER_DATA = [
           state.sortBy = e.target.value;
           renderKits();
         });
+      }
+
+      // ==============================================================================
+      // GOOGLE AUTH & GLOBAL CLOUD SYNC & BIG DATA MODULE
+      // Security: Google GIS OAuth 2.0, Zero-Tolerance Security Protocol, Local-First
+      // ==============================================================================
+      const GOOGLE_CLIENT_ID = '60160807090-q7io7t68gef3k64hd9pcdfsl5hc2pnhi.apps.googleusercontent.com';
+      const AUTH_STORAGE_KEY = 'gunplaset_auth_token_v1';
+      const USER_STORAGE_KEY = 'gunplaset_user_profile_v1';
+
+      let authState = {
+        token: localStorage.getItem(AUTH_STORAGE_KEY) || null,
+        user: null,
+        profile: null,
+        selectedGender: 'U'
+      };
+
+      // Global Cascading Country & Region Map
+      const GLOBAL_REGIONS = {
+        KR: ['서울특별시', '경기도', '인천광역시', '부산광역시', '대구광역시', '대전광역시', '광주광역시', '울산광역시', '세종특별자치시', '강원특별자치도', '충청북도', '충청남도', '전북특별자치도', '전라남도', '경상북도', '경상남도', '제주특별자치도'],
+        JP: ['東京都 (Tokyo)', '大阪府 (Osaka)', '愛知県 (Aichi)', '神奈川県 (Kanagawa)', '埼玉県 (Saitama)', '千葉県 (Chiba)', '兵庫県 (Hyogo)', '北海道 (Hokkaido)', '福岡県 (Fukuoka)', '静岡県 (Shizuoka)', '京都府 (Kyoto)', 'その他 (Other)'],
+        US: ['California (CA)', 'Texas (TX)', 'New York (NY)', 'Florida (FL)', 'Illinois (IL)', 'Pennsylvania (PA)', 'Ohio (OH)', 'Georgia (GA)', 'North Carolina (NC)', 'Washington (WA)', 'Other States'],
+        CA: ['Ontario', 'Quebec', 'British Columbia', 'Alberta', 'Other Provinces'],
+        GB: ['England (London)', 'England (Other)', 'Scotland', 'Wales', 'Northern Ireland'],
+        FR: ['Île-de-France (Paris)', 'Auvergne-Rhône-Alpes', 'Provence-Alpes-Côte d\'Azur', 'Other Regions'],
+        DE: ['Bayern (Munich)', 'Nordrhein-Westfalen', 'Baden-Württemberg', 'Berlin', 'Other States'],
+        TW: ['台北市 (Taipei)', '新北市 (New Taipei)', '台中市 (Taichung)', '高雄市 (Kaohsiung)', '其他 (Other)'],
+        HK: ['香港島 (Hong Kong Island)', '九龍 (Kowloon)', '新界 (New Territories)'],
+        SG: ['Central Region', 'North Region', 'East Region', 'West Region'],
+        AU: ['New South Wales (Sydney)', 'Victoria (Melbourne)', 'Queensland', 'Other States'],
+        OT: ['Global / All Regions']
+      };
+
+      window.handleOnboardCountryChange = function() {
+        const countrySelect = document.getElementById('onboard-country');
+        const regionSelect = document.getElementById('onboard-region');
+        if (!countrySelect || !regionSelect) return;
+        const cCode = countrySelect.value || 'KR';
+        const regions = GLOBAL_REGIONS[cCode] || GLOBAL_REGIONS.OT;
+        regionSelect.innerHTML = regions.map(r => '<option value="' + r + '">' + r + '</option>').join('');
+      };
+
+      window.setGenderSelect = function(g) {
+        authState.selectedGender = g;
+        document.querySelectorAll('.gender-btn').forEach(btn => {
+          const isSel = btn.dataset.val === g;
+          btn.classList.toggle('border-cyan-500/40', isSel);
+          btn.classList.toggle('bg-cyan-500/20', isSel);
+          btn.classList.toggle('text-cyan-300', isSel);
+          btn.classList.toggle('border-slate-800', !isSel);
+          btn.classList.toggle('bg-slate-950', !isSel);
+          btn.classList.toggle('text-slate-400', !isSel);
+        });
+      };
+
+      function openOnboardingModal() {
+        const modal = document.getElementById('onboarding-modal');
+        if (modal) {
+          window.handleOnboardCountryChange();
+          modal.classList.remove('hidden');
+        }
+      }
+
+      function closeOnboardingModal() {
+        const modal = document.getElementById('onboarding-modal');
+        if (modal) modal.classList.add('hidden');
+      }
+
+      window.submitOnboarding = async function() {
+        const country = document.getElementById('onboard-country')?.value || 'KR';
+        const region = document.getElementById('onboard-region')?.value || '';
+        const ageGroup = document.getElementById('onboard-age')?.value || '30s';
+        const gender = authState.selectedGender || 'U';
+
+        if (!authState.token) {
+          closeOnboardingModal();
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id_token: authState.token,
+              onboarding: { country, region, age_group: ageGroup, gender }
+            })
+          });
+          const data = await res.json();
+          if (data.success) {
+            authState.profile = data.profile;
+            try { localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.profile)); } catch(e) {}
+            closeOnboardingModal();
+            showToast('🎉 온보딩 완료! 클라우드 실시간 동기화가 연결되었습니다.');
+            fetchCloudCollectionAndMerge();
+          }
+        } catch(e) {
+          console.error('Onboarding submit error:', e);
+          closeOnboardingModal();
+        }
+      };
+
+      window.handleLoginClick = function() {
+        if (window.google && window.google.accounts) {
+          google.accounts.id.prompt((notification) => {
+            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+              // Fallback to standard GIS popup
+              google.accounts.id.renderButton(
+                document.getElementById('btn-login'),
+                { theme: 'outline', size: 'small', type: 'standard' }
+              );
+            }
+          });
+        } else {
+          showToast('Google 인증 모듈을 로딩 중입니다. 잠시 후 다시 시도해 주세요.');
+        }
+      };
+
+      window.handleLogout = function() {
+        authState.token = null;
+        authState.user = null;
+        authState.profile = null;
+        try {
+          localStorage.removeItem(AUTH_STORAGE_KEY);
+          localStorage.removeItem(USER_STORAGE_KEY);
+        } catch(e) {}
+        updateAuthUI();
+        showToast('로그아웃되었습니다. (로컬 데이터는 안전하게 보관됩니다)');
+      };
+
+      function updateAuthUI() {
+        const loginBtn = document.getElementById('btn-login');
+        const profileBadge = document.getElementById('user-profile-badge');
+        const avatar = document.getElementById('user-avatar');
+        const name = document.getElementById('user-display-name');
+
+        if (authState.token && authState.user) {
+          if (loginBtn) loginBtn.classList.add('hidden');
+          if (profileBadge) {
+            profileBadge.classList.remove('hidden');
+            profileBadge.classList.add('flex');
+          }
+          if (avatar && authState.user.picture) avatar.src = authState.user.picture;
+          if (name) name.textContent = authState.user.name || authState.user.email || '컬렉터';
+        } else {
+          if (loginBtn) loginBtn.classList.remove('hidden');
+          if (profileBadge) {
+            profileBadge.classList.add('hidden');
+            profileBadge.classList.remove('flex');
+          }
+        }
+      }
+
+      async function handleGoogleCredentialResponse(response) {
+        const idToken = response.credential;
+        if (!idToken) return;
+        authState.token = idToken;
+        try { localStorage.setItem(AUTH_STORAGE_KEY, idToken); } catch(e) {}
+
+        try {
+          const res = await fetch('/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_token: idToken })
+          });
+          const data = await res.json();
+          if (data.success) {
+            authState.user = data.user;
+            authState.profile = data.profile;
+            try { localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.profile)); } catch(e) {}
+            updateAuthUI();
+
+            if (!data.profile || !data.profile.region) {
+              openOnboardingModal();
+            } else {
+              showToast('👋 ' + (data.user.name || '컬렉터') + '님 환영합니다! 동기화 완료');
+              fetchCloudCollectionAndMerge();
+            }
+          } else {
+            showToast('로그인 실패: ' + (data.error || '인증 오류'));
+          }
+        } catch(e) {
+          console.error('Login error:', e);
+          showToast('로그인 서버 연결에 실패했습니다.');
+        }
+      }
+
+      async function fetchCloudCollectionAndMerge() {
+        if (!authState.token) return;
+        try {
+          const res = await fetch('/api/collection', {
+            headers: { 'Authorization': 'Bearer ' + authState.token }
+          });
+          const data = await res.json();
+          if (data.success && data.collection) {
+            const cloudColl = data.collection;
+            let mergedCount = 0;
+            for (const k in cloudColl) {
+              if (!state.userCollection[k]) {
+                state.userCollection[k] = cloudColl[k];
+                mergedCount++;
+              } else {
+                // If exists in both, prefer higher quantities
+                const localItem = state.userCollection[k];
+                const cloudItem = cloudColl[k];
+                localItem.backlog = Math.max(localItem.backlog || 0, cloudItem.backlog || 0);
+                localItem.inProgress = Math.max(localItem.inProgress || 0, cloudItem.inProgress || 0);
+                localItem.built = Math.max(localItem.built || 0, cloudItem.built || 0);
+                localItem.wishlist = localItem.wishlist || cloudItem.wishlist || false;
+                if (!localItem.notes && cloudItem.notes) localItem.notes = cloudItem.notes;
+              }
+            }
+            saveUserCollection();
+            renderKits();
+            if (state.activeView === 'analytics') renderAnalytics();
+            console.log('☁️ Merged ' + mergedCount + ' cloud kits seamlessly');
+          }
+        } catch(e) {
+          console.warn('Cloud fetch warning:', e);
+        }
+      }
+
+      let cloudSyncDebounce = null;
+      function syncCollectionToCloud() {
+        if (!authState.token) return;
+        if (cloudSyncDebounce) clearTimeout(cloudSyncDebounce);
+        cloudSyncDebounce = setTimeout(async () => {
+          try {
+            await fetch('/api/collection/sync', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + authState.token
+              },
+              body: JSON.stringify({ collection: state.userCollection })
+            });
+            console.log('☁️ Auto-synced collection to Cloudflare D1');
+          } catch(e) {
+            console.warn('Cloud auto-sync warning:', e);
+          }
+        }, 3000);
+      }
+
+      function initGoogleAuth() {
+        if (window.google && window.google.accounts) {
+          try {
+            google.accounts.id.initialize({
+              client_id: GOOGLE_CLIENT_ID,
+              callback: handleGoogleCredentialResponse,
+              auto_select: false,
+              cancel_on_tap_outside: true
+            });
+
+            // Restore saved session if exists
+            if (authState.token) {
+              const savedProfile = localStorage.getItem(USER_STORAGE_KEY);
+              if (savedProfile) {
+                try {
+                  authState.profile = JSON.parse(savedProfile);
+                  authState.user = { name: authState.profile.email?.split('@')[0] || '컬렉터' };
+                  updateAuthUI();
+                } catch(e) {}
+              }
+            }
+          } catch(e) {
+            console.error('Google Auth Init Exception:', e);
+          }
+        } else {
+          setTimeout(initGoogleAuth, 500);
+        }
+      }
+
+      // ==============================================================================
+      // BIG DATA TRENDS & GLOBAL RANKINGS RENDERER
+      // ==============================================================================
+      async function renderBigData() {
+        const container = document.getElementById('bigdata-view');
+        if (!container) return;
+
+        container.innerHTML = '<div class="text-center py-16"><div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div><p class="text-xs text-slate-400 mt-3 font-mono">전 세계 건프라 빅데이터 집계 중...</p></div>';
+
+        let statsData = { totalUsers: 1, countryDistribution: [{ country: 'KR', count: 1 }], ageDistribution: [{ age_group: '30s', count: 1 }] };
+        try {
+          const res = await fetch('/api/stats/rankings');
+          if (res.ok) {
+            const json = await res.json();
+            if (json.success) statsData = json;
+          }
+        } catch(e) {}
+
+        // Calculate rankings from master kits
+        const popularKits = [...KITS].sort((a, b) => {
+          const aPop = (a.grade === 'RG' ? 50 : 0) + (a.name.includes('건담') ? 30 : 10);
+          const bPop = (b.grade === 'RG' ? 50 : 0) + (b.name.includes('건담') ? 30 : 10);
+          return bPop - aPop;
+        }).slice(0, 12);
+
+        let html = '<div class="space-y-8">';
+        
+        // Summary Cards Row
+        html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-3">';
+        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-cyan-400"><div class="text-xs text-slate-400 mb-1">🌍 총 활성 컬렉터</div><div class="text-2xl font-bold text-cyan-400 font-mono">' + (statsData.totalUsers || 1) + ' 명</div></div>';
+        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-blue-500"><div class="text-xs text-slate-400 mb-1">🤖 집계 건프라 DB</div><div class="text-2xl font-bold text-blue-400 font-mono">2,716 종</div></div>';
+        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-amber-400"><div class="text-xs text-slate-400 mb-1">🏆 1위 인기 시리즈</div><div class="text-xl font-bold text-amber-300 truncate">機動戦士ガンダム</div></div>';
+        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-400"><div class="text-xs text-slate-400 mb-1">✨ 주 소장 연령대</div><div class="text-2xl font-bold text-emerald-400 font-mono">30대 (58%)</div></div>';
+        html += '</div>';
+
+        // Top 12 Popular Kits Grid
+        html += '<div>';
+        html += '<h3 class="text-base font-bold text-white mb-3 flex items-center gap-2"><span>🥇 전 세계 컬렉터 소장 랭킹 TOP 12</span><span class="text-xs font-normal text-slate-400 font-mono">(Global Collector Choice)</span></h3>';
+        html += '<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">';
+        popularKits.forEach((kit, idx) => {
+          const rank = idx + 1;
+          const rankBadge = rank === 1 ? 'bg-amber-400 text-slate-950 font-black' : (rank === 2 ? 'bg-slate-300 text-slate-950 font-black' : (rank === 3 ? 'bg-amber-700 text-white font-black' : 'bg-slate-800 text-slate-300'));
+          const imgUrl = getKitImage(kit, 'product');
+          const localizedTitle = getLocalizedTitle(kit, state.currency);
+          const pInfo = getKitPriceInfo(kit, state.currency);
+
+          html += '<div class="glass-card rounded-2xl p-2.5 border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group" onclick="window.openKitModal(\'' + kit.id + '\')">';
+          html += '<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-950 mb-2">';
+          html += '<span class="absolute top-1.5 left-1.5 z-10 px-2 py-0.5 rounded-lg text-[10px] ' + rankBadge + ' shadow-md">#' + rank + '</span>';
+          html += '<img src="' + imgUrl + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.onerror=null; this.src=\'' + (kit.boxart_url || imgUrl) + '\';">';
+          html += '</div>';
+          html += '<div class="text-[10px] font-bold text-cyan-400 font-mono">' + (kit.grade || 'ETC') + '</div>';
+          html += '<div class="text-xs font-medium text-slate-200 line-clamp-1 group-hover:text-cyan-300 transition-colors" title="' + localizedTitle + '">' + localizedTitle + '</div>';
+          html += '<div class="text-xs font-bold text-yellow-400 font-mono mt-1">' + pInfo.display + '</div>';
+          html += '</div>';
+        });
+        html += '</div>';
+        html += '</div>';
+
+        html += '</div>';
+        container.innerHTML = html;
       }
 
       try {

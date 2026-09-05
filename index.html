@@ -30,7 +30,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="GunplaSet">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="images/icon-192.png">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -225,7 +228,10 @@ body {
                 </button>
               </div>
 
-              <div class="pt-2.5 mt-2.5 border-t border-slate-800/80 text-center">
+              <div class="pt-2 mt-2 border-t border-slate-800/80 space-y-2 text-center">
+                <button id="pwa-menu-install-btn" onclick="window.triggerPwaInstall(); window.closeUserMenu();" class="w-full py-1.5 px-2 rounded-xl bg-cyan-950/50 hover:bg-cyan-900/60 border border-cyan-500/40 text-cyan-300 font-semibold flex items-center justify-center gap-1.5 transition-all text-xs">
+                  <span>📲 홈 화면에 앱 설치 (PWA)</span>
+                </button>
                 <button onclick="window.resetAccountData(); window.closeUserMenu();" class="text-[10px] text-slate-500 hover:text-red-400 underline transition-colors" title="프로필과 소장 기록을 지우고 신규 가입 상태로 되돌립니다">
                   🗑️ 계정 초기화 (신규 가입 재테스트)
                 </button>
@@ -585,6 +591,36 @@ body {
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-500/40 text-cyan-300 text-xs font-semibold shadow-2xl shadow-cyan-500/20 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
     알림 메시지
+  </div>
+
+  <!-- PWA INSTALL FLOATING BANNER (Mobile / Desktop prompt) -->
+  <div id="pwa-install-banner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-96 z-50 p-4 rounded-2xl bg-slate-900/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <div class="flex items-start gap-3">
+      <img src="images/icon-192.png" class="w-11 h-11 rounded-xl object-cover shadow-md border border-cyan-400/40 shrink-0" alt="GunplaSet App">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-white text-xs flex items-center gap-1.5">
+            <span>GunplaSet 전용 앱 설치</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30 font-mono">PWA</span>
+          </h4>
+          <button onclick="window.dismissPwaBanner()" class="text-slate-400 hover:text-slate-200 text-xs p-1" aria-label="닫기">✕</button>
+        </div>
+        <p class="text-[11px] text-slate-300 mt-1 leading-snug">
+          홈 화면에 추가하면 브라우저 주소창 없이 전체 화면으로 쾌적하게 즐길 수 있습니다.
+        </p>
+        <div id="ios-install-guide" class="hidden text-[11px] text-amber-300 bg-amber-950/40 border border-amber-500/30 rounded-lg p-2 mt-2">
+          💡 <b>아이폰/iPad 설치 안내</b>: 사파리 하단의 <b>공유 버튼(⎋)</b>을 누른 후 <b>[홈 화면에 추가]</b>를 선택해 주세요.
+        </div>
+        <div class="flex items-center gap-2 mt-3">
+          <button id="pwa-btn-install" onclick="window.triggerPwaInstall()" class="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs shadow-md transition-all">
+            홈 화면에 추가
+          </button>
+          <button onclick="window.dismissPwaBanner()" class="py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-xs font-medium transition-all">
+            나중에
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
@@ -43990,6 +44026,88 @@ window.GUNPLA_MASTER_DATA = [
         if (!document.querySelector('#kits-grid > div')) {
           init();
         }
+      });
+
+      // ==============================================================================
+      // 📱 PWA & SERVICE WORKER ENGINE
+      // ==============================================================================
+      let deferredPrompt = null;
+      const isIos = /iPhone|iPad|iPod/i.test(navigator.userAgent) && !window.MSStream;
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then((reg) => {
+            console.log('[GunplaSet PWA] Service Worker registered:', reg.scope);
+          }).catch((err) => {
+            console.warn('[GunplaSet PWA] Service Worker registration failed:', err);
+          });
+        });
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('[GunplaSet PWA] beforeinstallprompt captured');
+        const dismissed = localStorage.getItem('gunplaset_pwa_dismissed');
+        const now = Date.now();
+        if (!isStandalone && (!dismissed || (now - parseInt(dismissed, 10)) > 3 * 24 * 60 * 60 * 1000)) {
+          setTimeout(() => {
+            window.showPwaBanner();
+          }, 2500);
+        }
+      });
+
+      window.showPwaBanner = function() {
+        const banner = document.getElementById('pwa-install-banner');
+        if (!banner || isStandalone) return;
+        banner.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        banner.classList.add('translate-y-0', 'opacity-100');
+        if (isIos) {
+          const iosGuide = document.getElementById('ios-install-guide');
+          const installBtn = document.getElementById('pwa-btn-install');
+          if (iosGuide) iosGuide.classList.remove('hidden');
+          if (installBtn) installBtn.classList.add('hidden');
+        }
+      };
+
+      window.dismissPwaBanner = function() {
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) {
+          banner.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+          banner.classList.remove('translate-y-0', 'opacity-100');
+        }
+        try {
+          localStorage.setItem('gunplaset_pwa_dismissed', Date.now().toString());
+        } catch(e) {}
+      };
+
+      window.triggerPwaInstall = async function() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log('[GunplaSet PWA] User prompt outcome:', outcome);
+          deferredPrompt = null;
+          window.dismissPwaBanner();
+          if (outcome === 'accepted') {
+            showToast('🎉 GunplaSet 앱이 홈 화면에 추가되었습니다!');
+          }
+        } else if (isIos) {
+          window.showPwaBanner();
+          const iosGuide = document.getElementById('ios-install-guide');
+          if (iosGuide) {
+            iosGuide.classList.remove('hidden');
+            showToast('💡 하단 사파리 공유(⎋) 버튼 ➔ [홈 화면에 추가]를 눌러주세요.');
+          }
+        } else {
+          showToast('ℹ️ 브라우저 메뉴(⋮)에서 [앱 설치] 또는 [홈 화면에 추가]를 선택해주세요.');
+        }
+      };
+
+      window.addEventListener('appinstalled', () => {
+        console.log('[GunplaSet PWA] App successfully installed');
+        window.dismissPwaBanner();
+        showToast('🎉 GunplaSet 앱 설치가 완료되었습니다!');
       });
     })();
   </script>

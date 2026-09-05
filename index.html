@@ -522,6 +522,38 @@ body {
     </div>
   </div>
 
+  <!-- AUTH PROMPT MODAL (Triggered on collection mutation attempt without login) -->
+  <div id="auth-prompt-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden" onclick="window.closeAuthPromptModal(event)">
+    <div class="glass-card max-w-sm w-full rounded-3xl p-6 relative border border-cyan-500/40 shadow-2xl bg-slate-900/95 text-center" onclick="event.stopPropagation()">
+      <button onclick="window.closeAuthPromptModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">✕</button>
+      
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-500/30 text-3xl">
+        📦
+      </div>
+      
+      <h3 class="text-lg font-bold text-white mb-1.5">나만의 건프라 컬렉션 저장</h3>
+      <p class="text-xs text-slate-400 leading-relaxed mb-6">
+        소장 수량과 위시리스트를 안전하게 보관하려면<br>
+        <span class="text-cyan-400 font-semibold">Google 간편 로그인</span>이 필요합니다.<br>
+        <span class="text-slate-500 text-[11px] mt-1 inline-block">스마트폰 & PC 어디서든 실시간 자동 동기화!</span>
+      </p>
+
+      <div class="space-y-3 mb-4">
+        <!-- Direct Google Login Trigger Button inside Modal -->
+        <button onclick="window.triggerModalGoogleLogin()" class="w-full py-3 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2.5 border border-slate-200">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          <span>Google 계정으로 계속하기</span>
+        </button>
+
+        <div id="modal-gis-btn" class="flex justify-center"></div>
+      </div>
+
+      <button onclick="window.closeAuthPromptModal()" class="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 text-xs font-medium transition-all">
+        나중에 하기 (둘러보기)
+      </button>
+    </div>
+  </div>
+
   <!-- KIT DETAIL MODAL -->
   <div id="kit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
     <div class="glass-card max-w-4xl w-full rounded-3xl p-6 relative max-h-[92vh] overflow-y-auto border border-slate-700 shadow-2xl">
@@ -41435,12 +41467,45 @@ window.GUNPLA_MASTER_DATA = [
         }
       }
 
+      window.openAuthPromptModal = function() {
+        const modal = document.getElementById('auth-prompt-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          // Render GIS button inside modal if container exists
+          const container = document.getElementById('modal-gis-btn');
+          if (container && window.google && window.google.accounts) {
+            try {
+              google.accounts.id.renderButton(container, {
+                theme: 'filled_blue',
+                size: 'large',
+                shape: 'pill',
+                text: 'continue_with',
+                width: 280
+              });
+            } catch(e) {}
+          }
+        }
+      };
+
+      window.closeAuthPromptModal = function() {
+        const modal = document.getElementById('auth-prompt-modal');
+        if (modal) modal.classList.add('hidden');
+      };
+
+      window.triggerModalGoogleLogin = function() {
+        if (window.google && window.google.accounts) {
+          google.accounts.id.prompt((notification) => {
+            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+              const btn = document.querySelector('#modal-gis-btn div[role="button"]') || document.getElementById('btn-login');
+              if (btn) btn.click();
+            }
+          });
+        }
+      };
+
       function requireAuth() {
         if (!authState || !authState.token) {
-          showToast('🔒 소장 수량 및 위시리스트 관리는 로그인이 필요합니다.');
-          if (typeof window.handleLoginClick === 'function') {
-            window.handleLoginClick();
-          }
+          window.openAuthPromptModal();
           return false;
         }
         return true;
@@ -43672,6 +43737,7 @@ window.GUNPLA_MASTER_DATA = [
             authState.profile = data.profile;
             try { localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.profile)); } catch(e) {}
             updateAuthUI();
+            window.closeAuthPromptModal();
 
             if (!data.profile || !data.profile.region) {
               openOnboardingModal();

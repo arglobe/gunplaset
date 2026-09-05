@@ -224,6 +224,12 @@ body {
                   🚪 로그아웃
                 </button>
               </div>
+
+              <div class="pt-2.5 mt-2.5 border-t border-slate-800/80 text-center">
+                <button onclick="window.resetAccountData(); window.closeUserMenu();" class="text-[10px] text-slate-500 hover:text-red-400 underline transition-colors" title="프로필과 소장 기록을 지우고 신규 가입 상태로 되돌립니다">
+                  🗑️ 계정 초기화 (신규 가입 재테스트)
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -456,9 +462,9 @@ body {
         <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-cyan-500/30 text-2xl">
           🤖
         </div>
-        <h3 id="onboard-title" class="text-lg font-bold text-white mb-1">환영합니다! 컬렉터님</h3>
+        <h3 id="onboard-title" class="text-lg font-bold text-white mb-1">🎉 구글 인증 완료! 마지막 필수 단계</h3>
         <p id="onboard-sub" class="text-xs text-slate-400 leading-relaxed">
-          전 세계 건프라 빅데이터 통계 분석을 위해 기본 정보만 선택해 주세요.<br>
+          거주 지역과 연령대를 선택하시면 회원가입이 완료됩니다.<br>
           <span class="text-cyan-400 font-medium">※ 이름, 전화번호 등 민감 정보는 일절 수집되지 않는 100% 익명 통계입니다.</span>
         </p>
       </div>
@@ -43582,7 +43588,18 @@ window.GUNPLA_MASTER_DATA = [
       function openOnboardingModal() {
         const modal = document.getElementById('onboarding-modal');
         if (modal) {
-          window.handleOnboardCountryChange();
+          if (authState.profile) {
+            const countryEl = document.getElementById('onboard-country');
+            if (countryEl) countryEl.value = authState.profile.country || 'KR';
+            window.handleOnboardCountryChange();
+            const regionEl = document.getElementById('onboard-region');
+            if (regionEl && authState.profile.region) regionEl.value = authState.profile.region;
+            const ageEl = document.getElementById('onboard-age');
+            if (ageEl && authState.profile.age_group) ageEl.value = authState.profile.age_group;
+            if (authState.profile.gender) window.setGenderSelect(authState.profile.gender);
+          } else {
+            window.handleOnboardCountryChange();
+          }
           modal.classList.remove('hidden');
         }
       }
@@ -43643,9 +43660,31 @@ window.GUNPLA_MASTER_DATA = [
         try {
           localStorage.removeItem(AUTH_STORAGE_KEY);
           localStorage.removeItem(USER_STORAGE_KEY);
+          localStorage.removeItem('gunplaset_user_info_v1');
         } catch(e) {}
         updateAuthUI();
-        showToast('로그아웃되었습니다. (로컬 데이터는 안전하게 보관됩니다)');
+        showToast('로그아웃되었습니다.');
+      };
+
+      window.resetAccountData = function() {
+        if (!confirm('⚠️ 주의: 등록된 프로필(거주지, 연령대)과 소장 기록이 완전히 초기화되어 "최초 신규 가입자" 상태로 되돌아갑니다.\n\n신규 가입 온보딩 화면을 다시 테스트하시겠습니까?')) {
+          return;
+        }
+        authState.token = null;
+        authState.user = null;
+        authState.profile = null;
+        state.userCollection = {};
+        try {
+          localStorage.removeItem(AUTH_STORAGE_KEY);
+          localStorage.removeItem(USER_STORAGE_KEY);
+          localStorage.removeItem('gunplaset_user_info_v1');
+          localStorage.removeItem(STORAGE_KEY);
+        } catch(e) {}
+        updateGlobalStats();
+        renderKits();
+        updateAuthUI();
+        if (state.activeView === 'analytics') renderAnalytics();
+        showToast('🗑️ 계정이 초기화되었습니다! 이제 신규 가입 화면을 테스트하실 수 있습니다.');
       };
 
       window.toggleUserMenu = function(e) {

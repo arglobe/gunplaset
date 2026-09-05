@@ -169,39 +169,62 @@ body {
             </button>
           </div>
 
-          <!-- Utilities (Sync, Backup, Restore, CSV) -->
-          <div class="flex items-center gap-1.5">
-            <button id="btn-cloud-sync" onclick="window.initOrToggleAutoSync()" class="px-2.5 py-1 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 text-cyan-300 text-xs font-semibold border border-cyan-500/40 transition-all flex items-center gap-1.5 shadow-sm" title="구글 드라이브 폴더의 my_collection.js/json과 실시간 자동 동기화">
-              <span id="sync-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span id="sync-status-text">☁️ 드라이브 자동연동</span>
+          <!-- Modern Google Login & User Profile Dropdown -->
+          <div id="user-auth-container" class="relative">
+            <!-- 1. Logged-out State: Clean Prominent Google Login Button -->
+            <button id="btn-login" onclick="window.handleLoginClick()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+              <span id="btn-login-text">Google 로그인</span>
             </button>
 
-            <button id="btn-backup" onclick="window.exportJSON()" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all flex items-center gap-1" title="JSON 수동 백업 다운로드">
-              <span id="btn-text-backup">💾 백업</span>
+            <!-- 2. Logged-in State: Profile Button -->
+            <button id="user-profile-btn" onclick="window.toggleUserMenu(event)" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 shadow-md transition-all cursor-pointer">
+              <img id="user-avatar" src="" class="w-5 h-5 rounded-full object-cover border border-cyan-400">
+              <span id="user-display-name" class="text-xs font-semibold text-slate-200 truncate max-w-[90px]"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            
-            <!-- Google Login / Profile Badge Container -->
-            <div id="user-auth-container" class="flex items-center gap-1.5">
-              <button id="btn-login" onclick="window.handleLoginClick()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                <span id="btn-login-text">로그인</span>
-              </button>
-              <div id="user-profile-badge" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700">
-                <img id="user-avatar" src="" class="w-4 h-4 rounded-full object-cover border border-cyan-400">
-                <span id="user-display-name" class="text-xs font-medium text-slate-200 truncate max-w-[80px]"></span>
-                <span class="text-[10px] text-emerald-400 font-mono">☁️</span>
-                <button onclick="window.handleLogout()" class="text-[10px] text-slate-400 hover:text-red-400 font-bold ml-0.5">로그아웃</button>
+
+            <!-- 3. User Dropdown Menu Card (My Page) -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-72 rounded-2xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl p-4 z-50 text-xs">
+              <div class="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <img id="menu-user-avatar" src="" class="w-10 h-10 rounded-full object-cover border border-cyan-400">
+                <div class="overflow-hidden">
+                  <div id="menu-user-name" class="font-bold text-white text-sm truncate">컬렉터</div>
+                  <div id="menu-user-email" class="text-slate-400 text-[11px] truncate"></div>
+                </div>
+              </div>
+
+              <div class="py-3 border-b border-slate-800 space-y-1.5 text-slate-300">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">📍 거주 지역:</span>
+                  <span id="menu-user-region" class="font-semibold text-slate-200">설정 안 됨</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">🎂 연령대:</span>
+                  <span id="menu-user-age" class="font-semibold text-slate-200">설정 안 됨</span>
+                </div>
+                <div class="pt-1 text-right">
+                  <button onclick="window.openOnboardingModal(); window.closeUserMenu();" class="text-[11px] text-cyan-400 hover:text-cyan-300 underline font-medium">✏️ 프로필 정보 수정</button>
+                </div>
+              </div>
+
+              <div class="py-3 border-b border-slate-800 space-y-2">
+                <button onclick="window.exportCSV(); window.closeUserMenu();" class="w-full py-2 px-3 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 font-bold border border-emerald-800/40 flex items-center justify-center gap-2 transition-all shadow-sm">
+                  <span>📊 내 소장 목록 엑셀(CSV) 받기</span>
+                </button>
+              </div>
+
+              <div class="pt-3 flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>클라우드 자동 동기화 켬</span>
+                </div>
+                <button onclick="window.handleLogout(); window.closeUserMenu();" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-red-400 font-bold hover:bg-red-950/40 transition-colors">
+                  🚪 로그아웃
+                </button>
               </div>
             </div>
-
-            <label id="btn-restore" class="px-2.5 py-1 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700 transition-all cursor-pointer flex items-center gap-1" title="수동 백업 파일 불러오기">
-              <span id="btn-text-restore">📂 복원</span>
-              <input type="file" accept=".json" class="hidden" onchange="window.importJSON(event)">
-            </label>
-
-            <button id="btn-csv" onclick="window.exportCSV()" class="px-2.5 py-1 rounded-xl bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 text-xs font-semibold border border-emerald-800/40 transition-all flex items-center gap-1" title="엑셀 CSV 파일 다운로드">
-              <span id="btn-text-csv">📊 엑셀</span>
-            </button>
           </div>
         </div>
 
@@ -397,9 +420,14 @@ body {
 
     <!-- ANALYTICS SECTION -->
     <div id="analytics-section" class="hidden">
-      <div class="mb-6">
-        <h2 class="text-xl font-bold text-white mb-1">📊 내 건프라 컬렉션 & 자산 가치 분석</h2>
-        <p class="text-xs text-slate-400 font-mono">My Gunpla Portfolio & Valuation Dashboard</p>
+      <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">📊 내 건프라 컬렉션 & 자산 가치 분석</h2>
+          <p class="text-xs text-slate-400 font-mono">My Gunpla Portfolio & Valuation Dashboard</p>
+        </div>
+        <button onclick="window.exportCSV()" class="px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 text-xs font-bold border border-emerald-800/40 transition-all flex items-center gap-1.5 shadow-sm">
+          <span>📊 내 소장 목록 엑셀(CSV) 다운로드</span>
+        </button>
       </div>
       <div id="analytics-view"></div>
     </div>
@@ -41407,8 +41435,20 @@ window.GUNPLA_MASTER_DATA = [
         }
       }
 
+      function requireAuth() {
+        if (!authState || !authState.token) {
+          showToast('🔒 소장 수량 및 위시리스트 관리는 로그인이 필요합니다.');
+          if (typeof window.handleLoginClick === 'function') {
+            window.handleLoginClick();
+          }
+          return false;
+        }
+        return true;
+      }
+
       window.changeBacklog = function(id, delta, event) {
         if (event) event.stopPropagation();
+        if (!requireAuth()) return;
         const item = getItem(id);
         const newQty = Math.max(0, (item.backlog || 0) + delta);
         updateItem(id, { backlog: newQty });
@@ -41417,6 +41457,7 @@ window.GUNPLA_MASTER_DATA = [
 
       window.changeInProgress = function(id, delta, event) {
         if (event) event.stopPropagation();
+        if (!requireAuth()) return;
         const item = getItem(id);
         const newQty = Math.max(0, (item.inProgress || 0) + delta);
         updateItem(id, { inProgress: newQty });
@@ -41425,6 +41466,7 @@ window.GUNPLA_MASTER_DATA = [
 
       window.changeBuilt = function(id, delta, event) {
         if (event) event.stopPropagation();
+        if (!requireAuth()) return;
         const item = getItem(id);
         const newQty = Math.max(0, (item.built || 0) + delta);
         updateItem(id, { built: newQty });
@@ -41433,6 +41475,7 @@ window.GUNPLA_MASTER_DATA = [
 
       window.toggleWishlist = function(id, event) {
         if (event) event.stopPropagation();
+        if (!requireAuth()) return;
         const item = getItem(id);
         const nextState = !item.wishlist;
         updateItem(id, { wishlist: nextState });
@@ -43010,6 +43053,7 @@ window.GUNPLA_MASTER_DATA = [
       }
 
       window.saveModalData = function(id) {
+        if (!requireAuth()) return;
         const notes = document.getElementById('modal-notes')?.value || '';
         updateItem(id, { notes });
         showToast('저장되었습니다.');
@@ -43545,26 +43589,68 @@ window.GUNPLA_MASTER_DATA = [
         showToast('로그아웃되었습니다. (로컬 데이터는 안전하게 보관됩니다)');
       };
 
+      window.toggleUserMenu = function(e) {
+        if (e) e.stopPropagation();
+        const menu = document.getElementById('user-dropdown-menu');
+        if (menu) menu.classList.toggle('hidden');
+      };
+
+      window.closeUserMenu = function() {
+        const menu = document.getElementById('user-dropdown-menu');
+        if (menu) menu.classList.add('hidden');
+      };
+
+      document.addEventListener('click', (e) => {
+        const authContainer = document.getElementById('user-auth-container');
+        if (authContainer && !authContainer.contains(e.target)) {
+          window.closeUserMenu();
+        }
+      });
+
       function updateAuthUI() {
         const loginBtn = document.getElementById('btn-login');
-        const profileBadge = document.getElementById('user-profile-badge');
+        const profileBtn = document.getElementById('user-profile-btn');
         const avatar = document.getElementById('user-avatar');
         const name = document.getElementById('user-display-name');
 
+        const menuAvatar = document.getElementById('menu-user-avatar');
+        const menuName = document.getElementById('menu-user-name');
+        const menuEmail = document.getElementById('menu-user-email');
+        const menuRegion = document.getElementById('menu-user-region');
+        const menuAge = document.getElementById('menu-user-age');
+
         if (authState.token && authState.user) {
           if (loginBtn) loginBtn.classList.add('hidden');
-          if (profileBadge) {
-            profileBadge.classList.remove('hidden');
-            profileBadge.classList.add('flex');
+          if (profileBtn) {
+            profileBtn.classList.remove('hidden');
+            profileBtn.classList.add('flex');
           }
-          if (avatar && authState.user.picture) avatar.src = authState.user.picture;
-          if (name) name.textContent = authState.user.name || authState.user.email || '컬렉터';
+          const pic = authState.user.picture || 'https://www.gstatic.com/images/branding/product/1x/avatar_square_blue_512dp.png';
+          const dName = authState.user.name || authState.user.email?.split('@')[0] || '컬렉터';
+          
+          if (avatar) avatar.src = pic;
+          if (name) name.textContent = dName;
+          if (menuAvatar) menuAvatar.src = pic;
+          if (menuName) menuName.textContent = dName;
+          if (menuEmail) menuEmail.textContent = authState.user.email || '';
+
+          if (authState.profile) {
+            if (menuRegion) {
+              const cName = authState.profile.country === 'KR' ? '🇰🇷 ' : (authState.profile.country === 'JP' ? '🇯🇵 ' : (authState.profile.country === 'US' ? '🇺🇸 ' : '🌍 '));
+              menuRegion.textContent = cName + (authState.profile.region || '기본 권역');
+            }
+            if (menuAge) {
+              const ageMap = { '10s': '10대 이하', '20s': '20대', '30s': '30대', '40s': '40대', '50s+': '50대 이상' };
+              menuAge.textContent = ageMap[authState.profile.age_group] || (authState.profile.age_group || '설정 안 됨');
+            }
+          }
         } else {
           if (loginBtn) loginBtn.classList.remove('hidden');
-          if (profileBadge) {
-            profileBadge.classList.add('hidden');
-            profileBadge.classList.remove('flex');
+          if (profileBtn) {
+            profileBtn.classList.add('hidden');
+            profileBtn.classList.remove('flex');
           }
+          window.closeUserMenu();
         }
       }
 

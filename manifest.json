@@ -1,18 +1,81 @@
-{
+﻿{
   "name": "GunplaSet (건프라셋) - 건프라 컬렉션 매니저",
   "short_name": "GunplaSet",
   "description": "2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 수집/조립 관리 도구",
-  "start_url": "./",
+  "id": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#030712",
-  "theme_color": "#030712",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "entertainment",
+    "utilities",
+    "lifestyle"
+  ],
+  "shortcuts": [
+    {
+      "name": "전체 탐색",
+      "short_name": "탐색",
+      "description": "2,716종 전체 건프라 아카이브 탐색",
+      "url": "./index.html?view=all",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "미개봉 보관함",
+      "short_name": "미개봉",
+      "description": "새것 / 미개봉 소장품 목록",
+      "url": "./index.html?view=backlog",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "글로벌 랭킹",
+      "short_name": "랭킹",
+      "description": "글로벌 트렌드 소장 랭킹 TOP 50",
+      "url": "./index.html?view=bigdata",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

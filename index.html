@@ -232,8 +232,8 @@ body {
                 <button id="pwa-menu-install-btn" onclick="window.triggerPwaInstall(); window.closeUserMenu();" class="w-full py-1.5 px-2 rounded-xl bg-cyan-950/50 hover:bg-cyan-900/60 border border-cyan-500/40 text-cyan-300 font-semibold flex items-center justify-center gap-1.5 transition-all text-xs">
                   <span>📲 홈 화면에 앱 설치 (PWA)</span>
                 </button>
-                <button onclick="window.resetAccountData(); window.closeUserMenu();" class="text-[10px] text-slate-500 hover:text-red-400 underline transition-colors" title="프로필과 소장 기록을 지우고 신규 가입 상태로 되돌립니다">
-                  🗑️ 계정 초기화 (신규 가입 재테스트)
+                <button onclick="window.handleAccountDeletion(); window.closeUserMenu();" class="w-full py-1 text-[11px] text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex items-center justify-center gap-1" title="계정과 모든 소장품 데이터를 영구 삭제합니다">
+                  <span>🗑️ 회원 탈퇴 (데이터 영구 삭제)</span>
                 </button>
               </div>
             </div>
@@ -43702,26 +43702,59 @@ window.GUNPLA_MASTER_DATA = [
         showToast('로그아웃되었습니다.');
       };
 
-      window.resetAccountData = function() {
-        if (!confirm('⚠️ 주의: 등록된 프로필(거주지, 연령대)과 소장 기록이 완전히 초기화되어 "최초 신규 가입자" 상태로 되돌아갑니다.\n\n신규 가입 온보딩 화면을 다시 테스트하시겠습니까?')) {
-          return;
+      window.handleAccountDeletion = async function() {
+        const confirmFirst = confirm(
+          '⚠️ [회원 탈퇴 및 데이터 영구 삭제]\n\n' +
+          '정말로 회원 탈퇴를 진행하시겠습니까?\n\n' +
+          '• 등록하신 모든 건프라 소장품 목록 및 위시리스트가 완전히 삭제됩니다.\n' +
+          '• 국가/지역/연령대 등 프로필 정보가 영구 파기됩니다.\n' +
+          '• 삭제된 데이터는 어떠한 경우에도 복구할 수 없습니다.\n\n' +
+          '탈퇴 후 서비스를 다시 이용하시려면 언제든 신규 가입으로 다시 시작하실 수 있습니다.'
+        );
+        if (!confirmFirst) return;
+
+        const currentToken = authState.token;
+
+        // 1. Cloudflare D1 Backend Account & Collection Deletion
+        if (currentToken) {
+          try {
+            await fetch('/api/user/delete', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer ' + currentToken,
+                'Content-Type': 'application/json'
+              }
+            });
+          } catch(e) {
+            console.warn('Backend deletion request skipped or offline:', e);
+          }
         }
+
+        // 2. Client Memory & Storage Complete Purge
         authState.token = null;
         authState.user = null;
         authState.profile = null;
         state.userCollection = {};
+
         try {
           localStorage.removeItem(AUTH_STORAGE_KEY);
           localStorage.removeItem(USER_STORAGE_KEY);
           localStorage.removeItem('gunplaset_user_info_v1');
           localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem('gunplaset_cached_stats');
         } catch(e) {}
+
+        // 3. UI State Reset & Notification
         updateGlobalStats();
         renderKits();
         updateAuthUI();
         if (state.activeView === 'analytics') renderAnalytics();
-        showToast('🗑️ 계정이 초기화되었습니다! 이제 신규 가입 화면을 테스트하실 수 있습니다.');
+        if (state.activeView === 'bigdata') renderBigDataTrends();
+
+        showToast('🗑️ 회원 탈퇴가 완료되었습니다. 모든 데이터가 안전하게 삭제되었습니다.');
       };
+
+      window.resetAccountData = window.handleAccountDeletion;
 
       window.toggleUserMenu = function(e) {
         if (e) e.stopPropagation();

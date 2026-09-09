@@ -161,7 +161,7 @@ body {
         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 text-xs">
           <!-- Currency Selector Tabs -->
           <div class="flex items-center bg-slate-950 p-0.5 rounded-xl border border-slate-800 text-[11px] font-bold font-mono shrink-0 shadow-inner">
-            <button id="curr-btn-KRW" onclick="window.setCurrency('KRW')" class="px-2.5 py-1 rounded-lg transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" title="반다이코리아 공식가 기준 (일반 12배 / 한정 14.3배)">
+            <button id="curr-btn-KRW" onclick="window.setCurrency('KRW')" class="px-2.5 py-1 rounded-lg transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" title="반다이남코코리아 공식 등록 정가 기준">
               🇰🇷 KRW
             </button>
             <button id="curr-btn-JPY" onclick="window.setCurrency('JPY')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="반다이 일본 공식 엔화(MSRP) 기준">
@@ -43018,7 +43018,7 @@ window.GUNPLA_MASTER_DATA = [
             '<p class="mb-2"><b>GunplaSet (건프라셋)</b>은 1980년부터 현재까지 출시된 2,716종 이상의 반다이 정품 건프라 및 프라모델을 한눈에 조회하고, 나만의 프라모델 수집/조립 상태(새것/조립중/조립완료)와 자산 가치를 체계적으로 관리할 수 있는 글로벌 팬 아카이브 도구입니다.</p>' +
             '<div class="bg-slate-950/60 p-3.5 rounded-2xl border border-cyan-500/20 space-y-1.5 mt-3">' +
               '<div class="text-cyan-400 font-bold">✨ 주요 핵심 기능</div>' +
-              '<div>&bull; 2,716종 전 테마 반다이 공식 12배 정가(클럽G 14.3배) 실시간 환산</div>' +
+              '<div>&bull; 2,716종 전 테마 반다이남코코리아 공식 등록 정가 100% 반영 및 실시간 조회</div>' +
               '<div>&bull; 새것(미개봉), 조립중/부품, 조립완료 3단계 실시간 보유 현황 및 자산 가치 포트폴리오</div>' +
               '<div>&bull; 한국어, 일본어, 영어 3개국어 검색 및 KRW, JPY, USD 3대 통화 지원</div>' +
             '</div>';
@@ -43505,7 +43505,7 @@ window.GUNPLA_MASTER_DATA = [
         let subValNote = '';
         if (state.currency === 'KRW') {
           formattedVal = '₩ ' + Math.round(totalVal).toLocaleString();
-          subValNote = '반다이코리아 공식가 기준 (일반 12배 / 한정 14.3배)';
+          subValNote = '반다이남코코리아 공식 확인가 기준';
         } else if (state.currency === 'USD') {
           formattedVal = '$ ' + totalVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           subValNote = 'Bandai US / BNTCA Official Retail MSRP';
@@ -43959,7 +43959,7 @@ window.GUNPLA_MASTER_DATA = [
                   '</div>' +
                   '<div class="text-[11px] text-slate-400 mt-0.5 font-mono flex items-center gap-2">' +
                     '<span class="text-yellow-400 font-bold">₩' + item.krw.toLocaleString() + '</span>' +
-                    '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔 @ ' + item.multiplier.toFixed(1) + '배)</span>' +
+                    '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔)</span>' +
                     '<span class="text-slate-600 hidden sm:inline">•</span>' +
                     '<span class="text-slate-500 hidden sm:inline truncate" title="' + item.note + '">' + item.note + '</span>' +
                   '</div>' +

@@ -41665,7 +41665,9 @@ window.GUNPLA_MASTER_DATA = [
 
       // 3-CURRENCY OFFICIAL BANDAI PRICING ENGINE
       const CURRENCY_STORAGE_KEY = 'gunpladex_active_currency';
-      state.currency = localStorage.getItem(CURRENCY_STORAGE_KEY) || 'KRW';
+      const _urlParams = new URLSearchParams(window.location.search);
+      const _urlCurrency = _urlParams.get('currency') || _urlParams.get('lang');
+      state.currency = (_urlCurrency && ['KRW','JPY','USD'].includes(_urlCurrency.toUpperCase())) ? _urlCurrency.toUpperCase() : (localStorage.getItem(CURRENCY_STORAGE_KEY) || 'KRW');
 
       window.setCurrency = function(curr) {
         if (curr !== 'KRW' && curr !== 'JPY' && curr !== 'USD') return;

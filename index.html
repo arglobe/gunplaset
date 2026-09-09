@@ -325,14 +325,14 @@ body {
                 <h2 class="text-base font-black text-white heading-font tracking-wide">
                   RELEASE & RESTOCK RADAR
                 </h2>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40">
+                <span id="radar-header-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40">
                   월간 출하 & 재입고 레이더
                 </span>
                 <span id="radar-header-wish-badge" class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/40 hidden sm:inline-block">
                   💖 내 위시 매칭 계산 중...
                 </span>
               </div>
-              <p class="text-[11px] text-slate-400 mt-0.5">
+              <p id="radar-header-desc" class="text-[11px] text-slate-400 mt-0.5">
                 반다이 코리아 공식 일반판 출하일, 클럽G 온라인 수주·발송, 건담베이스 한정 입고 일정
               </p>
             </div>
@@ -41698,6 +41698,9 @@ window.GUNPLA_MASTER_DATA = [
         if (state.selectedKit) {
           renderModalContent();
         }
+        if (typeof renderReleaseRadar === 'function') {
+          renderReleaseRadar();
+        }
         const t = UI_I18N[state.currency] || UI_I18N.KRW;
         showToast(t.toastLangChanged);
       };
@@ -41862,7 +41865,26 @@ window.GUNPLA_MASTER_DATA = [
           statBuilt: '🔨 조립 완료',
           statValuation: '💰 미개봉 자산 가치',
           toastSaved: '저장되었습니다.',
-          toastLangChanged: '💱 통화 및 언어 설정: 🇰🇷 한국어 / 원화'
+          toastLangChanged: '💱 통화 및 언어 설정: 🇰🇷 한국어 / 원화',
+          radarBadge: '월간 출하 & 재입고 레이더',
+          radarDesc: '반다이 코리아 공식 일반판 출하일, 클럽G 온라인 수주·발송, 건담베이스 한정 입고 일정',
+          radarWishMatching: (n) => '💖 내 위시 ' + n + '건 출하 예정',
+          radarWishEmpty: '✨ 내 위시 0건',
+          radarWishCollapsed: (n) => '💖 내 위시 ' + n + '건 출하 대기 중',
+          radarTotalBudget: '필요 총 지출 예산:',
+          radarEarliest: '가장 빠른 일정:',
+          radarOfficialPriceStd: '(반코 공식 정가 기준)',
+          radarUnconfirmed: (n) => '(+ 국내 공식가 미정 ' + n + '건)',
+          radarFilterAll: (n) => '전체 (' + n + ')',
+          radarFilterRetail: '🔵 일반 발매',
+          radarFilterClubG: '🔴 클럽G',
+          radarFilterGBase: '🟡 건베 한정',
+          radarWishFilterOn: '📋 전체 일정 보기',
+          radarWishFilterOff: (n) => '✨ 내 위시만 보기 (' + n + ')',
+          radarEmpty: '해당 조건에 일치하는 출하 일정이 없습니다.',
+          radarWishDone: '💖 찜 완료',
+          radarWishDo: '🤍 찜하기',
+          radarDexBtn: '도감 ›'
         },
         JPY: {
           appSubtitle: 'マスターガンプラアーカイブ & コレクション',
@@ -41874,75 +41896,94 @@ window.GUNPLA_MASTER_DATA = [
           dashBacklog: '新品(未開封):',
           dashInProgress: '組立中/パーツ:',
           dashBuilt: '組立完了:',
-          dashValue: '未開封資産価値:',
+          dashValue: '未開封 価値:',
           countUnit: '個',
           boxUnit: '箱',
-          navAll: '🔍 全体カタログ',
+          navAll: '🔍 全て探す',
           navBacklog: '📦 新品 / 未開封',
           navInProgress: '⚙️ 組立中 / パーツ',
           navBuilt: '🔨 組立完了',
-          navWishlist: '💖 ウィッシュリスト',
+          navWishlist: '💖 欲しいもの',
           navAnalytics: '📊 コレクション統計',
-          yearBarTitle: '📅 発売年別ガンプラ検索',
-          yearBarSub: '(クリックして複数年を選択可能)',
-          catalogCount: (n) => n.toLocaleString() + ' 件のガンプラカタログ',
-          allYearsPill: (n) => '全期間 (' + n.toLocaleString() + ')',
-          quickFilterTitle: '⚡ クイックフィルター:',
+          yearBarTitle: '📅 年代別ガンプラ探索',
+          yearBarSub: '(クリックで複数年を選択可能)',
+          catalogCount: (n) => n.toLocaleString() + ' 種のガンプラカタログ',
+          allYearsPill: (n) => '全年代 (' + n.toLocaleString() + ')',
+          quickFilterTitle: '⚡ クイック絞り込み:',
           quickFilterGrade: '🏷️ グレード別',
           quickFilterSeries: '🎬 シリーズ別',
-          quickFilterSub: '年 + グレード + シリーズの複数選択が可能',
+          quickFilterSub: '年代 + グレード + シリーズの複数同時選択が可能',
           appliedFilters: '適用中の条件:',
-          clearFilters: '↺ フィルター解除',
+          clearFilters: '↺ フィルター初期化',
           allSeriesPill: (n) => '全シリーズ (' + n.toLocaleString() + ')',
           allGradesPill: (n) => '全グレード (' + n.toLocaleString() + ')',
-          searchPlaceholder: 'ガンプラ名、グレード、シリーズを検索...',
-          imgModeProduct: '🤖 完成品 視点',
-          imgModeBoxart: '📦 パッケージ 視点',
-          optAllYears: '全発売年 (All Years)',
-          optAllGrades: '全グレード (All Grades)',
-          optAllSeries: '全シリーズ (All Series)',
-          optRunAll: '発売区分: 全て',
-          optRunStandard: '一般販売 (Standard)',
-          optRunLimited: '限定品/プレバン (Limited)',
-          optSortNewest: '発売日 (新しい順)',
-          optSortOldest: '発売日 (古い順)',
-          optSortName: '名前順 (五十音/ABC)',
-          optSortPriceHigh: '価格 (高い順)',
-          optSortPriceLow: '価格 (安い順)',
-          optSortOwned: '所蔵数順',
+          searchPlaceholder: '機体名、グレード、シリーズを検索...',
+          imgModeProduct: '🤖 完成品表示',
+          imgModeBoxart: '📦 パッケージ表示',
+          optAllYears: '全ての年代 (All Years)',
+          optAllGrades: '全てのグレード (All Grades)',
+          optAllSeries: '全てのシリーズ (All Series)',
+          optRunAll: '全ての販売形態',
+          optRunStandard: '一般販売品 (Standard)',
+          optRunLimited: '限定品 / プレバン (P-Bandai)',
+          optSortNewest: '発売日が新しい順 (Newest)',
+          optSortOldest: '発売日が古い順 (Oldest)',
+          optSortName: '名前順 (五十音 / アルファベット)',
+          optSortPriceHigh: '価格が高い順 (Price: High)',
+          optSortPriceLow: '価格が低い順 (Price: Low)',
+          optSortOwned: '所蔵数が多い順',
           msrpLabel: '定価:',
-          orgNote: 'バンダイ日本',
+          orgNote: '公式定価(税込)',
           cardBacklog: '📦 新品(未開封)',
           cardInProgress: '⚙️ 組立中/パーツ',
           cardBuilt: '🔨 組立完了',
           totalOwned: (cnt) => '✨ 計 ' + cnt + '個 所蔵',
-          notOwned: '計 0個 (未所蔵)',
+          notOwned: '所蔵 0個 (未所蔵)',
           released: (year) => year + '年 発売',
-          pbandai: '限定/プレバン',
+          pbandai: '限定 / プレバン',
           loadMore: (vis, tot) => 'さらに読み込む (' + vis + ' / ' + tot + ')',
           modalScale: 'スケール:',
           modalRelease: '発売日:',
-          modalEdition: '発売区分:',
-          modalStandard: '一般販売',
-          modalLimited: '限定品/プレバン',
+          modalEdition: '販売形態:',
+          modalStandard: '一般販売品',
+          modalLimited: '限定品 / プレバン',
           modalStatusTitle: '現在の所蔵状況',
           modalTotal: (cnt) => '計 ' + cnt + '個',
           modalBacklog: '📦 新品:',
-          modalInProgress: '⚙️ 組立中:',
-          modalBuilt: '🔨 完成:',
+          modalInProgress: '⚙️ 組立/パーツ:',
+          modalBuilt: '🔨 完了:',
           modalNotesLabel: '個人メモ / 保管場所',
-          modalNotesPlaceholder: '例: 倉庫2番保管、塗装/改造パーツ用など',
+          modalNotesPlaceholder: '例: 押入れ2番箱、改造・塗装用など',
           modalClose: '閉じる',
           modalSave: '保存する',
-          analyticsTitle: '📊 ガンプラコレクション & 資産価値分析',
-          analyticsSub: 'Gunpla Portfolio & Valuation Dashboard',
+          analyticsTitle: '📊 ガンプラ資産ポートフォリオ分析',
+          analyticsSub: 'My Gunpla Portfolio & Valuation Dashboard',
           statTotalOwned: '🏆 総所蔵数 合計',
           statBacklog: '📦 新品 (未開封)',
           statInProgress: '⚙️ 組立中 / パーツ',
           statBuilt: '🔨 組立完了',
           statValuation: '💰 未開封 資産価値',
           toastSaved: '保存されました。',
-          toastLangChanged: '💱 通貨・言語設定: 🇯🇵 日本語 / 円'
+          toastLangChanged: '💱 通貨・言語設定: 🇯🇵 日本語 / 円',
+          radarBadge: '月間出荷・再販レーダー',
+          radarDesc: 'バンダイスピリッツ公式一般出荷日、プレミアムバンダイ発送、ガンダムベース限定入荷日程',
+          radarWishMatching: (n) => '💖 欲しいもの ' + n + '件 出荷予定',
+          radarWishEmpty: '✨ 欲しいもの 0件',
+          radarWishCollapsed: (n) => '💖 欲しいもの ' + n + '件 出荷待機中',
+          radarTotalBudget: '必要予算合計:',
+          radarEarliest: '直近の出荷日程:',
+          radarOfficialPriceStd: '(バンダイ公式税込定価基準)',
+          radarUnconfirmed: (n) => '(+ 公式価格未定 ' + n + '件)',
+          radarFilterAll: (n) => 'すべて (' + n + ')',
+          radarFilterRetail: '🔵 一般発売',
+          radarFilterClubG: '🔴 プレバン',
+          radarFilterGBase: '🟡 ガンダムベース限定',
+          radarWishFilterOn: '📋 全日程を表示',
+          radarWishFilterOff: (n) => '✨ 欲しいもののみ (' + n + ')',
+          radarEmpty: '該当する出荷日程はありません。',
+          radarWishDone: '💖 登録済み',
+          radarWishDo: '🤍 欲しい',
+          radarDexBtn: '図鑑 ›'
         },
         USD: {
           appSubtitle: 'MASTER GUNPLA ARCHIVE & COLLECTION',
@@ -42022,7 +42063,26 @@ window.GUNPLA_MASTER_DATA = [
           statBuilt: '🔨 Completed / Built',
           statValuation: '💰 Backlog Asset Value',
           toastSaved: 'Saved successfully.',
-          toastLangChanged: '💱 Currency & Language: 🇺🇸 English / USD'
+          toastLangChanged: '💱 Currency & Language: 🇺🇸 English / USD',
+          radarBadge: 'Monthly Release & Restock Radar',
+          radarDesc: 'Official Bandai Namco standard release dates, Premium Bandai deliveries, and Gundam Base event drops',
+          radarWishMatching: (n) => '💖 ' + n + ' Wishlist Releases',
+          radarWishEmpty: '✨ 0 Wishlist Items',
+          radarWishCollapsed: (n) => '💖 ' + n + ' Wishlist items shipping soon',
+          radarTotalBudget: 'Required Total Budget:',
+          radarEarliest: 'Earliest Release:',
+          radarOfficialPriceStd: '(Official Bandai MSRP Standard)',
+          radarUnconfirmed: (n) => '(+ ' + n + ' Pending Official Price)',
+          radarFilterAll: (n) => 'All (' + n + ')',
+          radarFilterRetail: '🔵 Standard Retail',
+          radarFilterClubG: '🔴 P-Bandai',
+          radarFilterGBase: '🟡 Gundam Base',
+          radarWishFilterOn: '📋 View All Releases',
+          radarWishFilterOff: (n) => '✨ Wishlist Only (' + n + ')',
+          radarEmpty: 'No release schedules found for this criteria.',
+          radarWishDone: '💖 Wishlisted',
+          radarWishDo: '🤍 Wishlist',
+          radarDexBtn: 'Dex ›'
         }
       };
 
@@ -43574,163 +43634,439 @@ window.GUNPLA_MASTER_DATA = [
       }
 
       // ==============================================================================
-      // 🚨 RELEASE & RESTOCK RADAR ENGINE & MASTER DATASET
+      // 🚨 RELEASE & RESTOCK RADAR ENGINE & MASTER DATASET (3-LOCALE ISOLATED)
       // ==============================================================================
       window.GUNPLA_RELEASE_RADAR_DATA = {
-        '2026-09': {
-          label: '2026. 09 (이번 달 출하)',
-          items: [
-            {
-              id: '4920',
-              date: '09. 05 (금)',
-              time: '14:00 예약 오픈',
-              cat: 'clubg',
-              catName: '🔴 클럽G',
-              name: 'MG 1/100 미션팩 X-Type for F90IIIY',
-              grade: 'MG',
-              jpy: 3850,
-              krw: 46200,
-              multiplier: 12.0,
-              note: '11월 순차 배송 예정 (온라인 수주)',
-              img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
-            },
-            {
-              id: '5089',
-              date: '09. 12 (토)',
-              time: '매장 오픈 입고',
-              cat: 'gbase',
-              catName: '🟡 건베 한정',
-              name: 'RG 1/144 MSN-04FF 사자비 [클리어 컬러]',
-              grade: 'RG',
-              jpy: 5170,
-              krw: 62040,
-              multiplier: 12.0,
-              note: '수도권 건베 전 지점 (1인 1개 구매 제한)',
-              img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
-            },
-            {
-              id: '1097',
-              date: '09. 19 (토)',
-              time: '전국 정규 출하',
-              cat: 'retail',
-              catName: '🔵 일반 발매',
-              name: 'PG UNLEASHED 1/60 ν(뉴) 건담',
-              grade: 'PG',
-              jpy: 66000,
-              krw: 792000,
-              multiplier: 12.0,
-              note: '전국 온/오프라인 일반 공식 판매',
-              img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
-            },
-            {
-              id: '5254',
-              date: '09. 19 (토)',
-              time: '전국 정규 출하',
-              cat: 'retail',
-              catName: '🔵 일반 발매',
-              name: 'HG 1/144 ALYZEUS (알리제우스)',
-              grade: 'HG',
-              jpy: 13200,
-              krw: 158400,
-              multiplier: 12.0,
-              note: '전국 건담 취급점',
-              img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
-            },
-            {
-              id: '5182',
-              date: '09. 26 (토)',
-              time: '재입고 출하',
-              cat: 'retail',
-              catName: '🔵 일반 재판',
-              name: 'MG 1/100 제타 건담 Ver.Ka',
-              grade: 'MG',
-              jpy: 6500,
-              krw: 78000,
-              multiplier: 12.0,
-              note: '전국 온/오프라인 건프라 매장 재입고',
-              img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
-            },
-            {
-              id: '5281',
-              date: '09. 26 (토)',
-              time: '재입고 출하',
-              cat: 'retail',
-              catName: '🔵 일반 재판',
-              name: 'RG 1/144 하이뉴 건담 (Hi-ν)',
-              grade: 'RG',
-              jpy: 4500,
-              krw: 54000,
-              multiplier: 12.0,
-              note: '전국 건담 취급점 재입고',
-              img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
-            }
-          ]
+        KRW: {
+          '2026-09': {
+            label: '2026. 09 (이번 달 출하)',
+            items: [
+              {
+                id: '4920',
+                date: '09. 05 (금)',
+                time: '14:00 예약 오픈',
+                cat: 'clubg',
+                catName: '🔴 클럽G',
+                name: 'MG 1/100 미션팩 X-Type for F90IIIY',
+                grade: 'MG',
+                jpy: 3850,
+                krw: 46200,
+                note: '11월 순차 배송 예정 (온라인 수주)',
+                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
+              },
+              {
+                id: '5089',
+                date: '09. 12 (토)',
+                time: '매장 오픈 입고',
+                cat: 'gbase',
+                catName: '🟡 건베 한정',
+                name: 'RG 1/144 MSN-04FF 사자비 [클리어 컬러]',
+                grade: 'RG',
+                jpy: 5170,
+                krw: 62040,
+                note: '수도권 건베 전 지점 (1인 1개 구매 제한)',
+                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
+              },
+              {
+                id: '1097',
+                date: '09. 19 (토)',
+                time: '전국 정규 출하',
+                cat: 'retail',
+                catName: '🔵 일반 발매',
+                name: 'PG UNLEASHED 1/60 ν(뉴) 건담',
+                grade: 'PG',
+                jpy: 66000,
+                krw: 792000,
+                note: '전국 온/오프라인 일반 공식 판매',
+                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
+              },
+              {
+                id: '5254',
+                date: '09. 19 (토)',
+                time: '전국 정규 출하',
+                cat: 'retail',
+                catName: '🔵 일반 발매',
+                name: 'HG 1/144 ALYZEUS (알리제우스)',
+                grade: 'HG',
+                jpy: 13200,
+                krw: 158400,
+                note: '전국 건담 취급점',
+                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
+              },
+              {
+                id: '5182',
+                date: '09. 26 (토)',
+                time: '재입고 출하',
+                cat: 'retail',
+                catName: '🔵 일반 재판',
+                name: 'MG 1/100 제타 건담 Ver.Ka',
+                grade: 'MG',
+                jpy: 6500,
+                krw: 78000,
+                note: '전국 온/오프라인 건프라 매장 재입고',
+                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
+              },
+              {
+                id: '5281',
+                date: '09. 26 (토)',
+                time: '재입고 출하',
+                cat: 'retail',
+                catName: '🔵 일반 재판',
+                name: 'RG 1/144 하이뉴 건담 (Hi-ν)',
+                grade: 'RG',
+                jpy: 4500,
+                krw: 54000,
+                note: '전국 건담 취급점 재입고',
+                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
+              }
+            ]
+          },
+          '2026-08': {
+            label: '2026. 08 (지난 달 출하)',
+            items: [
+              {
+                id: '5250',
+                date: '08. 10 (토)',
+                time: '정규 출하',
+                cat: 'retail',
+                catName: '🔵 일반 발매',
+                name: 'HG 1/144 라이징 프리덤 건담',
+                grade: 'HG',
+                jpy: 2600,
+                krw: 31200,
+                note: '전국 온/오프라인 발매',
+                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
+              },
+              {
+                id: '5251',
+                date: '08. 24 (토)',
+                time: '정규 출하',
+                cat: 'retail',
+                catName: '🔵 일반 발매',
+                name: 'RG 1/144 RX-78-2 건담 Ver.2.0',
+                grade: 'RG',
+                jpy: 3500,
+                krw: 42000,
+                note: '전국 일반 매장 정규 출시',
+                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
+              }
+            ]
+          },
+          '2026-10': {
+            label: '2026. 10 (다음 달 출하 예정)',
+            items: [
+              {
+                id: '5227',
+                date: '10. 17 (토)',
+                time: '정규 출하 예정',
+                cat: 'retail',
+                catName: '🔵 일반 발매',
+                name: 'MGSD 윙 건담 제로 EW',
+                grade: 'MG',
+                jpy: 4200,
+                krw: null,
+                note: '하반기 SD 최신작 정규 발매 예정 (공식가 발표 대기)',
+                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
+              },
+              {
+                id: '4985',
+                date: '10. 24 (토)',
+                time: '온라인 배송 예정',
+                cat: 'clubg',
+                catName: '🔴 클럽G',
+                name: 'HG 1/144 고스트 건담 [2차 수주분]',
+                grade: 'HG',
+                jpy: 2400,
+                krw: 34320,
+                note: '클럽G 사전 예약자 순차 택배 발송',
+                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
+              }
+            ]
+          }
         },
-        '2026-08': {
-          label: '2026. 08 (지난 달 출하)',
-          items: [
-            {
-              id: '5250',
-              date: '08. 10 (토)',
-              time: '정규 출하',
-              cat: 'retail',
-              catName: '🔵 일반 발매',
-              name: 'HG 1/144 라이징 프리덤 건담',
-              grade: 'HG',
-              jpy: 2600,
-              krw: 31200,
-              multiplier: 12.0,
-              note: '전국 온/오프라인 발매',
-              img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
-            },
-            {
-              id: '5251',
-              date: '08. 24 (토)',
-              time: '정규 출하',
-              cat: 'retail',
-              catName: '🔵 일반 발매',
-              name: 'RG 1/144 RX-78-2 건담 Ver.2.0',
-              grade: 'RG',
-              jpy: 3500,
-              krw: 42000,
-              multiplier: 12.0,
-              note: '전국 일반 매장 정규 출시',
-              img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
-            }
-          ]
+        JPY: {
+          '2026-09': {
+            label: '2026年 09月 (今月の出荷予定)',
+            items: [
+              {
+                id: '4920',
+                date: '09. 05 (金)',
+                time: '13:00 予約開始',
+                cat: 'clubg',
+                catName: '🔴 プレバン',
+                name: 'MG 1/100 ミッションパック Xタイプ (F90IIIY用)',
+                grade: 'MG',
+                jpy: 3850,
+                note: '11月発送予定 (プレミアムバンダイ限定)',
+                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
+              },
+              {
+                id: '5089',
+                date: '09. 12 (土)',
+                time: '店舗入荷',
+                cat: 'gbase',
+                catName: '🟡 ガンダムベース限定',
+                name: 'RG 1/144 MSN-04FF サザビー [クリアカラー]',
+                grade: 'RG',
+                jpy: 5170,
+                note: 'ガンダムベース東京・福岡・サテライト限定',
+                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
+              },
+              {
+                id: '1097',
+                date: '09. 19 (土)',
+                time: '全国出荷予定',
+                cat: 'retail',
+                catName: '🔵 一般発売',
+                name: 'PG UNLEASHED 1/60 νガンダム',
+                grade: 'PG',
+                jpy: 66000,
+                note: '全国ホビーショップ・量販店にて発売',
+                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
+              },
+              {
+                id: '5254',
+                date: '09. 19 (土)',
+                time: '全国出荷予定',
+                cat: 'retail',
+                catName: '🔵 一般発売',
+                name: 'HG 1/144 アリゼウス',
+                grade: 'HG',
+                jpy: 13200,
+                note: '全国一般店舗出荷',
+                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
+              },
+              {
+                id: '5182',
+                date: '09. 26 (土)',
+                time: '再生産出荷',
+                cat: 'retail',
+                catName: '🔵 一般再販',
+                name: 'MG 1/100 ゼータガンダム Ver.Ka',
+                grade: 'MG',
+                jpy: 6500,
+                note: '全国ホビー流通にて再販出荷',
+                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
+              },
+              {
+                id: '5281',
+                date: '09. 26 (土)',
+                time: '再生産出荷',
+                cat: 'retail',
+                catName: '🔵 一般再販',
+                name: 'RG 1/144 Hi-νガンダム',
+                grade: 'RG',
+                jpy: 4500,
+                note: '全国模型店・量販店再入荷',
+                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
+              }
+            ]
+          },
+          '2026-08': {
+            label: '2026年 08月 (先月の出荷)',
+            items: [
+              {
+                id: '5250',
+                date: '08. 10 (土)',
+                time: '一般出荷',
+                cat: 'retail',
+                catName: '🔵 一般発売',
+                name: 'HG 1/144 ライジングフリーダムガンダム',
+                grade: 'HG',
+                jpy: 2600,
+                note: '全国一般店舗発売',
+                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
+              },
+              {
+                id: '5251',
+                date: '08. 24 (土)',
+                time: '一般出荷',
+                cat: 'retail',
+                catName: '🔵 一般発売',
+                name: 'RG 1/144 RX-78-2 ガンダム Ver.2.0',
+                grade: 'RG',
+                jpy: 3500,
+                note: '全国一般店舗発売',
+                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
+              }
+            ]
+          },
+          '2026-10': {
+            label: '2026年 10月 (来月の出荷予定)',
+            items: [
+              {
+                id: '5227',
+                date: '10. 17 (土)',
+                time: '一般出荷予定',
+                cat: 'retail',
+                catName: '🔵 一般発売',
+                name: 'MGSD ウイングガンダムゼロ EW',
+                grade: 'MG',
+                jpy: 4200,
+                note: 'SDハイエンド最新作',
+                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
+              },
+              {
+                id: '4985',
+                date: '10. 24 (土)',
+                time: '発送開始予定',
+                cat: 'clubg',
+                catName: '🔴 プレバン',
+                name: 'HG 1/144 ゴーストガンダム [2次]',
+                grade: 'HG',
+                jpy: 2400,
+                note: 'プレミアムバンダイ予約者順次発送',
+                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
+              }
+            ]
+          }
         },
-        '2026-10': {
-          label: '2026. 10 (다음 달 출하 예정)',
-          items: [
-            {
-              id: '5227',
-              date: '10. 17 (토)',
-              time: '정규 출하 예정',
-              cat: 'retail',
-              catName: '🔵 일반 발매',
-              name: 'MGSD 윙 건담 제로 EW',
-              grade: 'MG',
-              jpy: 4200,
-              krw: 50400,
-              multiplier: 12.0,
-              note: '하반기 SD 최신작 정규 발매 예정',
-              img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
-            },
-            {
-              id: '4985',
-              date: '10. 24 (토)',
-              time: '온라인 배송 예정',
-              cat: 'clubg',
-              catName: '🔴 클럽G',
-              name: 'HG 1/144 고스트 건담 [2차 수주분]',
-              grade: 'HG',
-              jpy: 2400,
-              krw: 34320,
-              multiplier: 14.3,
-              note: '클럽G 사전 예약자 순차 택배 발송',
-              img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
-            }
-          ]
+        USD: {
+          '2026-09': {
+            label: 'September 2026 (Monthly Releases)',
+            items: [
+              {
+                id: '4920',
+                date: '09. 05 (Fri)',
+                time: '21:00 EDT Drop',
+                cat: 'clubg',
+                catName: '🔴 P-Bandai',
+                name: 'MG 1/100 Mission Pack X-Type for F90IIIY',
+                grade: 'MG',
+                usd: 38.50,
+                jpy: 3850,
+                note: 'Ships in November (P-Bandai US Pre-order)',
+                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
+              },
+              {
+                id: '5089',
+                date: '09. 12 (Sat)',
+                time: 'Event Release',
+                cat: 'gbase',
+                catName: '🟡 Gundam Base',
+                name: 'RG 1/144 MSN-04FF Sazabi [Clear Color]',
+                grade: 'RG',
+                usd: 51.70,
+                jpy: 5170,
+                note: 'Gundam Base Tour & Pop-up Event Exclusive',
+                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
+              },
+              {
+                id: '1097',
+                date: '09. 19 (Sat)',
+                time: 'Standard Retail',
+                cat: 'retail',
+                catName: '🔵 Retail Drop',
+                name: 'PG UNLEASHED 1/60 Nu Gundam',
+                grade: 'PG',
+                usd: 660.00,
+                jpy: 66000,
+                note: 'Official North America Retail Distribution',
+                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
+              },
+              {
+                id: '5254',
+                date: '09. 19 (Sat)',
+                time: 'Standard Retail',
+                cat: 'retail',
+                catName: '🔵 Retail Drop',
+                name: 'HG 1/144 ALYZEUS',
+                grade: 'HG',
+                usd: 132.00,
+                jpy: 13200,
+                note: 'Official Hobby Retailers',
+                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
+              },
+              {
+                id: '5182',
+                date: '09. 26 (Sat)',
+                time: 'Retail Restock',
+                cat: 'retail',
+                catName: '🔵 Restock',
+                name: 'MG 1/100 Zeta Gundam Ver.Ka',
+                grade: 'MG',
+                usd: 65.00,
+                jpy: 6500,
+                note: 'North America Retailers Restock Drop',
+                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
+              },
+              {
+                id: '5281',
+                date: '09. 26 (Sat)',
+                time: 'Retail Restock',
+                cat: 'retail',
+                catName: '🔵 Restock',
+                name: 'RG 1/144 Hi-Nu Gundam',
+                grade: 'RG',
+                usd: 45.00,
+                jpy: 4500,
+                note: 'Official Hobby Stores Restock Drop',
+                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
+              }
+            ]
+          },
+          '2026-08': {
+            label: 'August 2026 (Past Releases)',
+            items: [
+              {
+                id: '5250',
+                date: '08. 10 (Sat)',
+                time: 'Standard Release',
+                cat: 'retail',
+                catName: '🔵 Retail Drop',
+                name: 'HG 1/144 Rising Freedom Gundam',
+                grade: 'HG',
+                usd: 26.00,
+                jpy: 2600,
+                note: 'Available at North American retail outlets',
+                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
+              },
+              {
+                id: '5251',
+                date: '08. 24 (Sat)',
+                time: 'Standard Release',
+                cat: 'retail',
+                catName: '🔵 Retail Drop',
+                name: 'RG 1/144 RX-78-2 Gundam Ver.2.0',
+                grade: 'RG',
+                usd: 35.00,
+                jpy: 3500,
+                note: 'Standard retail release across US hobby shops',
+                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
+              }
+            ]
+          },
+          '2026-10': {
+            label: 'October 2026 (Upcoming Releases)',
+            items: [
+              {
+                id: '5227',
+                date: '10. 17 (Sat)',
+                time: 'Expected Drop',
+                cat: 'retail',
+                catName: '🔵 Retail Drop',
+                name: 'MGSD Wing Gundam Zero EW',
+                grade: 'MG',
+                usd: 42.00,
+                jpy: 4200,
+                note: 'Fall 2026 SD High-End Release',
+                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
+              },
+              {
+                id: '4985',
+                date: '10. 24 (Sat)',
+                time: 'P-Bandai Shipments',
+                cat: 'clubg',
+                catName: '🔴 P-Bandai',
+                name: 'HG 1/144 Ghost Gundam [Batch 2]',
+                grade: 'HG',
+                usd: 24.00,
+                jpy: 2400,
+                note: 'Shipping to US pre-order backers',
+                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
+              }
+            ]
+          }
         }
       };
 
@@ -43778,7 +44114,9 @@ window.GUNPLA_MASTER_DATA = [
       };
 
       window.changeRadarMonth = function(delta) {
-        const months = Object.keys(window.GUNPLA_RELEASE_RADAR_DATA);
+        const curr = state.currency || 'KRW';
+        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
+        const months = Object.keys(localeRadar);
         const idx = months.indexOf(radarState.currentMonthKey);
         const newIdx = idx + delta;
         if (newIdx >= 0 && newIdx < months.length) {
@@ -43803,7 +44141,9 @@ window.GUNPLA_MASTER_DATA = [
         const newWishlist = !current.wishlist;
         updateItem(kitId, { wishlist: newWishlist });
         updateRadarWishlistUI();
-        showToast(newWishlist ? '💖 위시리스트에 담겼습니다!' : '🤍 위시리스트에서 제외되었습니다.');
+        const curr = state.currency || 'KRW';
+        const t = UI_I18N[curr] || UI_I18N.KRW;
+        showToast(newWishlist ? (curr === 'USD' ? '💖 Added to Wishlist!' : (curr === 'JPY' ? '💖 欲しいものに追加しました！' : '💖 위시리스트에 담겼습니다!')) : (curr === 'USD' ? '🤍 Removed from Wishlist.' : (curr === 'JPY' ? '🤍 欲しいものから削除しました。' : '🤍 위시리스트에서 제외되었습니다.')));
       };
 
       window.scrollToRadar = function() {
@@ -43825,29 +44165,67 @@ window.GUNPLA_MASTER_DATA = [
       }
 
       function renderReleaseRadar() {
-        const monthData = window.GUNPLA_RELEASE_RADAR_DATA[radarState.currentMonthKey];
+        const curr = state.currency || 'KRW';
+        const t = UI_I18N[curr] || UI_I18N.KRW;
+
+        // Dynamic Header Localization
+        const badgeElem = document.getElementById('radar-header-badge');
+        if (badgeElem && t.radarBadge) badgeElem.textContent = t.radarBadge;
+        const descElem = document.getElementById('radar-header-desc');
+        if (descElem && t.radarDesc) descElem.textContent = t.radarDesc;
+
+        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
+        let monthData = localeRadar[radarState.currentMonthKey];
+        if (!monthData) {
+          radarState.currentMonthKey = Object.keys(localeRadar)[0];
+          monthData = localeRadar[radarState.currentMonthKey];
+        }
         if (!monthData) return;
 
         // 1. Update Month Label
         const monthLabel = document.getElementById('radar-active-month-label');
         if (monthLabel) monthLabel.textContent = monthData.label;
 
-        // 2. Compute Wishlist matching items & total budget
+        // 2. Compute Wishlist matching items & total budget (Zero-Assumption Fact-Only)
         const allItems = monthData.items || [];
         const wishItems = allItems.filter(item => {
           const u = getItem(item.id);
           return !!(u && u.wishlist);
         });
-        const totalBudget = wishItems.reduce((acc, item) => acc + item.krw, 0);
+
+        let totalBudget = 0;
+        let unconfirmedCount = 0;
+        let budgetFormatted = '';
+
+        if (curr === 'KRW') {
+          const confirmedItems = wishItems.filter(item => typeof item.krw === 'number' && item.krw > 0);
+          unconfirmedCount = wishItems.length - confirmedItems.length;
+          totalBudget = confirmedItems.reduce((acc, item) => acc + item.krw, 0);
+          budgetFormatted = '₩' + totalBudget.toLocaleString();
+        } else if (curr === 'JPY') {
+          const confirmedItems = wishItems.filter(item => typeof item.jpy === 'number' && item.jpy > 0);
+          unconfirmedCount = wishItems.length - confirmedItems.length;
+          totalBudget = confirmedItems.reduce((acc, item) => acc + item.jpy, 0);
+          budgetFormatted = '¥' + totalBudget.toLocaleString();
+        } else { // USD
+          const confirmedItems = wishItems.filter(item => typeof item.usd === 'number' && item.usd > 0);
+          unconfirmedCount = wishItems.length - confirmedItems.length;
+          totalBudget = confirmedItems.reduce((acc, item) => acc + item.usd, 0);
+          budgetFormatted = '$' + totalBudget.toFixed(2);
+        }
+
+        const unconfirmedSuffix = unconfirmedCount > 0 && typeof t.radarUnconfirmed === 'function' 
+          ? ' <span class="text-slate-400 text-xs font-normal font-sans">' + t.radarUnconfirmed(unconfirmedCount) + '</span>' 
+          : '';
 
         // Header Wish Badge
         const headerBadge = document.getElementById('radar-header-wish-badge');
         if (headerBadge) {
           if (wishItems.length > 0) {
-            headerBadge.innerHTML = '💖 내 위시 ' + wishItems.length + '건 출하 예정';
+            headerBadge.innerHTML = typeof t.radarWishMatching === 'function' ? t.radarWishMatching(wishItems.length) : '💖 ' + wishItems.length;
             headerBadge.classList.remove('hidden');
           } else {
-            headerBadge.innerHTML = '✨ 내 위시 0건';
+            headerBadge.innerHTML = t.radarWishEmpty || '✨ 0';
           }
         }
 
@@ -43855,15 +44233,16 @@ window.GUNPLA_MASTER_DATA = [
         const miniSummary = document.getElementById('radar-mini-summary-content');
         if (miniSummary) {
           if (wishItems.length > 0) {
-            miniSummary.innerHTML = '<span class="text-pink-400 font-bold">💖 내 위시 ' + wishItems.length + '건 출하 대기 중</span>' +
+            const collapsedWishText = typeof t.radarWishCollapsed === 'function' ? t.radarWishCollapsed(wishItems.length) : ('💖 ' + wishItems.length);
+            miniSummary.innerHTML = '<span class="text-pink-400 font-bold">' + collapsedWishText + '</span>' +
               '<span class="text-slate-500">|</span>' +
-              '<span class="text-slate-400">필요 총 예산: <strong class="text-yellow-400 font-mono">₩' + totalBudget.toLocaleString() + '</strong></span>' +
+              '<span class="text-slate-400">' + (t.radarTotalBudget || 'Budget:') + ' <strong class="text-yellow-400 font-mono">' + budgetFormatted + '</strong>' + unconfirmedSuffix + '</span>' +
               '<span class="text-slate-500 hidden sm:inline">|</span>' +
-              '<span class="text-slate-400 hidden sm:inline">가장 빠른 일정: <strong class="text-cyan-400 font-mono">' + wishItems[0].date + ' ' + wishItems[0].name.slice(0, 20) + '...</strong></span>';
+              '<span class="text-slate-400 hidden sm:inline">' + (t.radarEarliest || 'Earliest:') + ' <strong class="text-cyan-400 font-mono">' + wishItems[0].date + ' ' + wishItems[0].name.slice(0, 20) + '...</strong></span>';
           } else {
             miniSummary.innerHTML = '<span class="text-cyan-400 font-bold">' + monthData.label + '</span>' +
               '<span class="text-slate-500">|</span>' +
-              '<span class="text-slate-400">총 ' + allItems.length + '건 출하 예정 (위시리스트 0건)</span>';
+              '<span class="text-slate-400">' + allItems.length + ' items (Wishlist 0)</span>';
           }
         }
 
@@ -43883,23 +44262,24 @@ window.GUNPLA_MASTER_DATA = [
             '<div class="flex items-center gap-2.5">' +
               '<div class="w-8 h-8 rounded-xl bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-sm shadow-sm shrink-0">💖</div>' +
               '<div>' +
-                '<div class="text-xs font-bold text-white flex items-center gap-1.5">' +
-                  '<span>이번 달 내 위시리스트 출하:</span>' +
-                  '<span class="text-pink-400 font-mono text-sm font-black">' + wishItems.length + ' 건</span>' +
+                '<div class="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">' +
+                  '<span>' + (curr === 'USD' ? 'My Wishlist Releases:' : (curr === 'JPY' ? '今月の欲しいもの出荷:' : '이번 달 내 위시리스트 출하:')) + '</span>' +
+                  '<span class="text-pink-400 font-mono text-sm font-black">' + wishItems.length + ' ' + (curr === 'USD' ? 'kits' : (curr === 'JPY' ? '件' : '건')) + '</span>' +
                   '<span class="text-slate-600">|</span>' +
-                  '<span>필요 총 지출 예산:</span>' +
-                  '<span class="text-yellow-400 font-mono font-bold">₩' + totalBudget.toLocaleString() + '</span>' +
-                  '<span class="text-slate-500 text-[10px] font-mono hidden sm:inline">(반코 공식 정가 기준)</span>' +
+                  '<span>' + (t.radarTotalBudget || 'Budget:') + '</span>' +
+                  '<span class="text-yellow-400 font-mono font-bold">' + budgetFormatted + '</span>' +
+                  unconfirmedSuffix +
+                  '<span class="text-slate-500 text-[10px] font-mono hidden sm:inline">' + (t.radarOfficialPriceStd || '') + '</span>' +
                 '</div>' +
               '</div>' +
             '</div>' +
             '<div class="flex items-center gap-1.5 text-xs font-semibold overflow-x-auto scrollbar-none">' +
-              '<button onclick="window.setRadarCategory(\'all\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipAllClass + '">전체 (' + allItems.length + ')</button>' +
-              '<button onclick="window.setRadarCategory(\'retail\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipRetailClass + '">🔵 일반판</button>' +
-              '<button onclick="window.setRadarCategory(\'clubg\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipClubgClass + '">🔴 클럽G</button>' +
-              '<button onclick="window.setRadarCategory(\'gbase\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipGbaseClass + '">🟡 건베 한정</button>' +
+              '<button onclick="window.setRadarCategory(\'all\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipAllClass + '">' + (typeof t.radarFilterAll === 'function' ? t.radarFilterAll(allItems.length) : 'All') + '</button>' +
+              '<button onclick="window.setRadarCategory(\'retail\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipRetailClass + '">' + (t.radarFilterRetail || 'Standard') + '</button>' +
+              '<button onclick="window.setRadarCategory(\'clubg\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipClubgClass + '">' + (t.radarFilterClubG || 'P-Bandai') + '</button>' +
+              '<button onclick="window.setRadarCategory(\'gbase\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipGbaseClass + '">' + (t.radarFilterGBase || 'Gundam Base') + '</button>' +
               '<button onclick="window.toggleRadarOnlyWishlist()" class="px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ' + btnWishClass + '">' +
-                (radarState.onlyWishlist ? '📋 전체 일정 보기' : '✨ 내 위시만 보기 (' + wishItems.length + ')') +
+                (radarState.onlyWishlist ? (t.radarWishFilterOn || 'View All') : (typeof t.radarWishFilterOff === 'function' ? t.radarWishFilterOff(wishItems.length) : 'Wishlist Only')) +
               '</button>' +
             '</div>' +
           '</div>';
@@ -43921,7 +44301,7 @@ window.GUNPLA_MASTER_DATA = [
         const listContainer = document.getElementById('radar-list-container');
         if (listContainer) {
           if (filteredItems.length === 0) {
-            listContainer.innerHTML = '<div class="py-8 text-center text-xs text-slate-500 font-mono">해당 조건에 일치하는 출하 일정이 없습니다.</div>';
+            listContainer.innerHTML = '<div class="py-8 text-center text-xs text-slate-500 font-mono">' + (t.radarEmpty || 'No schedules.') + '</div>';
             return;
           }
 
@@ -43941,6 +44321,24 @@ window.GUNPLA_MASTER_DATA = [
               ? 'bg-red-950/80 text-red-400 border-red-500/30' 
               : (item.cat === 'gbase' ? 'bg-amber-950/80 text-amber-400 border-amber-500/30' : 'bg-blue-950/80 text-blue-400 border-blue-500/30');
 
+            // Formatted Price HTML according to active currency
+            let priceHtml = '';
+            if (curr === 'KRW') {
+              if (typeof item.krw === 'number' && item.krw > 0) {
+                priceHtml = '<span class="text-yellow-400 font-bold">₩' + item.krw.toLocaleString() + '</span>' +
+                  (item.jpy ? '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔)</span>' : '');
+              } else {
+                priceHtml = '<span class="text-amber-400 font-bold">국내 공식가 발표 대기</span>' +
+                  (item.jpy ? '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔)</span>' : '');
+              }
+            } else if (curr === 'JPY') {
+              priceHtml = '<span class="text-yellow-400 font-bold">¥' + (item.jpy ? item.jpy.toLocaleString() : '未定') + '</span>' +
+                '<span class="text-slate-500 text-[10px]">(税込)</span>';
+            } else { // USD
+              priceHtml = '<span class="text-yellow-400 font-bold">$' + (item.usd ? item.usd.toFixed(2) : 'TBD') + '</span>' +
+                '<span class="text-slate-500 text-[10px]">(MSRP)</span>';
+            }
+
             html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
               '<div class="flex items-center gap-3 min-w-0">' +
                 '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-slate-900 border ' + (isWish ? 'border-pink-500/40' : 'border-slate-800') + ' shrink-0 p-1 flex items-center justify-center cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
@@ -43951,15 +44349,14 @@ window.GUNPLA_MASTER_DATA = [
                   '<div class="flex flex-wrap items-center gap-1.5 mb-1">' +
                     '<span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-slate-800 text-cyan-300">' + item.date + '</span>' +
                     '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold border ' + catBadgeClass + '">' + item.catName + '</span>' +
-                    (isWish ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/50">💖 내 위시리스트</span>' : '') +
+                    (isWish ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/50">' + (curr === 'USD' ? '💖 Wishlist' : (curr === 'JPY' ? '💖 欲しいもの' : '💖 내 위시리스트')) + '</span>' : '') +
                     '<span class="text-[11px] text-slate-500 font-mono hidden sm:inline">' + item.time + '</span>' +
                   '</div>' +
                   '<div class="text-xs sm:text-sm font-bold ' + (isWish ? 'text-pink-200' : 'text-white') + ' group-hover:text-cyan-300 transition-colors truncate cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
                     item.name +
                   '</div>' +
                   '<div class="text-[11px] text-slate-400 mt-0.5 font-mono flex items-center gap-2">' +
-                    '<span class="text-yellow-400 font-bold">₩' + item.krw.toLocaleString() + '</span>' +
-                    '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔)</span>' +
+                    priceHtml +
                     '<span class="text-slate-600 hidden sm:inline">•</span>' +
                     '<span class="text-slate-500 hidden sm:inline truncate" title="' + item.note + '">' + item.note + '</span>' +
                   '</div>' +
@@ -43967,10 +44364,10 @@ window.GUNPLA_MASTER_DATA = [
               '</div>' +
               '<div class="flex items-center gap-1.5 shrink-0">' +
                 '<button onclick="window.toggleRadarWishlist(\'' + item.id + '\', event)" class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all ' + wishBtnClass + '">' +
-                  (isWish ? '<span>💖 찜 완료</span>' : '<span>🤍 찜하기</span>') +
+                  (isWish ? '<span>' + (t.radarWishDone || '💖 찜 완료') + '</span>' : '<span>' + (t.radarWishDo || '🤍 찜하기') + '</span>') +
                 '</button>' +
                 '<button onclick="window.openKitModal(\'' + item.id + '\')" class="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs border border-slate-800 transition-colors" title="도감 상세 모달 열기">' +
-                  '도감 ›' +
+                  (t.radarDexBtn || '도감 ›') +
                 '</button>' +
               '</div>' +
             '</div>';

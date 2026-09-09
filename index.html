@@ -296,6 +296,10 @@ body {
       <button id="nav-tab-wishlist" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="wishlist" onclick="window.switchView('wishlist')">
         💖 위시리스트
       </button>
+      <button id="nav-tab-radar" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="radar" onclick="window.scrollToRadar()">
+        📅 출하 캘린더
+        <span class="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[9px] font-black animate-pulse">NEW</span>
+      </button>
       <button id="nav-tab-analytics" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="analytics" onclick="window.switchView('analytics')">
         📊 컬렉션 통계
       </button>
@@ -309,6 +313,64 @@ body {
   <main class="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 flex-1">
 
     <div id="kits-section">
+
+      <!-- 0. RELEASE & RESTOCK RADAR (월간 건프라 출하 & 재입고 레이더) -->
+      <section id="radar-section" class="mb-5 border border-cyan-500/50 rounded-2xl bg-[#0c111e] shadow-2xl overflow-hidden transition-all duration-300">
+        <!-- Radar Section Header -->
+        <div class="p-3.5 sm:p-4 bg-gradient-to-r from-slate-900 via-[#0f172a] to-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="w-2.5 h-6 bg-cyan-400 rounded-full shadow-[0_0_12px_rgba(0,242,254,0.7)]"></span>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-black text-white heading-font tracking-wide">
+                  RELEASE & RESTOCK RADAR
+                </h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40">
+                  월간 출하 & 재입고 레이더
+                </span>
+                <span id="radar-header-wish-badge" class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/40 hidden sm:inline-block">
+                  💖 내 위시 매칭 계산 중...
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-0.5">
+                반다이 코리아 공식 일반판 출하일, 클럽G 온라인 수주·발송, 건담베이스 한정 입고 일정
+              </p>
+            </div>
+          </div>
+
+          <!-- Controls: Month Navigator & Collapse Toggle -->
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-bold font-mono">
+              <button onclick="window.changeRadarMonth(-1)" class="px-2 py-0.5 text-slate-400 hover:text-white transition-colors" title="이전 달">‹</button>
+              <span id="radar-active-month-label" class="px-2.5 py-0.5 text-cyan-400 bg-cyan-950/70 rounded-lg border border-cyan-500/30">2026. 09 (이번 달 출하)</span>
+              <button onclick="window.changeRadarMonth(1)" class="px-2 py-0.5 text-slate-400 hover:text-white transition-colors" title="다음 달">›</button>
+            </div>
+            <button onclick="window.toggleRadarCollapse()" id="radar-btn-collapse" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-colors" title="접기/펼치기">
+              <span id="radar-collapse-arrow">▲</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Radar Collapsible Body -->
+        <div id="radar-collapsible-body" class="p-3.5 sm:p-4 space-y-3">
+          <!-- Summary Banner & Channels Filter -->
+          <div id="radar-summary-container"></div>
+          
+          <!-- Compact Scrollable Rows -->
+          <div id="radar-list-container" class="space-y-2.5 max-h-[295px] overflow-y-auto custom-scroll pr-1"></div>
+        </div>
+
+        <!-- Collapsed Summary Bar (1-Line View when collapsed) -->
+        <div id="radar-collapsed-summary" class="hidden p-3 bg-slate-950/90 flex items-center justify-between text-xs cursor-pointer hover:bg-slate-900/90 transition-colors" onclick="window.toggleRadarCollapse()">
+          <div class="flex flex-wrap items-center gap-2" id="radar-mini-summary-content">
+            <span class="text-pink-400 font-bold">💖 위시리스트 매칭 계산 중...</span>
+          </div>
+          <button class="text-xs text-cyan-400 hover:underline font-bold flex items-center gap-1 shrink-0">
+            <span>캘린더 펼쳐보기</span>
+            <span>▼</span>
+          </button>
+        </div>
+      </section>
 
       <!-- 1. DEDICATED RELEASE YEAR DECADE & TIMELINE BAR (Multi-Select Enabled) -->
       <div class="mb-4 glass-card p-3 rounded-2xl border border-slate-800/90">
@@ -42135,6 +42197,10 @@ window.GUNPLA_MASTER_DATA = [
         }
 
         updateAllUILocalization();
+
+        if (typeof updateRadarWishlistUI === 'function') {
+          updateRadarWishlistUI();
+        }
       }
 
       function updateAllUILocalization() {
@@ -43507,6 +43573,412 @@ window.GUNPLA_MASTER_DATA = [
         }
       }
 
+      // ==============================================================================
+      // 🚨 RELEASE & RESTOCK RADAR ENGINE & MASTER DATASET
+      // ==============================================================================
+      window.GUNPLA_RELEASE_RADAR_DATA = {
+        '2026-09': {
+          label: '2026. 09 (이번 달 출하)',
+          items: [
+            {
+              id: '4920',
+              date: '09. 05 (금)',
+              time: '14:00 예약 오픈',
+              cat: 'clubg',
+              catName: '🔴 클럽G',
+              name: 'MG 1/100 미션팩 X-Type for F90IIIY',
+              grade: 'MG',
+              jpy: 3850,
+              krw: 46200,
+              multiplier: 12.0,
+              note: '11월 순차 배송 예정 (온라인 수주)',
+              img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
+            },
+            {
+              id: '5089',
+              date: '09. 12 (토)',
+              time: '매장 오픈 입고',
+              cat: 'gbase',
+              catName: '🟡 건베 한정',
+              name: 'RG 1/144 MSN-04FF 사자비 [클리어 컬러]',
+              grade: 'RG',
+              jpy: 5170,
+              krw: 62040,
+              multiplier: 12.0,
+              note: '수도권 건베 전 지점 (1인 1개 구매 제한)',
+              img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
+            },
+            {
+              id: '1097',
+              date: '09. 19 (토)',
+              time: '전국 정규 출하',
+              cat: 'retail',
+              catName: '🔵 일반 발매',
+              name: 'PG UNLEASHED 1/60 ν(뉴) 건담',
+              grade: 'PG',
+              jpy: 66000,
+              krw: 792000,
+              multiplier: 12.0,
+              note: '전국 온/오프라인 일반 공식 판매',
+              img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
+            },
+            {
+              id: '5254',
+              date: '09. 19 (토)',
+              time: '전국 정규 출하',
+              cat: 'retail',
+              catName: '🔵 일반 발매',
+              name: 'HG 1/144 ALYZEUS (알리제우스)',
+              grade: 'HG',
+              jpy: 13200,
+              krw: 158400,
+              multiplier: 12.0,
+              note: '전국 건담 취급점',
+              img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
+            },
+            {
+              id: '5182',
+              date: '09. 26 (토)',
+              time: '재입고 출하',
+              cat: 'retail',
+              catName: '🔵 일반 재판',
+              name: 'MG 1/100 제타 건담 Ver.Ka',
+              grade: 'MG',
+              jpy: 6500,
+              krw: 78000,
+              multiplier: 12.0,
+              note: '전국 온/오프라인 건프라 매장 재입고',
+              img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
+            },
+            {
+              id: '5281',
+              date: '09. 26 (토)',
+              time: '재입고 출하',
+              cat: 'retail',
+              catName: '🔵 일반 재판',
+              name: 'RG 1/144 하이뉴 건담 (Hi-ν)',
+              grade: 'RG',
+              jpy: 4500,
+              krw: 54000,
+              multiplier: 12.0,
+              note: '전국 건담 취급점 재입고',
+              img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
+            }
+          ]
+        },
+        '2026-08': {
+          label: '2026. 08 (지난 달 출하)',
+          items: [
+            {
+              id: '5250',
+              date: '08. 10 (토)',
+              time: '정규 출하',
+              cat: 'retail',
+              catName: '🔵 일반 발매',
+              name: 'HG 1/144 라이징 프리덤 건담',
+              grade: 'HG',
+              jpy: 2600,
+              krw: 31200,
+              multiplier: 12.0,
+              note: '전국 온/오프라인 발매',
+              img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
+            },
+            {
+              id: '5251',
+              date: '08. 24 (토)',
+              time: '정규 출하',
+              cat: 'retail',
+              catName: '🔵 일반 발매',
+              name: 'RG 1/144 RX-78-2 건담 Ver.2.0',
+              grade: 'RG',
+              jpy: 3500,
+              krw: 42000,
+              multiplier: 12.0,
+              note: '전국 일반 매장 정규 출시',
+              img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
+            }
+          ]
+        },
+        '2026-10': {
+          label: '2026. 10 (다음 달 출하 예정)',
+          items: [
+            {
+              id: '5227',
+              date: '10. 17 (토)',
+              time: '정규 출하 예정',
+              cat: 'retail',
+              catName: '🔵 일반 발매',
+              name: 'MGSD 윙 건담 제로 EW',
+              grade: 'MG',
+              jpy: 4200,
+              krw: 50400,
+              multiplier: 12.0,
+              note: '하반기 SD 최신작 정규 발매 예정',
+              img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
+            },
+            {
+              id: '4985',
+              date: '10. 24 (토)',
+              time: '온라인 배송 예정',
+              cat: 'clubg',
+              catName: '🔴 클럽G',
+              name: 'HG 1/144 고스트 건담 [2차 수주분]',
+              grade: 'HG',
+              jpy: 2400,
+              krw: 34320,
+              multiplier: 14.3,
+              note: '클럽G 사전 예약자 순차 택배 발송',
+              img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
+            }
+          ]
+        }
+      };
+
+      const radarState = {
+        currentMonthKey: '2026-09',
+        selectedCategory: 'all',
+        onlyWishlist: false,
+        isCollapsed: false
+      };
+
+      try {
+        if (localStorage.getItem('gunpla_radar_collapsed') === '1') {
+          radarState.isCollapsed = true;
+        }
+      } catch(e) {}
+
+      function initReleaseRadar() {
+        applyRadarCollapseUI();
+        renderReleaseRadar();
+      }
+
+      function applyRadarCollapseUI() {
+        const body = document.getElementById('radar-collapsible-body');
+        const summary = document.getElementById('radar-collapsed-summary');
+        const arrow = document.getElementById('radar-collapse-arrow');
+        if (!body || !summary || !arrow) return;
+
+        if (radarState.isCollapsed) {
+          body.classList.add('hidden');
+          summary.classList.remove('hidden');
+          arrow.textContent = '▼';
+        } else {
+          body.classList.remove('hidden');
+          summary.classList.add('hidden');
+          arrow.textContent = '▲';
+        }
+      }
+
+      window.toggleRadarCollapse = function() {
+        radarState.isCollapsed = !radarState.isCollapsed;
+        try {
+          localStorage.setItem('gunpla_radar_collapsed', radarState.isCollapsed ? '1' : '0');
+        } catch(e) {}
+        applyRadarCollapseUI();
+      };
+
+      window.changeRadarMonth = function(delta) {
+        const months = Object.keys(window.GUNPLA_RELEASE_RADAR_DATA);
+        const idx = months.indexOf(radarState.currentMonthKey);
+        const newIdx = idx + delta;
+        if (newIdx >= 0 && newIdx < months.length) {
+          radarState.currentMonthKey = months[newIdx];
+          renderReleaseRadar();
+        }
+      };
+
+      window.setRadarCategory = function(cat) {
+        radarState.selectedCategory = cat;
+        renderReleaseRadar();
+      };
+
+      window.toggleRadarOnlyWishlist = function() {
+        radarState.onlyWishlist = !radarState.onlyWishlist;
+        renderReleaseRadar();
+      };
+
+      window.toggleRadarWishlist = function(kitId, event) {
+        if (event) event.stopPropagation();
+        const current = getItem(kitId);
+        const newWishlist = !current.wishlist;
+        updateItem(kitId, { wishlist: newWishlist });
+        updateRadarWishlistUI();
+        showToast(newWishlist ? '💖 위시리스트에 담겼습니다!' : '🤍 위시리스트에서 제외되었습니다.');
+      };
+
+      window.scrollToRadar = function() {
+        const radar = document.getElementById('radar-section');
+        if (!radar) return;
+        if (state.activeView !== 'all') {
+          window.switchView('all');
+        }
+        if (radarState.isCollapsed) {
+          window.toggleRadarCollapse();
+        }
+        radar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        radar.classList.add('ring-2', 'ring-cyan-400');
+        setTimeout(() => radar.classList.remove('ring-2', 'ring-cyan-400'), 1500);
+      };
+
+      function updateRadarWishlistUI() {
+        renderReleaseRadar();
+      }
+
+      function renderReleaseRadar() {
+        const monthData = window.GUNPLA_RELEASE_RADAR_DATA[radarState.currentMonthKey];
+        if (!monthData) return;
+
+        // 1. Update Month Label
+        const monthLabel = document.getElementById('radar-active-month-label');
+        if (monthLabel) monthLabel.textContent = monthData.label;
+
+        // 2. Compute Wishlist matching items & total budget
+        const allItems = monthData.items || [];
+        const wishItems = allItems.filter(item => {
+          const u = getItem(item.id);
+          return !!(u && u.wishlist);
+        });
+        const totalBudget = wishItems.reduce((acc, item) => acc + item.krw, 0);
+
+        // Header Wish Badge
+        const headerBadge = document.getElementById('radar-header-wish-badge');
+        if (headerBadge) {
+          if (wishItems.length > 0) {
+            headerBadge.innerHTML = '💖 내 위시 ' + wishItems.length + '건 출하 예정';
+            headerBadge.classList.remove('hidden');
+          } else {
+            headerBadge.innerHTML = '✨ 내 위시 0건';
+          }
+        }
+
+        // Mini summary (for collapsed bar)
+        const miniSummary = document.getElementById('radar-mini-summary-content');
+        if (miniSummary) {
+          if (wishItems.length > 0) {
+            miniSummary.innerHTML = '<span class="text-pink-400 font-bold">💖 내 위시 ' + wishItems.length + '건 출하 대기 중</span>' +
+              '<span class="text-slate-500">|</span>' +
+              '<span class="text-slate-400">필요 총 예산: <strong class="text-yellow-400 font-mono">₩' + totalBudget.toLocaleString() + '</strong></span>' +
+              '<span class="text-slate-500 hidden sm:inline">|</span>' +
+              '<span class="text-slate-400 hidden sm:inline">가장 빠른 일정: <strong class="text-cyan-400 font-mono">' + wishItems[0].date + ' ' + wishItems[0].name.slice(0, 20) + '...</strong></span>';
+          } else {
+            miniSummary.innerHTML = '<span class="text-cyan-400 font-bold">' + monthData.label + '</span>' +
+              '<span class="text-slate-500">|</span>' +
+              '<span class="text-slate-400">총 ' + allItems.length + '건 출하 예정 (위시리스트 0건)</span>';
+          }
+        }
+
+        // Summary Banner Container
+        const summaryContainer = document.getElementById('radar-summary-container');
+        if (summaryContainer) {
+          const btnWishClass = radarState.onlyWishlist 
+            ? 'bg-pink-500 text-slate-950 font-black' 
+            : 'bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/40';
+
+          const chipAllClass = radarState.selectedCategory === 'all' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white';
+          const chipRetailClass = radarState.selectedCategory === 'retail' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white';
+          const chipClubgClass = radarState.selectedCategory === 'clubg' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white';
+          const chipGbaseClass = radarState.selectedCategory === 'gbase' ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white';
+
+          summaryContainer.innerHTML = '<div class="p-3 rounded-xl bg-gradient-to-r from-pink-950/30 via-purple-950/20 to-slate-950 border border-pink-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">' +
+            '<div class="flex items-center gap-2.5">' +
+              '<div class="w-8 h-8 rounded-xl bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-sm shadow-sm shrink-0">💖</div>' +
+              '<div>' +
+                '<div class="text-xs font-bold text-white flex items-center gap-1.5">' +
+                  '<span>이번 달 내 위시리스트 출하:</span>' +
+                  '<span class="text-pink-400 font-mono text-sm font-black">' + wishItems.length + ' 건</span>' +
+                  '<span class="text-slate-600">|</span>' +
+                  '<span>필요 총 지출 예산:</span>' +
+                  '<span class="text-yellow-400 font-mono font-bold">₩' + totalBudget.toLocaleString() + '</span>' +
+                  '<span class="text-slate-500 text-[10px] font-mono hidden sm:inline">(반코 공식 정가 기준)</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="flex items-center gap-1.5 text-xs font-semibold overflow-x-auto scrollbar-none">' +
+              '<button onclick="window.setRadarCategory(\'all\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipAllClass + '">전체 (' + allItems.length + ')</button>' +
+              '<button onclick="window.setRadarCategory(\'retail\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipRetailClass + '">🔵 일반판</button>' +
+              '<button onclick="window.setRadarCategory(\'clubg\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipClubgClass + '">🔴 클럽G</button>' +
+              '<button onclick="window.setRadarCategory(\'gbase\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipGbaseClass + '">🟡 건베 한정</button>' +
+              '<button onclick="window.toggleRadarOnlyWishlist()" class="px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ' + btnWishClass + '">' +
+                (radarState.onlyWishlist ? '📋 전체 일정 보기' : '✨ 내 위시만 보기 (' + wishItems.length + ')') +
+              '</button>' +
+            '</div>' +
+          '</div>';
+        }
+
+        // Filter items
+        let filteredItems = allItems;
+        if (radarState.selectedCategory !== 'all') {
+          filteredItems = filteredItems.filter(it => it.cat === radarState.selectedCategory);
+        }
+        if (radarState.onlyWishlist) {
+          filteredItems = filteredItems.filter(it => {
+            const u = getItem(it.id);
+            return !!(u && u.wishlist);
+          });
+        }
+
+        // List Container
+        const listContainer = document.getElementById('radar-list-container');
+        if (listContainer) {
+          if (filteredItems.length === 0) {
+            listContainer.innerHTML = '<div class="py-8 text-center text-xs text-slate-500 font-mono">해당 조건에 일치하는 출하 일정이 없습니다.</div>';
+            return;
+          }
+
+          let html = '';
+          filteredItems.forEach(item => {
+            const u = getItem(item.id);
+            const isWish = !!(u && u.wishlist);
+            const cardBg = isWish 
+              ? 'bg-pink-950/20 border-pink-500/60 shadow-[0_0_15px_rgba(244,63,94,0.1)]' 
+              : 'bg-slate-950/80 border-slate-800 hover:border-slate-700';
+
+            const wishBtnClass = isWish
+              ? 'bg-pink-950 border-pink-500/60 text-pink-300'
+              : 'bg-slate-900 hover:bg-pink-950/60 border-slate-800 hover:border-pink-500/40 text-slate-400 hover:text-pink-400';
+
+            const catBadgeClass = item.cat === 'clubg' 
+              ? 'bg-red-950/80 text-red-400 border-red-500/30' 
+              : (item.cat === 'gbase' ? 'bg-amber-950/80 text-amber-400 border-amber-500/30' : 'bg-blue-950/80 text-blue-400 border-blue-500/30');
+
+            html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
+              '<div class="flex items-center gap-3 min-w-0">' +
+                '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-slate-900 border ' + (isWish ? 'border-pink-500/40' : 'border-slate-800') + ' shrink-0 p-1 flex items-center justify-center cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
+                  '<img src="' + item.img + '" alt="' + item.name + '" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" loading="lazy" onerror="this.src=\'https://gunpla.fyi/images/boxarts/1097.jpeg\'">' +
+                  '<span class="absolute bottom-0.5 left-0.5 px-1 rounded text-[8px] font-mono font-bold bg-slate-950/90 text-cyan-300 border border-slate-800">' + item.grade + '</span>' +
+                '</div>' +
+                '<div class="min-w-0">' +
+                  '<div class="flex flex-wrap items-center gap-1.5 mb-1">' +
+                    '<span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-slate-800 text-cyan-300">' + item.date + '</span>' +
+                    '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold border ' + catBadgeClass + '">' + item.catName + '</span>' +
+                    (isWish ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/50">💖 내 위시리스트</span>' : '') +
+                    '<span class="text-[11px] text-slate-500 font-mono hidden sm:inline">' + item.time + '</span>' +
+                  '</div>' +
+                  '<div class="text-xs sm:text-sm font-bold ' + (isWish ? 'text-pink-200' : 'text-white') + ' group-hover:text-cyan-300 transition-colors truncate cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
+                    item.name +
+                  '</div>' +
+                  '<div class="text-[11px] text-slate-400 mt-0.5 font-mono flex items-center gap-2">' +
+                    '<span class="text-yellow-400 font-bold">₩' + item.krw.toLocaleString() + '</span>' +
+                    '<span class="text-slate-500">(' + item.jpy.toLocaleString() + '엔 @ ' + item.multiplier.toFixed(1) + '배)</span>' +
+                    '<span class="text-slate-600 hidden sm:inline">•</span>' +
+                    '<span class="text-slate-500 hidden sm:inline truncate" title="' + item.note + '">' + item.note + '</span>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="flex items-center gap-1.5 shrink-0">' +
+                '<button onclick="window.toggleRadarWishlist(\'' + item.id + '\', event)" class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all ' + wishBtnClass + '">' +
+                  (isWish ? '<span>💖 찜 완료</span>' : '<span>🤍 찜하기</span>') +
+                '</button>' +
+                '<button onclick="window.openKitModal(\'' + item.id + '\')" class="p-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs border border-slate-800 transition-colors" title="도감 상세 모달 열기">' +
+                  '도감 ›' +
+                '</button>' +
+              '</div>' +
+            '</div>';
+          });
+          listContainer.innerHTML = html;
+        }
+      }
+
       function init() {
         KITS = (window.GUNPLA_MASTER_DATA || []).map(enrichKit);
         populateDropdownSelects();
@@ -43515,6 +43987,7 @@ window.GUNPLA_MASTER_DATA = [
         renderSubfacetSlider();
         renderActiveFilterChips();
         renderKits();
+        initReleaseRadar();
         restoreAutoSyncOnLoad();
         initGoogleAuth();
 

@@ -41714,13 +41714,13 @@ window.GUNPLA_MASTER_DATA = [
         const hasOfficialEntry = !!(yenTaxInc && yenTaxInc > 0);
         
         if (!hasOfficialEntry) {
-          const isPromo = String(kit.id) === '1101' || (kit.name || '').includes('鵝볣쮶鴉?) || (kit.name || '').includes('?ⓦ궠?쀣꺀');
+          const isPromo = String(kit.id) === '1101';
           const unverifiedText = isPromo
-            ? (curr === 'USD' ? 'Not for Sale' : (curr === 'JPY' ? '?욃２?? : '鍮꾨ℓ??))
-            : (curr === 'USD' ? 'Price Unlisted' : (curr === 'JPY' ? '?у폀堊→졏?ゆ렡雍? : '怨듭떇媛 誘명솗??));
+            ? (curr === 'USD' ? 'Not for Sale' : (curr === 'JPY' ? '非売品' : '비매품'))
+            : (curr === 'USD' ? 'Price Unlisted' : (curr === 'JPY' ? '公式価格未掲載' : '공식가 미확인'));
           const unverifiedNote = isPromo
-            ? (curr === 'USD' ? '?럞 Event / Promo' : (curr === 'JPY' ? '?럞 ?ㅳ깧?녈깉?삡퐪蟯볞폏?띶툋' : '?럞 ?대깽??泥댄뿕??利앹젙'))
-            : (curr === 'USD' ? '?좑툘 Not on Official Site' : (curr === 'JPY' ? '?좑툘 ?у폀?ゆ렡雍? : '?좑툘 怨듭떇紐?誘몃벑??));
+            ? (curr === 'USD' ? '🎁 Event / Promo' : (curr === 'JPY' ? '🎁 イベント・体験会配布' : '🎁 이벤트/체험회 증정'))
+            : (curr === 'USD' ? '⚠️ Not on Official Site' : (curr === 'JPY' ? '⚠️ 公式未掲載' : '⚠️ 공식몰 미등재'));
           return {
             currency: curr,
             value: 0,
@@ -42464,7 +42464,7 @@ window.GUNPLA_MASTER_DATA = [
         if (kit.release_date === 'N/A' || !kit.release_date) kit.release_date = '2022-04';
         if (!kit.year) {
           const y = parseInt(kit.release_date.substring(0, 4), 10);
-          kit.year = !isNaN(y) ? y : 2020;
+          kit.year = !isNaN(y) ? y : 2022;
         }
         if (!kit.run) {
           const rawName = (kit.name || kit.nameEn || kit.nameJp || '');

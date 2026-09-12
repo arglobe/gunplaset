@@ -2205,7 +2205,7 @@ window.GUNPLA_MASTER_DATA = [
         "nameEn":  "",
         "nameJp":  "エコプラ 1/144  RX-78-2 ガンダム 組立体験会Ver.",
         "partNo":  "2606673",
-        "releaseDate":  "N/A",
+        "releaseDate":  "2022-04",
         "brand":  "その他",
         "series":  "機動戦士ガンダム",
         "yenTaxIn":  0,
@@ -41714,16 +41714,22 @@ window.GUNPLA_MASTER_DATA = [
         const hasOfficialEntry = !!(yenTaxInc && yenTaxInc > 0);
         
         if (!hasOfficialEntry) {
-          const unverifiedText = curr === 'USD' ? 'Price Unlisted' : (curr === 'JPY' ? '公式価格未掲載' : '공식가 미확인');
-          const unverifiedNote = curr === 'USD' ? '⚠️ Not on Official Site' : (curr === 'JPY' ? '⚠️ 公式未掲載' : '⚠️ 공식몰 미등재');
+          const isPromo = String(kit.id) === '1101' || (kit.name || '').includes('鵝볣쮶鴉?) || (kit.name || '').includes('?ⓦ궠?쀣꺀');
+          const unverifiedText = isPromo
+            ? (curr === 'USD' ? 'Not for Sale' : (curr === 'JPY' ? '?욃２?? : '鍮꾨ℓ??))
+            : (curr === 'USD' ? 'Price Unlisted' : (curr === 'JPY' ? '?у폀堊→졏?ゆ렡雍? : '怨듭떇媛 誘명솗??));
+          const unverifiedNote = isPromo
+            ? (curr === 'USD' ? '?럞 Event / Promo' : (curr === 'JPY' ? '?럞 ?ㅳ깧?녈깉?삡퐪蟯볞폏?띶툋' : '?럞 ?대깽??泥댄뿕??利앹젙'))
+            : (curr === 'USD' ? '?좑툘 Not on Official Site' : (curr === 'JPY' ? '?좑툘 ?у폀?ゆ렡雍? : '?좑툘 怨듭떇紐?誘몃벑??));
           return {
             currency: curr,
             value: 0,
             formatted: unverifiedText,
             orgNote: unverifiedNote,
-            isVerified: false,
+            isVerified: isPromo ? true : false,
+            isPromo: isPromo,
             isClubG: false,
-            badgeColor: 'text-amber-400 font-medium'
+            badgeColor: isPromo ? 'text-purple-400 font-semibold' : 'text-amber-400 font-medium'
           };
         }
 
@@ -42455,6 +42461,7 @@ window.GUNPLA_MASTER_DATA = [
         }
 
         if (!kit.release_date) kit.release_date = kit.releaseDate || '2020-01-01';
+        if (kit.release_date === 'N/A' || !kit.release_date) kit.release_date = '2022-04';
         if (!kit.year) {
           const y = parseInt(kit.release_date.substring(0, 4), 10);
           kit.year = !isNaN(y) ? y : 2020;
@@ -42577,10 +42584,24 @@ window.GUNPLA_MASTER_DATA = [
           const totalB = (itemB.backlog || 0) + (itemB.inProgress || 0) + (itemB.built || 0);
 
           switch (state.sortBy) {
-            case 'release_desc':
-              return (b.release_date || '').localeCompare(a.release_date || '');
-            case 'release_asc':
-              return (a.release_date || '').localeCompare(b.release_date || '');
+            case 'release_desc': {
+              const aVal = a.release_date || '';
+              const bVal = b.release_date || '';
+              const aIsNa = aVal === 'N/A' || !aVal;
+              const bIsNa = bVal === 'N/A' || !bVal;
+              if (aIsNa && !bIsNa) return 1;
+              if (!aIsNa && bIsNa) return -1;
+              return bVal.localeCompare(aVal);
+            }
+            case 'release_asc': {
+              const aVal = a.release_date || '';
+              const bVal = b.release_date || '';
+              const aIsNa = aVal === 'N/A' || !aVal;
+              const bIsNa = bVal === 'N/A' || !bVal;
+              if (aIsNa && !bIsNa) return 1;
+              if (!aIsNa && bIsNa) return -1;
+              return aVal.localeCompare(bVal);
+            }
             case 'name_asc':
               return (a.name || '').localeCompare(b.name || '');
             case 'msrp_desc':
@@ -43256,7 +43277,7 @@ window.GUNPLA_MASTER_DATA = [
                 '<div>' + lblRelease + ': <span class="font-mono text-white">' + (kit.release_date || kit.year) + '</span></div>' +
                 '<div>' + lblRun + ': <span class="text-white">' + valRun + '</span></div>' +
               '</div>' +
-              (!krwInfo.isVerified ? '<div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-amber-300 flex items-center gap-2"><span>⚠️ 본 상품은 반다이 공식 카탈로그에 가격이 등재되어 있지 않은 단종/구판/미등록 품목입니다.</span></div>' : '') +
+              (krwInfo.isPromo ? '<div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-purple-300 flex items-center gap-2"><span>🎁 본 상품은 반다이 조립체험회 및 공식 이벤트에서 배포된 비매품(Not for Sale) 증정 키트입니다.</span></div>' : (!krwInfo.isVerified ? '<div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-amber-300 flex items-center gap-2"><span>⚠️ 본 상품은 반다이 공식 카탈로그에 가격이 등재되어 있지 않은 단종/구판/미등록 품목입니다.</span></div>' : '')) +
               '<div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 mb-3 text-xs">' +
                 '<div class="font-bold text-cyan-400 mb-1.5 flex justify-between">' +
                   '<span>' + t.modalStatusTitle + '</span>' +

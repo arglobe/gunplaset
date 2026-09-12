@@ -42208,8 +42208,20 @@ window.GUNPLA_MASTER_DATA = [
           return entry.jp;
         }
         return rawSeries;
-      }
       window.getLocalizedSeries = getLocalizedSeries;
+
+      function getLocalizedKitName(kit, targetCurrency) {
+        if (!kit) return '';
+        const curr = targetCurrency || state.currency || 'KRW';
+        if (curr === 'JPY') {
+          return kit.nameJp || kit.nameEn || kit.name || '';
+        } else if (curr === 'USD') {
+          return kit.nameEn || kit.name || kit.nameJp || '';
+        } else {
+          return kit.nameKo || kit.name || kit.nameEn || kit.nameJp || '';
+        }
+      }
+      window.getLocalizedKitName = getLocalizedKitName;
 
       function updateGlobalStats() {
         let totalBacklog = 0, totalInProgress = 0, totalBuilt = 0, totalVal = 0;
@@ -42602,8 +42614,11 @@ window.GUNPLA_MASTER_DATA = [
               if (!aIsNa && bIsNa) return -1;
               return aVal.localeCompare(bVal);
             }
-            case 'name_asc':
-              return (a.name || '').localeCompare(b.name || '');
+            case 'name_asc': {
+              const nameA = getLocalizedKitName(a, state.currency);
+              const nameB = getLocalizedKitName(b, state.currency);
+              return (nameA || '').localeCompare(nameB || '');
+            }
             case 'msrp_desc':
               return (b.msrp_jpy || 0) - (a.msrp_jpy || 0);
             case 'msrp_asc':
@@ -42971,6 +42986,7 @@ window.GUNPLA_MASTER_DATA = [
           const cardBorderClass = isOwned ? 'card-owned' : 'card-unowned';
 
           const dispGrade = getLocalizedClass(kit.classification, state.currency);
+          const dispName = getLocalizedKitName(kit, state.currency);
           const pbandaiLabel = t.pbandai;
           const releaseYearText = t.released(kit.year);
 
@@ -42979,7 +42995,7 @@ window.GUNPLA_MASTER_DATA = [
               '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
               '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-2 text-center z-0">' +
                 '<span class="text-3xl mb-1">🤖</span>' +
-                '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (kit.name || '') + '</span>' +
+                '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (dispName || '') + '</span>' +
               '</div>' +
               '<div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5 z-10 max-w-[calc(100%-110px)]">' +
                 '<span class="px-2 py-0.5 rounded-md text-[11px] font-bold tracking-wide ' + badgeClass + '">' + dispGrade + '</span>' +
@@ -42998,7 +43014,7 @@ window.GUNPLA_MASTER_DATA = [
             '<div class="p-3.5 flex-1 flex flex-col justify-between">' +
               '<div>' +
                 '<div class="text-[11px] text-cyan-400 font-medium truncate mb-1" title="' + getLocalizedSeries(kit.series) + '">' + getLocalizedSeries(kit.series) + '</div>' +
-                '<h3 class="text-sm font-bold text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug mb-1.5 min-h-[2.5rem]" title="' + (kit.name || '') + '">' + (kit.name || '') + '</h3>' +
+                '<h3 class="text-sm font-bold text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-2 leading-snug mb-1.5 min-h-[2.5rem]" title="' + (dispName || '') + '">' + (dispName || '') + '</h3>' +
                 '<div class="text-xs text-slate-400 font-mono mb-2.5 flex items-center gap-1.5 flex-wrap">' +
                   '<span>' + t.msrpLabel + ' <span class="text-slate-200 font-semibold">' + pInfo.formatted + '</span></span>' +
                   '<span class="text-[10px] ' + pInfo.badgeColor + '">(' + pInfo.orgNote + ')</span>' +
@@ -43178,7 +43194,7 @@ window.GUNPLA_MASTER_DATA = [
           };
         }
         if (counter) counter.innerText = (state.activeImageIndex + 1) + ' / ' + gallery.length;
-        if (title) title.innerText = (kit.classification ? '[' + kit.classification + '] ' : '') + (kit.name || '');
+        if (title) title.innerText = (kit.classification ? '[' + kit.classification + '] ' : '') + getLocalizedKitName(kit, state.currency);
         modal.classList.remove('hidden');
       };
 
@@ -43241,7 +43257,7 @@ window.GUNPLA_MASTER_DATA = [
         modalBody.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">' +
           '<div class="flex flex-col">' +
             '<div class="relative w-full h-[420px] md:h-[460px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-800 group cursor-zoom-in" onclick="window.openLightbox()">' +
-              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (kit.name || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (getLocalizedKitName(kit, state.currency) || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
               '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' +
@@ -43268,7 +43284,7 @@ window.GUNPLA_MASTER_DATA = [
                 '<span class="px-2.5 py-0.5 rounded-md text-xs font-bold ' + getGradeBadgeClass(kit.classification) + '">' + modalGrade + '</span>' +
                 '<span class="text-xs text-cyan-400 font-medium">' + getLocalizedSeries(kit.series) + '</span>' +
               '</div>' +
-              '<h2 class="text-xl font-bold text-white mb-2 leading-tight">' + kit.name + '</h2>' +
+              '<h2 class="text-xl font-bold text-white mb-2 leading-tight">' + getLocalizedKitName(kit, state.currency) + '</h2>' +
               '<div class="grid grid-cols-2 gap-2 text-xs py-3 border-y border-slate-800 my-3 text-slate-300">' +
                 '<div>' + (krwInfo.isClubG ? '🔵 클럽G' : '🇰🇷 반코') + ' 정가: <span class="text-cyan-400 font-bold font-mono">' + krwInfo.formatted + '</span> <span class="text-[10px] ' + krwInfo.badgeColor + '">(' + krwInfo.orgNote + ')</span></div>' +
                 '<div>🇯🇵 반다이 일본: <span class="text-slate-200 font-bold font-mono">' + jpyInfo.formatted + (jpyInfo.isVerified ? ' <span class="text-[10px] text-slate-400 font-normal">(세별 ¥' + Math.round(jpyInfo.value / 1.1).toLocaleString() + ')</span>' : '') + '</span></div>' +

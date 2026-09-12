@@ -42993,7 +42993,7 @@ window.GUNPLA_MASTER_DATA = [
 
           return '<div class="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-200 ' + cardBorderClass + '" onclick="window.openKitModal(\'' + kit.id + '\')">' +
             '<div class="relative w-full pt-[90%] bg-gradient-to-b from-slate-900/80 to-slate-950/90 overflow-hidden flex items-center justify-center p-3">' +
-              '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
+              '<img src="' + imgUrl + '" data-fallback="' + cdnFallback + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-contain p-3 group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; this.nextElementSibling.classList.remove(\'hidden\'); }">' +
               '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-2 text-center z-0">' +
                 '<span class="text-3xl mb-1">🤖</span>' +
                 '<span class="text-[10px] text-slate-400 font-medium line-clamp-1">' + (dispName || '') + '</span>' +
@@ -43189,6 +43189,7 @@ window.GUNPLA_MASTER_DATA = [
           img.src = curUrl;
           img.dataset.fallback = curCdn;
           img.onerror = function() {
+            this.onerror = null;
             if (this.dataset.fallback && this.src !== this.dataset.fallback) {
               this.src = this.dataset.fallback;
             }
@@ -43258,7 +43259,7 @@ window.GUNPLA_MASTER_DATA = [
         modalBody.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">' +
           '<div class="flex flex-col">' +
             '<div class="relative w-full h-[420px] md:h-[460px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-800 group cursor-zoom-in" onclick="window.openLightbox()">' +
-              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (getLocalizedKitName(kit, state.currency) || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (getLocalizedKitName(kit, state.currency) || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
               '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' +
@@ -43273,7 +43274,7 @@ window.GUNPLA_MASTER_DATA = [
                 const thumbUrl = g.url || kit.product_url;
                 const thumbCdn = g.cdn_url || thumbUrl;
                 return '<button class="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-slate-900 transition-all ' + (isSelected ? 'border-2 border-cyan-400 ring-2 ring-cyan-400/30 shadow-md shadow-cyan-500/20' : 'border border-slate-800/80 opacity-60 hover:opacity-100 hover:border-slate-600') + '" onclick="window.setModalImageIndex(' + idx + ')">' +
-                  '<img src="' + thumbUrl + '" data-fallback="' + thumbCdn + '" class="w-full h-full object-cover" alt="thumb ' + (idx + 1) + '" onerror="if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+                  '<img src="' + thumbUrl + '" data-fallback="' + thumbCdn + '" class="w-full h-full object-cover" alt="thumb ' + (idx + 1) + '" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
                   (isBoxart ? '<span class="absolute bottom-0 inset-x-0 bg-slate-950/90 text-[9px] text-cyan-300 font-bold text-center leading-tight py-0.5">BOX</span>' : '') +
                 '</button>';
               }).join('') +
@@ -43677,438 +43678,438 @@ window.GUNPLA_MASTER_DATA = [
       // 🚨 RELEASE & RESTOCK RADAR ENGINE & MASTER DATASET (3-LOCALE ISOLATED)
       // ==============================================================================
       window.GUNPLA_RELEASE_RADAR_DATA = {
-        KRW: {
-          '2026-09': {
-            label: '2026. 09 (이번 달 출하)',
-            items: [
-              {
-                id: '4920',
-                date: '09. 05 (금)',
-                time: '14:00 예약 오픈',
-                cat: 'clubg',
-                catName: '🔴 클럽G',
-                name: 'MG 1/100 미션팩 X-Type for F90IIIY',
-                grade: 'MG',
-                jpy: 3850,
-                krw: 46200,
-                note: '11월 순차 배송 예정 (온라인 수주)',
-                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
-              },
-              {
-                id: '5089',
-                date: '09. 12 (토)',
-                time: '매장 오픈 입고',
-                cat: 'gbase',
-                catName: '🟡 건베 한정',
-                name: 'RG 1/144 MSN-04FF 사자비 [클리어 컬러]',
-                grade: 'RG',
-                jpy: 5170,
-                krw: 62040,
-                note: '수도권 건베 전 지점 (1인 1개 구매 제한)',
-                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
-              },
-              {
-                id: '1097',
-                date: '09. 19 (토)',
-                time: '전국 정규 출하',
-                cat: 'retail',
-                catName: '🔵 일반 발매',
-                name: 'PG UNLEASHED 1/60 ν(뉴) 건담',
-                grade: 'PG',
-                jpy: 66000,
-                krw: 792000,
-                note: '전국 온/오프라인 일반 공식 판매',
-                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
-              },
-              {
-                id: '5254',
-                date: '09. 19 (토)',
-                time: '전국 정규 출하',
-                cat: 'retail',
-                catName: '🔵 일반 발매',
-                name: 'HG 1/144 ALYZEUS (알리제우스)',
-                grade: 'HG',
-                jpy: 13200,
-                krw: 158400,
-                note: '전국 건담 취급점',
-                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
-              },
-              {
-                id: '5182',
-                date: '09. 26 (토)',
-                time: '재입고 출하',
-                cat: 'retail',
-                catName: '🔵 일반 재판',
-                name: 'MG 1/100 제타 건담 Ver.Ka',
-                grade: 'MG',
-                jpy: 6500,
-                krw: 78000,
-                note: '전국 온/오프라인 건프라 매장 재입고',
-                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
-              },
-              {
-                id: '5281',
-                date: '09. 26 (토)',
-                time: '재입고 출하',
-                cat: 'retail',
-                catName: '🔵 일반 재판',
-                name: 'RG 1/144 하이뉴 건담 (Hi-ν)',
-                grade: 'RG',
-                jpy: 4500,
-                krw: 54000,
-                note: '전국 건담 취급점 재입고',
-                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
-              }
-            ]
-          },
-          '2026-08': {
-            label: '2026. 08 (지난 달 출하)',
-            items: [
-              {
-                id: '5250',
-                date: '08. 10 (토)',
-                time: '정규 출하',
-                cat: 'retail',
-                catName: '🔵 일반 발매',
-                name: 'HG 1/144 라이징 프리덤 건담',
-                grade: 'HG',
-                jpy: 2600,
-                krw: 31200,
-                note: '전국 온/오프라인 발매',
-                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
-              },
-              {
-                id: '5251',
-                date: '08. 24 (토)',
-                time: '정규 출하',
-                cat: 'retail',
-                catName: '🔵 일반 발매',
-                name: 'RG 1/144 RX-78-2 건담 Ver.2.0',
-                grade: 'RG',
-                jpy: 3500,
-                krw: 42000,
-                note: '전국 일반 매장 정규 출시',
-                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
-              }
-            ]
-          },
-          '2026-10': {
-            label: '2026. 10 (다음 달 출하 예정)',
-            items: [
-              {
-                id: '5227',
-                date: '10. 17 (토)',
-                time: '정규 출하 예정',
-                cat: 'retail',
-                catName: '🔵 일반 발매',
-                name: 'MGSD 윙 건담 제로 EW',
-                grade: 'MG',
-                jpy: 4200,
-                krw: null,
-                note: '하반기 SD 최신작 정규 발매 예정 (공식가 발표 대기)',
-                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
-              },
-              {
-                id: '4985',
-                date: '10. 24 (토)',
-                time: '온라인 배송 예정',
-                cat: 'clubg',
-                catName: '🔴 클럽G',
-                name: 'HG 1/144 고스트 건담 [2차 수주분]',
-                grade: 'HG',
-                jpy: 2400,
-                krw: 34320,
-                note: '클럽G 사전 예약자 순차 택배 발송',
-                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
-              }
-            ]
-          }
+  "KRW": {
+    "2026-09": {
+      "label": "2026. 09 (이번 달 출하)",
+      "items": [
+        {
+          "id": "4920",
+          "date": "09. 05 (금)",
+          "time": "14:00 예약 오픈",
+          "cat": "clubg",
+          "catName": "🔴 클럽G",
+          "name": "MG 1/100 F90IIIY 클러스터 건담용 미션팩 X-Type",
+          "grade": "MG",
+          "jpy": 3850,
+          "krw": 46200,
+          "note": "클럽G 온라인 예약 수주 (11월 순차 출하)",
+          "img": "images/4920_1.jpg"
         },
-        JPY: {
-          '2026-09': {
-            label: '2026年 09月 (今月の出荷予定)',
-            items: [
-              {
-                id: '4920',
-                date: '09. 05 (金)',
-                time: '13:00 予約開始',
-                cat: 'clubg',
-                catName: '🔴 プレバン',
-                name: 'MG 1/100 ミッションパック Xタイプ (F90IIIY用)',
-                grade: 'MG',
-                jpy: 3850,
-                note: '11月発送予定 (プレミアムバンダイ限定)',
-                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
-              },
-              {
-                id: '5089',
-                date: '09. 12 (土)',
-                time: '店舗入荷',
-                cat: 'gbase',
-                catName: '🟡 ガンダムベース限定',
-                name: 'RG 1/144 MSN-04FF サザビー [クリアカラー]',
-                grade: 'RG',
-                jpy: 5170,
-                note: 'ガンダムベース東京・福岡・サテライト限定',
-                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
-              },
-              {
-                id: '1097',
-                date: '09. 19 (土)',
-                time: '全国出荷予定',
-                cat: 'retail',
-                catName: '🔵 一般発売',
-                name: 'PG UNLEASHED 1/60 νガンダム',
-                grade: 'PG',
-                jpy: 66000,
-                note: '全国ホビーショップ・量販店にて発売',
-                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
-              },
-              {
-                id: '5254',
-                date: '09. 19 (土)',
-                time: '全国出荷予定',
-                cat: 'retail',
-                catName: '🔵 一般発売',
-                name: 'HG 1/144 アリゼウス',
-                grade: 'HG',
-                jpy: 13200,
-                note: '全国一般店舗出荷',
-                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
-              },
-              {
-                id: '5182',
-                date: '09. 26 (土)',
-                time: '再生産出荷',
-                cat: 'retail',
-                catName: '🔵 一般再販',
-                name: 'MG 1/100 ゼータガンダム Ver.Ka',
-                grade: 'MG',
-                jpy: 6500,
-                note: '全国ホビー流通にて再販出荷',
-                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
-              },
-              {
-                id: '5281',
-                date: '09. 26 (土)',
-                time: '再生産出荷',
-                cat: 'retail',
-                catName: '🔵 一般再販',
-                name: 'RG 1/144 Hi-νガンダム',
-                grade: 'RG',
-                jpy: 4500,
-                note: '全国模型店・量販店再入荷',
-                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
-              }
-            ]
-          },
-          '2026-08': {
-            label: '2026年 08月 (先月の出荷)',
-            items: [
-              {
-                id: '5250',
-                date: '08. 10 (土)',
-                time: '一般出荷',
-                cat: 'retail',
-                catName: '🔵 一般発売',
-                name: 'HG 1/144 ライジングフリーダムガンダム',
-                grade: 'HG',
-                jpy: 2600,
-                note: '全国一般店舗発売',
-                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
-              },
-              {
-                id: '5251',
-                date: '08. 24 (土)',
-                time: '一般出荷',
-                cat: 'retail',
-                catName: '🔵 一般発売',
-                name: 'RG 1/144 RX-78-2 ガンダム Ver.2.0',
-                grade: 'RG',
-                jpy: 3500,
-                note: '全国一般店舗発売',
-                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
-              }
-            ]
-          },
-          '2026-10': {
-            label: '2026年 10月 (来月の出荷予定)',
-            items: [
-              {
-                id: '5227',
-                date: '10. 17 (土)',
-                time: '一般出荷予定',
-                cat: 'retail',
-                catName: '🔵 一般発売',
-                name: 'MGSD ウイングガンダムゼロ EW',
-                grade: 'MG',
-                jpy: 4200,
-                note: 'SDハイエンド最新作',
-                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
-              },
-              {
-                id: '4985',
-                date: '10. 24 (土)',
-                time: '発送開始予定',
-                cat: 'clubg',
-                catName: '🔴 プレバン',
-                name: 'HG 1/144 ゴーストガンダム [2次]',
-                grade: 'HG',
-                jpy: 2400,
-                note: 'プレミアムバンダイ予約者順次発送',
-                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
-              }
-            ]
-          }
+        {
+          "id": "5089",
+          "date": "09. 12 (토)",
+          "time": "매장 오픈 입고",
+          "cat": "gbase",
+          "catName": "🟡 건베 한정",
+          "name": "RG 1/144 MSN-04FF 사자비 [클리어 컬러]",
+          "grade": "RG",
+          "jpy": 5170,
+          "krw": 62040,
+          "note": "수도권 건베 전 지점 한정 재입고 (1인 1개 구매 제한)",
+          "img": "images/5089_1.jpg"
         },
-        USD: {
-          '2026-09': {
-            label: 'September 2026 (Monthly Releases)',
-            items: [
-              {
-                id: '4920',
-                date: '09. 05 (Fri)',
-                time: '21:00 EDT Drop',
-                cat: 'clubg',
-                catName: '🔴 P-Bandai',
-                name: 'MG 1/100 Mission Pack X-Type for F90IIIY',
-                grade: 'MG',
-                usd: 38.50,
-                jpy: 3850,
-                note: 'Ships in November (P-Bandai US Pre-order)',
-                img: 'https://gunpla.fyi/images/boxarts/4920.jpeg'
-              },
-              {
-                id: '5089',
-                date: '09. 12 (Sat)',
-                time: 'Event Release',
-                cat: 'gbase',
-                catName: '🟡 Gundam Base',
-                name: 'RG 1/144 MSN-04FF Sazabi [Clear Color]',
-                grade: 'RG',
-                usd: 51.70,
-                jpy: 5170,
-                note: 'Gundam Base Tour & Pop-up Event Exclusive',
-                img: 'https://gunpla.fyi/images/boxarts/5089.jpeg'
-              },
-              {
-                id: '1097',
-                date: '09. 19 (Sat)',
-                time: 'Standard Retail',
-                cat: 'retail',
-                catName: '🔵 Retail Drop',
-                name: 'PG UNLEASHED 1/60 Nu Gundam',
-                grade: 'PG',
-                usd: 660.00,
-                jpy: 66000,
-                note: 'Official North America Retail Distribution',
-                img: 'https://gunpla.fyi/images/boxarts/1097.jpeg'
-              },
-              {
-                id: '5254',
-                date: '09. 19 (Sat)',
-                time: 'Standard Retail',
-                cat: 'retail',
-                catName: '🔵 Retail Drop',
-                name: 'HG 1/144 ALYZEUS',
-                grade: 'HG',
-                usd: 132.00,
-                jpy: 13200,
-                note: 'Official Hobby Retailers',
-                img: 'https://gunpla.fyi/images/boxarts/5254.jpeg'
-              },
-              {
-                id: '5182',
-                date: '09. 26 (Sat)',
-                time: 'Retail Restock',
-                cat: 'retail',
-                catName: '🔵 Restock',
-                name: 'MG 1/100 Zeta Gundam Ver.Ka',
-                grade: 'MG',
-                usd: 65.00,
-                jpy: 6500,
-                note: 'North America Retailers Restock Drop',
-                img: 'https://gunpla.fyi/images/boxarts/5182.jpeg'
-              },
-              {
-                id: '5281',
-                date: '09. 26 (Sat)',
-                time: 'Retail Restock',
-                cat: 'retail',
-                catName: '🔵 Restock',
-                name: 'RG 1/144 Hi-Nu Gundam',
-                grade: 'RG',
-                usd: 45.00,
-                jpy: 4500,
-                note: 'Official Hobby Stores Restock Drop',
-                img: 'https://gunpla.fyi/images/boxarts/5281.jpeg'
-              }
-            ]
-          },
-          '2026-08': {
-            label: 'August 2026 (Past Releases)',
-            items: [
-              {
-                id: '5250',
-                date: '08. 10 (Sat)',
-                time: 'Standard Release',
-                cat: 'retail',
-                catName: '🔵 Retail Drop',
-                name: 'HG 1/144 Rising Freedom Gundam',
-                grade: 'HG',
-                usd: 26.00,
-                jpy: 2600,
-                note: 'Available at North American retail outlets',
-                img: 'https://gunpla.fyi/images/boxarts/5250.jpeg'
-              },
-              {
-                id: '5251',
-                date: '08. 24 (Sat)',
-                time: 'Standard Release',
-                cat: 'retail',
-                catName: '🔵 Retail Drop',
-                name: 'RG 1/144 RX-78-2 Gundam Ver.2.0',
-                grade: 'RG',
-                usd: 35.00,
-                jpy: 3500,
-                note: 'Standard retail release across US hobby shops',
-                img: 'https://gunpla.fyi/images/boxarts/5251.jpeg'
-              }
-            ]
-          },
-          '2026-10': {
-            label: 'October 2026 (Upcoming Releases)',
-            items: [
-              {
-                id: '5227',
-                date: '10. 17 (Sat)',
-                time: 'Expected Drop',
-                cat: 'retail',
-                catName: '🔵 Retail Drop',
-                name: 'MGSD Wing Gundam Zero EW',
-                grade: 'MG',
-                usd: 42.00,
-                jpy: 4200,
-                note: 'Fall 2026 SD High-End Release',
-                img: 'https://gunpla.fyi/images/boxarts/5227.jpeg'
-              },
-              {
-                id: '4985',
-                date: '10. 24 (Sat)',
-                time: 'P-Bandai Shipments',
-                cat: 'clubg',
-                catName: '🔴 P-Bandai',
-                name: 'HG 1/144 Ghost Gundam [Batch 2]',
-                grade: 'HG',
-                usd: 24.00,
-                jpy: 2400,
-                note: 'Shipping to US pre-order backers',
-                img: 'https://gunpla.fyi/images/boxarts/4985.jpeg'
-              }
-            ]
-          }
+        {
+          "id": "4200",
+          "date": "09. 19 (토)",
+          "time": "전국 정규 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 발매",
+          "name": "PG UNLEASHED 1/60 ν(뉴) 건담",
+          "grade": "PG",
+          "jpy": 66000,
+          "krw": 792000,
+          "note": "전국 온/오프라인 일반 공식 판매",
+          "img": "images/4200_1.jpg"
+        },
+        {
+          "id": "4954",
+          "date": "09. 19 (토)",
+          "time": "전국 정규 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 발매",
+          "name": "HG 1/144 ALYZEUS (알리제우스)",
+          "grade": "HG",
+          "jpy": 13200,
+          "krw": 158400,
+          "note": "전국 건담 취급점",
+          "img": "https://bandai-a.akamaihd.net/bc/img/model/xl/1000251778_1.jpg"
+        },
+        {
+          "id": "647",
+          "date": "09. 26 (토)",
+          "time": "재입고 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 재판",
+          "name": "MG 1/100 제타 건담 Ver.Ka",
+          "grade": "MG",
+          "jpy": 7150,
+          "krw": 85800,
+          "note": "전국 온/오프라인 건프라 매장 재입고",
+          "img": "https://gunpla.fyi/images/boxarts/647.jpeg"
+        },
+        {
+          "id": "683",
+          "date": "09. 26 (토)",
+          "time": "재입고 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 재판",
+          "name": "RG 1/144 하이뉴 건담 (Hi-ν)",
+          "grade": "RG",
+          "jpy": 4950,
+          "krw": 59400,
+          "note": "전국 건담 취급점 재입고",
+          "img": "https://gunpla.fyi/images/boxarts/683.jpeg"
         }
-      };
+      ]
+    },
+    "2026-08": {
+      "label": "2026. 08 (지난 달 출하)",
+      "items": [
+        {
+          "id": "1290",
+          "date": "08. 10 (토)",
+          "time": "정규 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 발매",
+          "name": "HG 1/144 라이징 프리덤 건담",
+          "grade": "HG",
+          "jpy": 2640,
+          "krw": 31680,
+          "note": "전국 온/오프라인 발매",
+          "img": "https://gunpla.fyi/images/boxarts/1290.jpeg"
+        },
+        {
+          "id": "1585",
+          "date": "08. 24 (토)",
+          "time": "정규 출하",
+          "cat": "retail",
+          "catName": "🔵 일반 발매",
+          "name": "RG 1/144 RX-78-2 건담 Ver.2.0",
+          "grade": "RG",
+          "jpy": 3850,
+          "krw": 46200,
+          "note": "전국 일반 매장 정규 출시",
+          "img": "https://gunpla.fyi/images/boxarts/1585.jpeg"
+        }
+      ]
+    },
+    "2026-10": {
+      "label": "2026. 10 (다음 달 출하 예정)",
+      "items": [
+        {
+          "id": "1816",
+          "date": "10. 17 (토)",
+          "time": "정규 출하 예정",
+          "cat": "retail",
+          "catName": "🔵 일반 발매",
+          "name": "MGSD 윙 건담 제로 EW",
+          "grade": "MGSD",
+          "jpy": 4950,
+          "krw": 59400,
+          "note": "SD 하이엔드 최신작 정규 발매 예정",
+          "img": "https://gunpla.fyi/images/boxarts/1816.jpeg"
+        },
+        {
+          "id": "2495",
+          "date": "10. 24 (토)",
+          "time": "온라인 배송 예정",
+          "cat": "clubg",
+          "catName": "🔴 클럽G",
+          "name": "HG 1/144 고스트 건담 [2차 수주분]",
+          "grade": "HG",
+          "jpy": 6930,
+          "krw": 83160,
+          "note": "클럽G 사전 예약자 순차 택배 발송",
+          "img": "https://gunpla.fyi/images/boxarts/2495.jpeg"
+        }
+      ]
+    }
+  },
+  "JPY": {
+    "2026-09": {
+      "label": "2026年 09月 (今月の出荷予定)",
+      "items": [
+        {
+          "id": "4920",
+          "date": "09. 05 (金)",
+          "time": "13:00 予約開始",
+          "cat": "clubg",
+          "catName": "🔴 プレバン",
+          "name": "MG 1/100 F90IIIY クラスターガンダム用 ミッションパック Xタイプ",
+          "grade": "MG",
+          "jpy": 3850,
+          "note": "11月発送予定 (プレミアムバンダイ限定)",
+          "img": "images/4920_1.jpg"
+        },
+        {
+          "id": "5089",
+          "date": "09. 12 (土)",
+          "time": "店舗入荷",
+          "cat": "gbase",
+          "catName": "🟡 ガンダムベース限定",
+          "name": "RG 1/144 MSN-04FF サザビー [クリアカラー]",
+          "grade": "RG",
+          "jpy": 5170,
+          "note": "ガンダムベース東京・福岡・サテライト限定再入荷",
+          "img": "images/5089_1.jpg"
+        },
+        {
+          "id": "4200",
+          "date": "09. 19 (土)",
+          "time": "全国出荷予定",
+          "cat": "retail",
+          "catName": "🔵 一般発売",
+          "name": "PG UNLEASHED 1/60 νガンダム",
+          "grade": "PG",
+          "jpy": 66000,
+          "note": "全国ホビーショップ・量販店にて発売",
+          "img": "images/4200_1.jpg"
+        },
+        {
+          "id": "4954",
+          "date": "09. 19 (土)",
+          "time": "全国出荷予定",
+          "cat": "retail",
+          "catName": "🔵 一般発売",
+          "name": "HG 1/144 アリュゼウス",
+          "grade": "HG",
+          "jpy": 13200,
+          "note": "全国一般店舗出荷",
+          "img": "https://bandai-a.akamaihd.net/bc/img/model/xl/1000251778_1.jpg"
+        },
+        {
+          "id": "647",
+          "date": "09. 26 (土)",
+          "time": "再生産出荷",
+          "cat": "retail",
+          "catName": "🔵 一般再販",
+          "name": "MG 1/100 ゼータガンダム Ver.Ka",
+          "grade": "MG",
+          "jpy": 7150,
+          "note": "全国ホビー流通にて再販出荷",
+          "img": "https://gunpla.fyi/images/boxarts/647.jpeg"
+        },
+        {
+          "id": "683",
+          "date": "09. 26 (土)",
+          "time": "再生産出荷",
+          "cat": "retail",
+          "catName": "🔵 一般再販",
+          "name": "RG 1/144 Hi-νガンダム",
+          "grade": "RG",
+          "jpy": 4950,
+          "note": "全国模型店・量販店再入荷",
+          "img": "https://gunpla.fyi/images/boxarts/683.jpeg"
+        }
+      ]
+    },
+    "2026-08": {
+      "label": "2026年 08月 (先月の出荷)",
+      "items": [
+        {
+          "id": "1290",
+          "date": "08. 10 (土)",
+          "time": "一般出荷",
+          "cat": "retail",
+          "catName": "🔵 一般発売",
+          "name": "HG 1/144 ライジングフリーダムガンダム",
+          "grade": "HG",
+          "jpy": 2640,
+          "note": "全国一般店舗発売",
+          "img": "https://gunpla.fyi/images/boxarts/1290.jpeg"
+        },
+        {
+          "id": "1585",
+          "date": "08. 24 (土)",
+          "time": "一般出荷",
+          "cat": "retail",
+          "catName": "🔵 一般発売",
+          "name": "RG 1/144 RX-78-2 ガンダム Ver.2.0",
+          "grade": "RG",
+          "jpy": 3850,
+          "note": "全国一般店舗発売",
+          "img": "https://gunpla.fyi/images/boxarts/1585.jpeg"
+        }
+      ]
+    },
+    "2026-10": {
+      "label": "2026年 10月 (来月の出荷予定)",
+      "items": [
+        {
+          "id": "1816",
+          "date": "10. 17 (土)",
+          "time": "一般出荷予定",
+          "cat": "retail",
+          "catName": "🔵 一般発売",
+          "name": "MGSD ウイングガンダムゼロ EW",
+          "grade": "MGSD",
+          "jpy": 4950,
+          "note": "SDハイエンド最新作",
+          "img": "https://gunpla.fyi/images/boxarts/1816.jpeg"
+        },
+        {
+          "id": "2495",
+          "date": "10. 24 (土)",
+          "time": "発送開始予定",
+          "cat": "clubg",
+          "catName": "🔴 プレバン",
+          "name": "HG 1/144 ゴーストガンダム [2次]",
+          "grade": "HG",
+          "jpy": 6930,
+          "note": "プレミアムバンダイ予約者順次発送",
+          "img": "https://gunpla.fyi/images/boxarts/2495.jpeg"
+        }
+      ]
+    }
+  },
+  "USD": {
+    "2026-09": {
+      "label": "September 2026 (Monthly Releases)",
+      "items": [
+        {
+          "id": "4920",
+          "date": "09. 05 (Fri)",
+          "time": "21:00 EDT Drop",
+          "cat": "clubg",
+          "catName": "🔴 P-Bandai",
+          "name": "MG 1/100 MISSION PACK X-TYPE for F90ⅢY CLUSTER GUNDAM",
+          "grade": "MG",
+          "usd": 38.5,
+          "jpy": 3850,
+          "note": "Ships in November (P-Bandai US Pre-order)",
+          "img": "images/4920_1.jpg"
+        },
+        {
+          "id": "5089",
+          "date": "09. 12 (Sat)",
+          "time": "Event Release",
+          "cat": "gbase",
+          "catName": "🟡 Gundam Base",
+          "name": "RG 1/144 MSN-04FF Sazabi [Clear Color]",
+          "grade": "RG",
+          "usd": 51.7,
+          "jpy": 5170,
+          "note": "Gundam Base Tour & Pop-up Event Exclusive Restock",
+          "img": "images/5089_1.jpg"
+        },
+        {
+          "id": "4200",
+          "date": "09. 19 (Sat)",
+          "time": "Standard Retail",
+          "cat": "retail",
+          "catName": "🔵 Retail Drop",
+          "name": "PG UNLEASHED 1/60 ν GUNDAM",
+          "grade": "PG",
+          "usd": 660,
+          "jpy": 66000,
+          "note": "Official North America Retail Distribution",
+          "img": "images/4200_1.jpg"
+        },
+        {
+          "id": "4954",
+          "date": "09. 19 (Sat)",
+          "time": "Standard Retail",
+          "cat": "retail",
+          "catName": "🔵 Retail Drop",
+          "name": "HG 1/144 ALYZEUS",
+          "grade": "HG",
+          "usd": 132,
+          "jpy": 13200,
+          "note": "Official Hobby Retailers",
+          "img": "https://bandai-a.akamaihd.net/bc/img/model/xl/1000251778_1.jpg"
+        },
+        {
+          "id": "647",
+          "date": "09. 26 (Sat)",
+          "time": "Retail Restock",
+          "cat": "retail",
+          "catName": "🔵 Restock",
+          "name": "MG 1/100 Zeta Gundam Ver.Ka",
+          "grade": "MG",
+          "usd": 71.5,
+          "jpy": 7150,
+          "note": "North America Retailers Restock Drop",
+          "img": "https://gunpla.fyi/images/boxarts/647.jpeg"
+        },
+        {
+          "id": "683",
+          "date": "09. 26 (Sat)",
+          "time": "Retail Restock",
+          "cat": "retail",
+          "catName": "🔵 Restock",
+          "name": "RG 1/144 Hi-ν Gundam",
+          "grade": "RG",
+          "usd": 49.5,
+          "jpy": 4950,
+          "note": "Official Hobby Stores Restock Drop",
+          "img": "https://gunpla.fyi/images/boxarts/683.jpeg"
+        }
+      ]
+    },
+    "2026-08": {
+      "label": "August 2026 (Past Releases)",
+      "items": [
+        {
+          "id": "1290",
+          "date": "08. 10 (Sat)",
+          "time": "Standard Release",
+          "cat": "retail",
+          "catName": "🔵 Retail Drop",
+          "name": "HG 1/144 Rising Freedom Gundam",
+          "grade": "HG",
+          "usd": 26.4,
+          "jpy": 2640,
+          "note": "Available at North American retail outlets",
+          "img": "https://gunpla.fyi/images/boxarts/1290.jpeg"
+        },
+        {
+          "id": "1585",
+          "date": "08. 24 (Sat)",
+          "time": "Standard Release",
+          "cat": "retail",
+          "catName": "🔵 Retail Drop",
+          "name": "RG 1/144 RX-78-2 Gundam Ver.2.0",
+          "grade": "RG",
+          "usd": 38.5,
+          "jpy": 3850,
+          "note": "Standard retail release across US hobby shops",
+          "img": "https://gunpla.fyi/images/boxarts/1585.jpeg"
+        }
+      ]
+    },
+    "2026-10": {
+      "label": "October 2026 (Upcoming Releases)",
+      "items": [
+        {
+          "id": "1816",
+          "date": "10. 17 (Sat)",
+          "time": "Expected Drop",
+          "cat": "retail",
+          "catName": "🔵 Retail Drop",
+          "name": "MGSD Wing Gundam Zero EW",
+          "grade": "MGSD",
+          "usd": 49.5,
+          "jpy": 4950,
+          "note": "Fall 2026 SD High-End Release",
+          "img": "https://gunpla.fyi/images/boxarts/1816.jpeg"
+        },
+        {
+          "id": "2495",
+          "date": "10. 24 (Sat)",
+          "time": "P-Bandai Shipments",
+          "cat": "clubg",
+          "catName": "🔴 P-Bandai",
+          "name": "HG 1/144 Ghost Gundam [Batch 2]",
+          "grade": "HG",
+          "usd": 69.3,
+          "jpy": 6930,
+          "note": "Shipping to US pre-order backers",
+          "img": "https://gunpla.fyi/images/boxarts/2495.jpeg"
+        }
+      ]
+    }
+  }
+};
 
       const radarState = {
         currentMonthKey: '2026-09',
@@ -44382,7 +44383,7 @@ window.GUNPLA_MASTER_DATA = [
             html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
               '<div class="flex items-center gap-3 min-w-0">' +
                 '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-slate-900 border ' + (isWish ? 'border-pink-500/40' : 'border-slate-800') + ' shrink-0 p-1 flex items-center justify-center cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
-                  '<img src="' + item.img + '" alt="' + item.name + '" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" loading="lazy" onerror="this.src=\'https://gunpla.fyi/images/boxarts/1097.jpeg\'">' +
+                  '<img src="' + item.img + '" alt="' + item.name + '" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" loading="lazy" onerror="this.onerror=null; this.src=\'https://gunpla.fyi/images/boxarts/\' + item.id + \'.jpeg\'; this.onerror=function(){ this.style.display=\'none\'; };">' +
                   '<span class="absolute bottom-0.5 left-0.5 px-1 rounded text-[8px] font-mono font-bold bg-slate-950/90 text-cyan-300 border border-slate-800">' + item.grade + '</span>' +
                 '</div>' +
                 '<div class="min-w-0">' +

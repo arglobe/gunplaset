@@ -50180,10 +50180,18 @@ window.GUNPLA_MASTER_DATA = [
                 '<span class="text-slate-500 text-[10px]">(MSRP)</span>';
             }
 
+            const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + item.id + '.jpeg';
+            const isWeb = window.location.protocol.startsWith('http');
+            const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[item.id];
+            let radarImgUrl = item.img || defaultBoxartCdn;
+            if (isWeb && dbEntry && dbEntry.boxart_cdn_url && !dbEntry.boxart_cdn_url.startsWith('images/')) {
+              radarImgUrl = dbEntry.boxart_cdn_url;
+            }
+
             html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
               '<div class="flex items-center gap-3 min-w-0">' +
                 '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-slate-900 border ' + (isWish ? 'border-pink-500/40' : 'border-slate-800') + ' shrink-0 p-1 flex items-center justify-center cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
-                  '<img src="' + item.img + '" alt="' + item.name + '" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" loading="lazy" onerror="this.onerror=null; this.src=\'https://gunpla.fyi/images/boxarts/\' + item.id + \'.jpeg\'; this.onerror=function(){ this.style.display=\'none\'; };">' +
+                  '<img src="' + radarImgUrl + '" data-fallback="' + defaultBoxartCdn + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; }">' +
                   '<span class="absolute bottom-0.5 left-0.5 px-1 rounded text-[8px] font-mono font-bold bg-slate-950/90 text-cyan-300 border border-slate-800">' + item.grade + '</span>' +
                 '</div>' +
                 '<div class="min-w-0">' +

@@ -257,24 +257,43 @@ foreach ($mk in $kitsObj) {
     $pUrlLower = $entry.product_url.ToLower()
     $kNameLower = $mk.name.ToLower()
 
-    # 1. Local Image verification
+    # 1. Local Image verification (Strict Magic Bytes & Soft-404 Gate)
     if ($entry.product_url.StartsWith("images/")) {
         $localImgPath = Join-Path $rootDir ($entry.product_url -replace '/', '\')
         if (-not (Test-Path $localImgPath)) {
-            $imgLocalMissing += "$id ($($entry.product_url))"
+            $imgLocalMissing += "$id ($($entry.product_url) does not exist)"
         } else {
             $fileLen = (Get-Item $localImgPath).Length
-            if ($fileLen -lt 10000) {
+            if ($fileLen -lt 3000) {
                 $imgLocalMissing += "$id ($($entry.product_url) too small: $fileLen bytes)"
+            } elseif ($fileLen -eq 13464) {
+                $imgLocalMissing += "$id ($($entry.product_url) is Bandai Soft-404 HTML: 13,464 bytes)"
+            } else {
+                # Validate Magic Bytes (JPEG: FF D8 FF, PNG: 89 50 4E 47, WEBP: 52 49 46 46)
+                $fs = [System.IO.File]::OpenRead($localImgPath)
+                $headerBytes = New-Object byte[] 4
+                $fs.Read($headerBytes, 0, 4) | Out-Null
+                $fs.Close()
+                
+                $isJpeg = ($headerBytes[0] -eq 0xFF -and $headerBytes[1] -eq 0xD8 -and $headerBytes[2] -eq 0xFF)
+                $isPng  = ($headerBytes[0] -eq 0x89 -and $headerBytes[1] -eq 0x50 -and $headerBytes[2] -eq 0x4E -and $headerBytes[3] -eq 0x47)
+                $isWebp = ($headerBytes[0] -eq 0x52 -and $headerBytes[1] -eq 0x49 -and $headerBytes[2] -eq 0x46 -and $headerBytes[3] -eq 0x46)
+                
+                if (-not ($isJpeg -or $isPng -or $isWebp)) {
+                    $imgLocalMissing += "$id ($($entry.product_url) invalid magic bytes - not a valid image)"
+                }
             }
         }
     }
 
-    # 2. 2026 / Recent Kits Live Image Mandate: IDs >= 5280 must NOT use unverified gunpla.fyi fallback!
+    # 2. Strict Soft-404 & Unverified Fallback Elimination Gate
+    # Any 2026 kit (ID >= 5280) or known broken/pruned kit MUST use verified local or high-res assets!
+    $knownBrokenFyiIds = @("184", "4432", "4722", "4724", "4763", "4852", "4853", "4854", "4855", "4856", "4918", "4919", "4921", "4922", "4923", "4924")
     $idInt = 0
-    if ([int]::TryParse($id, [ref]$idInt) -and $idInt -ge 5280) {
-        if ($pUrlLower.Contains("gunpla.fyi/images/boxarts/$id.jpeg")) {
-            $imgUnverifiedFallbacks += "$id ($($mk.name)) points to unverified gunpla.fyi fallback"
+    [int]::TryParse($id, [ref]$idInt) | Out-Null
+    if ($pUrlLower.Contains("gunpla.fyi/images/boxarts/$id.jpeg")) {
+        if ($knownBrokenFyiIds -contains $id -or $idInt -ge 5280) {
+            $imgUnverifiedFallbacks += "$id ($($mk.name)) points to unverified/broken gunpla.fyi fallback"
         }
     }
 
@@ -301,7 +320,7 @@ if ($imgLocalMissing.Count -gt 0) {
     exit 1
 }
 if ($imgUnverifiedFallbacks.Count -gt 0) {
-    Write-Error "🚨 BUILD REJECTED: Recent kits using unverified gunpla.fyi fallback (404 risk):`n$($imgUnverifiedFallbacks -join "`n")"
+    Write-Error "🚨 BUILD REJECTED: Kits using unverified/broken gunpla.fyi fallback (404/Soft-404 risk):`n$($imgUnverifiedFallbacks -join "`n")"
     exit 1
 }
 if ($imgFinishMismatches.Count -gt 0) {
@@ -312,7 +331,7 @@ if ($imgPilotMismatches.Count -gt 0) {
     Write-Error "🚨 BUILD REJECTED: Pilot/Character mismatch detected (Zero-Mismatch violation):`n$($imgPilotMismatches -join "`n")"
     exit 1
 }
-Write-Output "✅ 100% Image Integrity & Zero-Mismatch Gate: All $($kitsObj.Count) kits verified (0 missing, 0 fallbacks, 0 mismatches)."
+Write-Output "✅ 100% Image Integrity & Zero-Mismatch Gate: All $($kitsObj.Count) kits verified (0 missing, 0 soft-404s, 0 fallbacks, 0 mismatches)."
 
 # 🛡️ Onerror Hardening Gate
 $onerrorMatches = [regex]::Matches($fullHtml, '(?i)onerror="([^"]+)"')

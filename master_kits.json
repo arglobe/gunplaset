@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "id":  "1",
         "name":  "1/144 HG AILE STRIKE GUNDAM",
@@ -1208,8 +1208,8 @@
     },
     {
         "id":  "1063",
-        "name":  "MG 1/100 ガンダムエクシアダークマター MG 1/100 GUNDAM EXIA DARK MATTER",
-        "nameEn":  "MG 1/100 ガンダムエクシアダークマター MG 1/100 GUNDAM EXIA DARK MATTER",
+        "name":  "MG 1/100 GUNDAM EXIA DARK MATTER",
+        "nameEn":  "MG 1/100 GUNDAM EXIA DARK MATTER",
         "nameJp":  "MG 1/100 ガンダムエクシアダークマター",
         "partNo":  "2279765",
         "releaseDate":  "2015-02-21",
@@ -1221,7 +1221,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2015-02-21",
-        "year":  2015
+        "year":  2015,
+        "nameKo":  "MG 1/100 건담 엑시아 다크 매터"
     },
     {
         "id":  "1064",
@@ -1667,8 +1668,8 @@
     },
     {
         "id":  "1101",
-        "name":  "エコプラ 1/144  RX-78-2 ガンダム 組立体験会Ver.",
-        "nameEn":  "",
+        "name":  "ECOPLA 1/144 RX-78-2 GUNDAM WORKSHOP Ver.",
+        "nameEn":  "ECOPLA 1/144 RX-78-2 GUNDAM WORKSHOP Ver.",
         "nameJp":  "エコプラ 1/144  RX-78-2 ガンダム 組立体験会Ver.",
         "partNo":  "2606673",
         "releaseDate":  "2022-04",
@@ -1680,7 +1681,8 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2022-04",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "에코프라 1/144 RX-78-2 건담 조립체험회Ver."
     },
     {
         "id":  "1102",
@@ -6529,8 +6531,8 @@
     },
     {
         "id":  "2048",
-        "name":  "MG 1/100 武者ガンダムMk-II 徳川家康Ver.",
-        "nameEn":  "MG 1/100 武者ガンダムMk-II 徳川家康Ver.",
+        "name":  "MG 1/100 MUSHA GUNDAM Mk-II TOKUGAWA IEYASU Ver.",
+        "nameEn":  "MG 1/100 MUSHA GUNDAM Mk-II TOKUGAWA IEYASU Ver.",
         "nameJp":  "ＭＧ 1/100 武者ガンダムMK-2 徳川家康Ｖｅｒ．",
         "partNo":  "2114436",
         "releaseDate":  "2012-01",
@@ -6542,7 +6544,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2012-01",
-        "year":  2012
+        "year":  2012,
+        "nameKo":  "MG 1/100 무사 건담 Mk-II 도쿠가와 이에야스 Ver."
     },
     {
         "id":  "2049",
@@ -11884,8 +11887,8 @@
     },
     {
         "id":  "2472",
-        "name":  "ＲＧ 1/144 ダブルオーザンライザー",
-        "nameEn":  "ＲＧ 1/144 ダブルオーザンライザー",
+        "name":  "RG 1/144 00 XN RAISER",
+        "nameEn":  "RG 1/144 00 XN RAISER",
         "nameJp":  "ＲＧ 1/144 ダブルオーザンライザー",
         "partNo":  "2583585",
         "releaseDate":  "2024-01",
@@ -11897,7 +11900,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-01",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "RG 1/144 더블오 잔 라이저"
     },
     {
         "id":  "2473",
@@ -12173,8 +12177,8 @@
     },
     {
         "id":  "2489",
-        "name":  "ＨＧ 1/144 高機動型ザク 地上用 (サンホ機)",
-        "nameEn":  "",
+        "name":  "HG 1/144 HIGH MOBILITY TYPE ZAKU GROUND TYPE (SANHO)",
+        "nameEn":  "HG 1/144 HIGH MOBILITY TYPE ZAKU GROUND TYPE (SANHO)",
         "nameJp":  "ＨＧ 1/144 高機動型ザク 地上用 (サンホ機)",
         "partNo":  "2646870",
         "releaseDate":  "2024-03",
@@ -12186,7 +12190,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-03",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "HG 1/144 고기동형 자쿠 지상용 (산호기)"
     },
     {
         "id":  "249",
@@ -16627,8 +16632,8 @@
     },
     {
         "id":  "2729",
-        "name":  "ＭＧ 1/100 ダブルオークアンタ フルセイバー [スペシャルコーティング]",
-        "nameEn":  "",
+        "name":  "MG 1/100 00 QAN[T] FULL SABER [SPECIAL COATING]",
+        "nameEn":  "MG 1/100 00 QAN[T] FULL SABER [SPECIAL COATING]",
         "nameJp":  "ＭＧ 1/100 ダブルオークアンタ フルセイバー [スペシャルコーティング]",
         "partNo":  "2463103",
         "releaseDate":  "2019-07",
@@ -16640,7 +16645,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-07",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "MG 1/100 더블오 퀀터 풀 세이버 [스페셜 코팅]"
     },
     {
         "id":  "273",
@@ -17834,8 +17840,8 @@
     },
     {
         "id":  "2848",
-        "name":  "ガンダムデカールＤＸ 06 機動戦士ガンダムUC MS用 【1/100スケール 推奨】",
-        "nameEn":  "",
+        "name":  "GUNDAM DECAL DX 06 FOR MOBILE SUIT GUNDAM UC MS [1/100 SCALE]",
+        "nameEn":  "GUNDAM DECAL DX 06 FOR MOBILE SUIT GUNDAM UC MS [1/100 SCALE]",
         "nameJp":  "ガンダムデカールＤＸ 06 機動戦士ガンダムUC MS用 【1/100スケール 推奨】",
         "partNo":  "2351313",
         "releaseDate":  "2014-04",
@@ -17847,7 +17853,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2014-04",
-        "year":  2014
+        "year":  2014,
+        "nameKo":  "건담 데칼 DX 06 기동전사 건담 UC MS용 [1/100스케일 권장]"
     },
     {
         "id":  "2849",
@@ -19636,8 +19643,8 @@
     },
     {
         "id":  "3207",
-        "name":  "ＨＧ 1/144 ガンダムプルトーネブラック",
-        "nameEn":  "",
+        "name":  "HG 1/144 GUNDAM PLUTONE BLACK",
+        "nameEn":  "HG 1/144 GUNDAM PLUTONE BLACK",
         "nameJp":  "ＨＧ 1/144 ガンダムプルトーネブラック",
         "partNo":  "2795386",
         "releaseDate":  "2025-06",
@@ -19649,12 +19656,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 플루토네 블랙"
     },
     {
         "id":  "3208",
-        "name":  "ＨＧ 1/144 レオン",
-        "nameEn":  "",
+        "name":  "HG 1/144 LEON",
+        "nameEn":  "HG 1/144 LEON",
         "nameJp":  "ＨＧ 1/144 レオン",
         "partNo":  "2762133",
         "releaseDate":  "2025-06",
@@ -19666,12 +19674,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 레온"
     },
     {
         "id":  "3209",
-        "name":  "ＭＧ 1/100 Ｆ８０ ガンレイド",
-        "nameEn":  "",
+        "name":  "MG 1/100 F80 GUNRAID",
+        "nameEn":  "MG 1/100 F80 GUNRAID",
         "nameJp":  "ＭＧ 1/100 Ｆ８０ ガンレイド",
         "partNo":  "2762135",
         "releaseDate":  "2025-06",
@@ -19683,7 +19692,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 F80 건레이드"
     },
     {
         "id":  "321",
@@ -19704,8 +19714,8 @@
     },
     {
         "id":  "3210",
-        "name":  "ＲＧ 1/144 ガンダムアヴァランチエクシアダッシュ",
-        "nameEn":  "",
+        "name":  "RG 1/144 GUNDAM AVALANCHE EXIA DASH",
+        "nameEn":  "RG 1/144 GUNDAM AVALANCHE EXIA DASH",
         "nameJp":  "ＲＧ 1/144 ガンダムアヴァランチエクシアダッシュ",
         "partNo":  "2762134",
         "releaseDate":  "2025-06",
@@ -19717,7 +19727,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 건담 아발란체 엑시아 대시"
     },
     {
         "id":  "322",
@@ -28748,8 +28759,8 @@
     },
     {
         "id":  "4291",
-        "name":  "RG 1/144 ガンダムベース限定 RX-0 ユニコーンガンダム(デストロイモード) Ver.TWC(LIGHTING MODEL)",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED RX-0 UNICORN GUNDAM (DESTROY MODE) Ver.TWC (LIGHTING MODEL)",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED RX-0 UNICORN GUNDAM (DESTROY MODE) Ver.TWC (LIGHTING MODEL)",
         "nameJp":  "RG 1/144 ガンダムベース限定 RX-0 ユニコーンガンダム(デストロイモード) Ver.TWC(LIGHTING MODEL)",
         "partNo":  "2403827",
         "releaseDate":  "2018-06",
@@ -28761,7 +28772,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-06",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "RG 1/144 건담베이스 한정 RX-0 유니콘 건담 (디스트로이 모드) Ver.TWC (라이팅 모델)"
     },
     {
         "id":  "4292",
@@ -28799,8 +28811,8 @@
     },
     {
         "id":  "4294",
-        "name":  "RG 1/144 ガンダムベース限定 ユニコーンガンダム2号機 バンシィ・ノルン (デストロイモード) (LIGHTING MODEL)",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 02 BANSHEE NORN (DESTROY MODE) (LIGHTING MODEL)",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 02 BANSHEE NORN (DESTROY MODE) (LIGHTING MODEL)",
         "nameJp":  "RG 1/144 ガンダムベース限定 ユニコーンガンダム2号機 バンシィ・ノルン (デストロイモード) (LIGHTING MODEL)",
         "partNo":  "2474718",
         "releaseDate":  "2019-04-20",
@@ -28812,12 +28824,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-04-20",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "RG 1/144 건담베이스 한정 유니콘 건담 2호기 밴시 노른 (디스트로이 모드) (라이팅 모델)"
     },
     {
         "id":  "4295",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット002",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 002",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 002",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット002",
         "partNo":  "2498041",
         "releaseDate":  "2019-10-12",
@@ -28829,12 +28842,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-10-12",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 002"
     },
     {
         "id":  "4296",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット003",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 003",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 003",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット003",
         "partNo":  "2500169",
         "releaseDate":  "2019-12-20",
@@ -28846,12 +28860,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-12-20",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 003"
     },
     {
         "id":  "4297",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット005",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 005",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 005",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット005",
         "partNo":  "2512892",
         "releaseDate":  "2020-02-08",
@@ -28863,12 +28878,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-02-08",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 005"
     },
     {
         "id":  "4298",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット009",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 009",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 009",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット009",
         "partNo":  "2526874",
         "releaseDate":  "2020-10",
@@ -28880,12 +28896,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-10",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 009"
     },
     {
         "id":  "4299",
-        "name":  "1/100 ガンダムベース限定 MSエフェクト01(クリアブルー)",
-        "nameEn":  "",
+        "name":  "1/100 THE GUNDAM BASE LIMITED MS EFFECT 01 (CLEAR BLUE)",
+        "nameEn":  "1/100 THE GUNDAM BASE LIMITED MS EFFECT 01 (CLEAR BLUE)",
         "nameJp":  "1/100 ガンダムベース限定 MSエフェクト01(クリアブルー)",
         "partNo":  "2569550",
         "releaseDate":  "2021-06-21",
@@ -28897,7 +28914,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-06-21",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "1/100 건담베이스 한정 MS 이펙트 01 (클리어 블루)"
     },
     {
         "id":  "43",
@@ -28935,8 +28953,8 @@
     },
     {
         "id":  "4300",
-        "name":  "MG 1/100 ガンダムベース限定 ガンダムナドレ",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM NADLEEH",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM NADLEEH",
         "nameJp":  "MG 1/100 ガンダムベース限定 ガンダムナドレ",
         "partNo":  "2582154",
         "releaseDate":  "2023-10-07",
@@ -28948,7 +28966,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-10-07",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "MG 1/100 건담베이스 한정 건담 나드레"
     },
     {
         "id":  "4301",
@@ -28986,8 +29005,8 @@
     },
     {
         "id":  "4303",
-        "name":  "ハロプラ ガンダムベース限定 ハロ [スペシャルコーティング] ゴールド\u0026シルバー",
-        "nameEn":  "",
+        "name":  "HAROPLA THE GUNDAM BASE LIMITED HARO [SPECIAL COATING] GOLD \u0026 SILVER",
+        "nameEn":  "HAROPLA THE GUNDAM BASE LIMITED HARO [SPECIAL COATING] GOLD \u0026 SILVER",
         "nameJp":  "ハロプラ ガンダムベース限定 ハロ [スペシャルコーティング] ゴールド\u0026シルバー",
         "partNo":  "2773837",
         "releaseDate":  "2025-10-11",
@@ -28999,12 +29018,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "하로프라 건담베이스 한정 하로 [스페셜 코팅] 골드 \u0026 실버"
     },
     {
         "id":  "4305",
-        "name":  "ガンダムベース限定 マルチビルダーズケース【ガンダムベースカラー】",
-        "nameEn":  "",
+        "name":  "THE GUNDAM BASE LIMITED MULTI BUILDERS CASE [GUNDAM BASE COLOR]",
+        "nameEn":  "THE GUNDAM BASE LIMITED MULTI BUILDERS CASE [GUNDAM BASE COLOR]",
         "nameJp":  "ガンダムベース限定 マルチビルダーズケース【ガンダムベースカラー】",
         "partNo":  "2794174",
         "releaseDate":  "2025-12-27",
@@ -29016,7 +29036,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12-27",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "건담베이스 한정 멀티 빌더즈 케이스 [건담베이스 컬러]"
     },
     {
         "id":  "4306",
@@ -29105,8 +29126,8 @@
     },
     {
         "id":  "4310",
-        "name":  "ハロプラ GUNDAM SIDE-F限定 ハロ [GUNDAM SIDE-Fカラー]",
-        "nameEn":  "",
+        "name":  "HAROPLA GUNDAM SIDE-F LIMITED HARO [GUNDAM SIDE-F COLOR]",
+        "nameEn":  "HAROPLA GUNDAM SIDE-F LIMITED HARO [GUNDAM SIDE-F COLOR]",
         "nameJp":  "ハロプラ GUNDAM SIDE-F限定 ハロ [GUNDAM SIDE-Fカラー]",
         "partNo":  "2621810",
         "releaseDate":  "2022-04-25",
@@ -29118,7 +29139,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-04-25",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "하로프라 GUNDAM SIDE-F 한정 하로 [GUNDAM SIDE-F 컬러]"
     },
     {
         "id":  "4311",
@@ -29156,8 +29178,8 @@
     },
     {
         "id":  "4313",
-        "name":  "BB戦士 MSN-04FF サザビー",
-        "nameEn":  "",
+        "name":  "BB SENSHI MSN-04FF SAZABI",
+        "nameEn":  "BB SENSHI MSN-04FF SAZABI",
         "nameJp":  "BB戦士 MSN-04FF サザビー",
         "partNo":  "2658443",
         "releaseDate":  "2023-05-03",
@@ -29169,7 +29191,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-05-03",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "BB전사 MSN-04FF 사자비"
     },
     {
         "id":  "4314",
@@ -29190,8 +29213,8 @@
     },
     {
         "id":  "4315",
-        "name":  "1/550 α･アジール [メタリック]",
-        "nameEn":  "",
+        "name":  "1/550 ALPHA AZEIRU [METALLIC]",
+        "nameEn":  "1/550 ALPHA AZEIRU [METALLIC]",
         "nameJp":  "1/550 α･アジール [メタリック]",
         "partNo":  "2783978",
         "releaseDate":  "2025-04-26",
@@ -29203,12 +29226,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-26",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "1/550 알파 아질 [메탈릭]"
     },
     {
         "id":  "4316",
-        "name":  "RG 1/144 GUNDAM SIDE-F限定 νガンダム (ファーストロットカラーVer.)",
-        "nameEn":  "",
+        "name":  "RG 1/144 GUNDAM SIDE-F LIMITED Nu GUNDAM (FIRST LOT COLOR Ver.)",
+        "nameEn":  "RG 1/144 GUNDAM SIDE-F LIMITED Nu GUNDAM (FIRST LOT COLOR Ver.)",
         "nameJp":  "RG 1/144 GUNDAM SIDE-F限定 νガンダム (ファーストロットカラーVer.)",
         "partNo":  "2583474",
         "releaseDate":  "2023-12-22",
@@ -29220,7 +29244,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-12-22",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "RG 1/144 GUNDAM SIDE-F 한정 뉴 건담 (퍼스트 로트 컬러 Ver.)"
     },
     {
         "id":  "4317",
@@ -29241,8 +29266,8 @@
     },
     {
         "id":  "4318",
-        "name":  "HG 1/144 GUNDAM SIDE-F限定 ジェガン (ユウ・カジマ専用機)",
-        "nameEn":  "",
+        "name":  "HG 1/144 GUNDAM SIDE-F LIMITED JEGAN (YUU KAJIMA CUSTOM)",
+        "nameEn":  "HG 1/144 GUNDAM SIDE-F LIMITED JEGAN (YUU KAJIMA CUSTOM)",
         "nameJp":  "HG 1/144 GUNDAM SIDE-F限定 ジェガン (ユウ・カジマ専用機)",
         "partNo":  "2611095",
         "releaseDate":  "2022-10-08",
@@ -29254,7 +29279,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-10-08",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "HG 1/144 GUNDAM SIDE-F 한정 제간 (유우 카지마 전용기)"
     },
     {
         "id":  "4319",
@@ -29309,8 +29335,8 @@
     },
     {
         "id":  "4321",
-        "name":  "SD ガンダムベース限定 RX-零丸(獅子吼)",
-        "nameEn":  "",
+        "name":  "SD THE GUNDAM BASE LIMITED RX-ZEROMARU (SHISHIKU)",
+        "nameEn":  "SD THE GUNDAM BASE LIMITED RX-ZEROMARU (SHISHIKU)",
         "nameJp":  "SD ガンダムベース限定 RX-零丸(獅子吼)",
         "partNo":  "2474717",
         "releaseDate":  "2019-04-20",
@@ -29322,7 +29348,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-04-20",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "SD 건담베이스 한정 RX-영환 (사자후)"
     },
     {
         "id":  "4322",
@@ -29343,8 +29370,8 @@
     },
     {
         "id":  "4323",
-        "name":  "HG 1/144 ガンダムベース限定 シャア専用ザクII[メタリック]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II [METALLIC]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II [METALLIC]",
         "nameJp":  "HG 1/144 ガンダムベース限定 シャア専用ザクII[メタリック]",
         "partNo":  "2544307",
         "releaseDate":  "2021-07-10",
@@ -29356,12 +29383,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-07-10",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "HG 1/144 건담베이스 한정 샤아 전용 자쿠 II [메탈릭]"
     },
     {
         "id":  "4324",
-        "name":  "HG 1/144 ガンダムベース限定 ザクII(21stCENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED ZAKU II (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED ZAKU II (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ザクII(21stCENTURY REAL TYPE Ver.)",
         "partNo":  "2558578",
         "releaseDate":  "2021-01-08",
@@ -29373,7 +29401,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-01-08",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "HG 1/144 건담베이스 한정 자쿠 II (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "4325",
@@ -29411,8 +29440,8 @@
     },
     {
         "id":  "4327",
-        "name":  "HG 1/144 ガンダムベース限定 シャア専用ザクII(21stCENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 シャア専用ザクII(21stCENTURY REAL TYPE Ver.)",
         "partNo":  "2604762",
         "releaseDate":  "2022-11-19",
@@ -29424,12 +29453,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-11-19",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "HG 1/144 건담베이스 한정 샤아 전용 자쿠 II (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "4328",
-        "name":  "MG 1/100 ガンダムベース限定 ガンダムAGE-1 ウェアシステムセット[クリアカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM AGE-1 WEAR SYSTEM SET [CLEAR COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM AGE-1 WEAR SYSTEM SET [CLEAR COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ガンダムAGE-1 ウェアシステムセット[クリアカラー]",
         "partNo":  "2611091",
         "releaseDate":  "2022-04-29",
@@ -29441,7 +29471,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-04-29",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "MG 1/100 건담베이스 한정 건담 AGE-1 웨어 시스템 세트 [클리어 컬러]"
     },
     {
         "id":  "433",
@@ -29496,8 +29527,8 @@
     },
     {
         "id":  "4357",
-        "name":  "MG 1/100 ガンダムベース限定 ドム[クリアカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED DOM [CLEAR COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED DOM [CLEAR COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ドム[クリアカラー]",
         "partNo":  "2654125",
         "releaseDate":  "2023-05-03",
@@ -29509,12 +29540,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-05-03",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "MG 1/100 건담베이스 한정 돔 [클리어 컬러]"
     },
     {
         "id":  "4358",
-        "name":  "MG 1/100 ガンダムべース限定 RX-78-3 G-3ガンダム Ver.3.0",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-3 G-3 GUNDAM Ver.3.0",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-3 G-3 GUNDAM Ver.3.0",
         "nameJp":  "MG 1/100 ガンダムべース限定 RX-78-3 G-3ガンダム Ver.3.0",
         "partNo":  "2715397",
         "releaseDate":  "2024-09-14",
@@ -29526,12 +29558,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-09-14",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "MG 1/100 건담베이스 한정 RX-78-3 G-3 건담 Ver.3.0"
     },
     {
         "id":  "4359",
-        "name":  "HG 1/144 ガンダムベース福岡限定 シナンジュ Ver.GSF",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE FUKUOKA LIMITED SINANJU Ver.GSF",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE FUKUOKA LIMITED SINANJU Ver.GSF",
         "nameJp":  "HG 1/144 ガンダムベース福岡限定 シナンジュ Ver.GSF",
         "partNo":  "2733969",
         "releaseDate":  "2024-11-30",
@@ -29543,7 +29576,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-11-30",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "HG 1/144 건담베이스 후쿠오카 한정 시난주 Ver.GSF"
     },
     {
         "id":  "436",
@@ -29564,8 +29598,8 @@
     },
     {
         "id":  "4360",
-        "name":  "HG 1/144 ガンダムベース限定 ゼータガンダム[U.C.0088] (バイオセンサーイメージカラー)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED ZETA GUNDAM [U.C.0088] (BIO-SENSOR IMAGE COLOR)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED ZETA GUNDAM [U.C.0088] (BIO-SENSOR IMAGE COLOR)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ゼータガンダム[U.C.0088] (バイオセンサーイメージカラー)",
         "partNo":  "2783968",
         "releaseDate":  "2025-04-19",
@@ -29577,12 +29611,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-19",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담베이스 한정 제타 건담 [U.C.0088] (바이오센서 이미지 컬러)"
     },
     {
         "id":  "4361",
-        "name":  "MG 1/100 ガンダムベース限定 ウイングガンダムゼロ EW Ver.Ka [リサーキュレーションカラー/ネオンピンク]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED WING GUNDAM ZERO EW Ver.Ka [RECIRCULATION COLOR / NEON PINK]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED WING GUNDAM ZERO EW Ver.Ka [RECIRCULATION COLOR / NEON PINK]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ウイングガンダムゼロ EW Ver.Ka [リサーキュレーションカラー/ネオンピンク]",
         "partNo":  "2783970",
         "releaseDate":  "2025-04-11",
@@ -29594,12 +29629,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담베이스 한정 윙 건담 제로 EW Ver.Ka [리서큘레이션 컬러/네온 핑크]"
     },
     {
         "id":  "4362",
-        "name":  "MG 1/100 ガンダムベース限定 ガンダムアストレイ レッドフレーム [リサーキュレーションカラー/ネオンピンク］",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM ASTRAY RED FRAME [RECIRCULATION COLOR / NEON PINK]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM ASTRAY RED FRAME [RECIRCULATION COLOR / NEON PINK]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ガンダムアストレイ レッドフレーム [リサーキュレーションカラー/ネオンピンク］",
         "partNo":  "2783971",
         "releaseDate":  "2025-04-11",
@@ -29611,12 +29647,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담베이스 한정 건담 아스트레이 레드 프레임 [리서큘레이션 컬러/네온 핑크]"
     },
     {
         "id":  "4363",
-        "name":  "Figure-rise Standard ガンダムベース限定 ルナマリア･ホーク [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "Figure-rise Standard THE GUNDAM BASE LIMITED LUNAMARIA HAWKE [GUNDAM BASE COLOR]",
+        "nameEn":  "Figure-rise Standard THE GUNDAM BASE LIMITED LUNAMARIA HAWKE [GUNDAM BASE COLOR]",
         "nameJp":  "Figure-rise Standard ガンダムベース限定 ルナマリア･ホーク [ガンダムベースカラー]",
         "partNo":  "2783974",
         "releaseDate":  "2025-10-11",
@@ -29628,12 +29665,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "Figure-rise Standard 건담베이스 한정 루나마리아 호크 [건담베이스 컬러]"
     },
     {
         "id":  "4364",
-        "name":  "HG 1/144 ガンダムベース限定 グフ・フライトタイプ(21stCENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED GOUF FLIGHT TYPE (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED GOUF FLIGHT TYPE (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 グフ・フライトタイプ(21stCENTURY REAL TYPE Ver.)",
         "partNo":  "2475078",
         "releaseDate":  "2019-08-09",
@@ -29645,12 +29683,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-08-09",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HG 1/144 건담베이스 한정 구프 플라이트 타입 (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "4365",
-        "name":  "Figure-rise Mechanics ガンダムベース限定 ハロ  (LIGHTING UNIT SET)",
-        "nameEn":  "",
+        "name":  "Figure-rise Mechanics THE GUNDAM BASE LIMITED HARO (LIGHTING UNIT SET)",
+        "nameEn":  "Figure-rise Mechanics THE GUNDAM BASE LIMITED HARO (LIGHTING UNIT SET)",
         "nameJp":  "Figure-rise Mechanics ガンダムベース限定 ハロ  (LIGHTING UNIT SET)",
         "partNo":  "2475306",
         "releaseDate":  "2019-07-20",
@@ -29662,12 +29701,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-07-20",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "Figure-rise Mechanics 건담베이스 한정 하로 (라이팅 유닛 세트)"
     },
     {
         "id":  "4366",
-        "name":  "Figure-rise Standard BD ガンダムベース限定 ダイバーアヤメ[ガンダムベースカラー]\u0026プチッガイセット",
-        "nameEn":  "",
+        "name":  "Figure-rise Standard BD THE GUNDAM BASE LIMITED DIVER AYAME [GUNDAM BASE COLOR] \u0026 PETIT\u0027GGUY SET",
+        "nameEn":  "Figure-rise Standard BD THE GUNDAM BASE LIMITED DIVER AYAME [GUNDAM BASE COLOR] \u0026 PETIT\u0027GGUY SET",
         "nameJp":  "Figure-rise Standard BD ガンダムベース限定 ダイバーアヤメ[ガンダムベースカラー]\u0026プチッガイセット",
         "partNo":  "2499057",
         "releaseDate":  "2019-09-01",
@@ -29679,12 +29719,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-09-01",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "Figure-rise Standard BD 건담베이스 한정 다이버 아야메 [건담베이스 컬러] \u0026 쁘띠가이 세트"
     },
     {
         "id":  "4367",
-        "name":  "LEGENDBB ガンダムベース限定 飛駆鳥大将軍 [クリアカラー]",
-        "nameEn":  "",
+        "name":  "LEGENDBB THE GUNDAM BASE LIMITED VICTORY DAISHOGUN [CLEAR COLOR]",
+        "nameEn":  "LEGENDBB THE GUNDAM BASE LIMITED VICTORY DAISHOGUN [CLEAR COLOR]",
         "nameJp":  "LEGENDBB ガンダムベース限定 飛駆鳥大将軍 [クリアカラー]",
         "partNo":  "2511936",
         "releaseDate":  "2020-01-25",
@@ -29696,12 +29737,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-01-25",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "LEGENDBB 건담베이스 한정 빅토리 대장군 [클리어 컬러]"
     },
     {
         "id":  "4368",
-        "name":  "HG 1/144 ガンダムベース福岡限定 ユニコーンガンダム ペルフェクティビリティ(デストロイモード) (最終決戦仕様)Ver.GSF【クリアカラー】",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE FUKUOKA LIMITED UNICORN GUNDAM PERFECTIBILITY (DESTROY MODE) (FINAL BATTLE SPEC) Ver.GSF [CLEAR COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE FUKUOKA LIMITED UNICORN GUNDAM PERFECTIBILITY (DESTROY MODE) (FINAL BATTLE SPEC) Ver.GSF [CLEAR COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース福岡限定 ユニコーンガンダム ペルフェクティビリティ(デストロイモード) (最終決戦仕様)Ver.GSF【クリアカラー】",
         "partNo":  "2773823",
         "releaseDate":  "2025-08-08",
@@ -29713,7 +29755,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담베이스 후쿠오카 한정 유니콘 건담 페르펙티빌리티 (디스트로이 모드) (최종결전 사양) Ver.GSF [클리어 컬러]"
     },
     {
         "id":  "437",
@@ -29819,8 +29862,8 @@
     },
     {
         "id":  "4393",
-        "name":  "HG 1/144 ガンダムベース限定 すーぱーふみな [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED SUPER FUMINA [GUNDAM BASE COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED SUPER FUMINA [GUNDAM BASE COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース限定 すーぱーふみな [ガンダムベースカラー]",
         "partNo":  "2390175",
         "releaseDate":  "2017-08",
@@ -29832,7 +29875,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-08",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "HG 1/144 건담베이스 한정 수퍼 후미나 [건담베이스 컬러]"
     },
     {
         "id":  "4394",
@@ -29853,8 +29897,8 @@
     },
     {
         "id":  "4395",
-        "name":  "HG 1/144 ガンダムベース限定 ベアッガイIII [トリコロールペイント]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED BEARGGUY III [TRICOLOR PAINT]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED BEARGGUY III [TRICOLOR PAINT]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ベアッガイIII [トリコロールペイント]",
         "partNo":  "2405200",
         "releaseDate":  "2017-12",
@@ -29866,7 +29910,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-12",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "HG 1/144 건담베이스 한정 베앗가이 III [트라이컬러 페인트]"
     },
     {
         "id":  "4396",
@@ -30125,8 +30170,8 @@
     },
     {
         "id":  "4409",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット001",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 001",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 001",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット001",
         "partNo":  "2498040",
         "releaseDate":  "2019-10-21",
@@ -30138,7 +30183,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-10-21",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 001"
     },
     {
         "id":  "441",
@@ -30176,8 +30222,8 @@
     },
     {
         "id":  "4411",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット004",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 004",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 004",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット004",
         "partNo":  "2500180",
         "releaseDate":  "2019-12-20",
@@ -30189,7 +30235,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-12-20",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 004"
     },
     {
         "id":  "4412",
@@ -30278,8 +30325,8 @@
     },
     {
         "id":  "4417",
-        "name":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム デストロイモード[メタリックグロスインジェクション]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM (DESTROY MODE) [METALLIC GLOSS INJECTION]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM (DESTROY MODE) [METALLIC GLOSS INJECTION]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム デストロイモード[メタリックグロスインジェクション]",
         "partNo":  "2401850",
         "releaseDate":  "2017-10",
@@ -30291,12 +30338,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-10",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "HG 1/144 건담베이스 한정 유니콘 건담 (디스트로이 모드) [메탈릭 글로스 인젝션]"
     },
     {
         "id":  "4418",
-        "name":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム ユニコーンモード[メタリックグロスインジェクション]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM (UNICORN MODE) [METALLIC GLOSS INJECTION]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM (UNICORN MODE) [METALLIC GLOSS INJECTION]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム ユニコーンモード[メタリックグロスインジェクション]",
         "partNo":  "2403101",
         "releaseDate":  "2017-10",
@@ -30308,12 +30356,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-10",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "HG 1/144 건담베이스 한정 유니콘 건담 (유니콘 모드) [메탈릭 글로스 인젝션]"
     },
     {
         "id":  "4419",
-        "name":  "RG 1/144 ガンダムベース限定 RX-0 ユニコーンガンダム Ver.TWC",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED RX-0 UNICORN GUNDAM Ver.TWC",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED RX-0 UNICORN GUNDAM Ver.TWC",
         "nameJp":  "RG 1/144 ガンダムベース限定 RX-0 ユニコーンガンダム Ver.TWC",
         "partNo":  "2403829",
         "releaseDate":  "2017-09",
@@ -30325,7 +30374,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-09",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "RG 1/144 건담베이스 한정 RX-0 유니콘 건담 Ver.TWC"
     },
     {
         "id":  "442",
@@ -30363,8 +30413,8 @@
     },
     {
         "id":  "4421",
-        "name":  "HG 1/144 ガンダムベース限定 シャア専用ザクII [メタリック]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II [METALLIC]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED CHAR\u0027S ZAKU II [METALLIC]",
         "nameJp":  "HG 1/144 ガンダムベース限定 シャア専用ザクII [メタリック]",
         "partNo":  "2406585",
         "releaseDate":  "2018-03",
@@ -30376,7 +30426,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-03",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "HG 1/144 건담베이스 한정 샤아 전용 자쿠 II [메탈릭]"
     },
     {
         "id":  "4422",
@@ -30397,8 +30448,8 @@
     },
     {
         "id":  "4423",
-        "name":  "PG 1/60 ガンダムベース限定 RX-78-3 G-3ガンダム [エクストラフィニッシュ]",
-        "nameEn":  "",
+        "name":  "PG 1/60 THE GUNDAM BASE LIMITED RX-78-3 G-3 GUNDAM [EXTRA FINISH]",
+        "nameEn":  "PG 1/60 THE GUNDAM BASE LIMITED RX-78-3 G-3 GUNDAM [EXTRA FINISH]",
         "nameJp":  "PG 1/60 ガンダムベース限定 RX-78-3 G-3ガンダム [エクストラフィニッシュ]",
         "partNo":  "2431241",
         "releaseDate":  "2018-06",
@@ -30410,12 +30461,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-06",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "PG 1/60 건담베이스 한정 RX-78-3 G-3 건담 [엑스트라 피니시]"
     },
     {
         "id":  "4424",
-        "name":  "MG 1/100 ガンダムベース限定 クロスボーンガンダムX-1 フルクロス [エクストラフィニッシュ]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED CROSSBONE GUNDAM X-1 FULL CLOTH [EXTRA FINISH]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED CROSSBONE GUNDAM X-1 FULL CLOTH [EXTRA FINISH]",
         "nameJp":  "MG 1/100 ガンダムベース限定 クロスボーンガンダムX-1 フルクロス [エクストラフィニッシュ]",
         "partNo":  "2431281",
         "releaseDate":  "2018-04",
@@ -30427,12 +30479,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-04",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "MG 1/100 건담베이스 한정 크로스본 건담 X-1 풀 클로스 [엑스트라 피니시]"
     },
     {
         "id":  "4425",
-        "name":  "HG 1/144 ガンダムベース限定 ういにんぐふみな [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED WINNING FUMINA [GUNDAM BASE COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED WINNING FUMINA [GUNDAM BASE COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ういにんぐふみな [ガンダムベースカラー]",
         "partNo":  "2431324",
         "releaseDate":  "2018-05",
@@ -30444,12 +30497,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-05",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "HG 1/144 건담베이스 한정 위닝 후미나 [건담베이스 컬러]"
     },
     {
         "id":  "4426",
-        "name":  "HG 1/144 ガンダムベース限定 νガンダムvsサザビー(宿命の対決セット)[スペシャルコーティング]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED Nu GUNDAM vs SAZABI (DESTINED RIVALRY SET) [SPECIAL COATING]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED Nu GUNDAM vs SAZABI (DESTINED RIVALRY SET) [SPECIAL COATING]",
         "nameJp":  "HG 1/144 ガンダムベース限定 νガンダムvsサザビー(宿命の対決セット)[スペシャルコーティング]",
         "partNo":  "2434364",
         "releaseDate":  "2018-09",
@@ -30461,12 +30515,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-09",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "HG 1/144 건담베이스 한정 뉴 건담 vs 사자비 (숙명의 대결 세트) [스페셜 코팅]"
     },
     {
         "id":  "4427",
-        "name":  "RG 1/144 ガンダムベース限定 ユニコーンガンダム [ゴールドコーティング]",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM [GOLD COATING]",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM [GOLD COATING]",
         "nameJp":  "RG 1/144 ガンダムベース限定 ユニコーンガンダム [ゴールドコーティング]",
         "partNo":  "2434384",
         "releaseDate":  "2018-08",
@@ -30478,7 +30533,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-08",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "RG 1/144 건담베이스 한정 유니콘 건담 [골드 코팅]"
     },
     {
         "id":  "4428",
@@ -30499,8 +30555,8 @@
     },
     {
         "id":  "4429",
-        "name":  "HG 1/144 ガンダムベース限定 ブルーディスティニー1号機“EXAM”[メタリックグロスインジェクション]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED BLUE DESTINY UNIT 1 \"EXAM\" [METALLIC GLOSS INJECTION]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED BLUE DESTINY UNIT 1 \"EXAM\" [METALLIC GLOSS INJECTION]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ブルーディスティニー1号機“EXAM”[メタリックグロスインジェクション]",
         "partNo":  "2434706",
         "releaseDate":  "2019-01-12",
@@ -30512,7 +30568,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-01-12",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HG 1/144 건담베이스 한정 블루 데스티니 1호기 \"EXAM\" [메탈릭 글로스 인젝션]"
     },
     {
         "id":  "443",
@@ -30567,8 +30624,8 @@
     },
     {
         "id":  "4432",
-        "name":  "HGBD ガンダムベース限定 モビルドールサラ(ミラーミッションVer.)",
-        "nameEn":  "",
+        "name":  "HGBD THE GUNDAM BASE LIMITED MOBILE DOLL SARAH (MIRROR MISSION Ver.)",
+        "nameEn":  "HGBD THE GUNDAM BASE LIMITED MOBILE DOLL SARAH (MIRROR MISSION Ver.)",
         "nameJp":  "HGBD ガンダムベース限定 モビルドールサラ(ミラーミッションVer.)",
         "partNo":  "2499056",
         "releaseDate":  "2019-09-21",
@@ -30580,12 +30637,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-09-21",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HGBD 건담베이스 한정 모빌돌 사라 (미러 미션 Ver.)"
     },
     {
         "id":  "4433",
-        "name":  "LEGENDBB ガンダムベース限定 武者號斗丸(最終決戦Ver.) [クリアカラー]",
-        "nameEn":  "",
+        "name":  "LEGENDBB THE GUNDAM BASE LIMITED MUSHA GODMARU (FINAL BATTLE Ver.) [CLEAR COLOR]",
+        "nameEn":  "LEGENDBB THE GUNDAM BASE LIMITED MUSHA GODMARU (FINAL BATTLE Ver.) [CLEAR COLOR]",
         "nameJp":  "LEGENDBB ガンダムベース限定 武者號斗丸(最終決戦Ver.) [クリアカラー]",
         "partNo":  "2390166",
         "releaseDate":  "2017-08",
@@ -30597,12 +30655,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-08",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "LEGENDBB 건담베이스 한정 무사 고도마루 (최종결전 Ver.) [클리어 컬러]"
     },
     {
         "id":  "4434",
-        "name":  "MG 1/100 ガンダムベース限定 RX-78-2 ガンダム Ver.3.0 [クリアカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM Ver.3.0 [CLEAR COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM Ver.3.0 [CLEAR COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 RX-78-2 ガンダム Ver.3.0 [クリアカラー]",
         "partNo":  "2390179",
         "releaseDate":  "2017-08",
@@ -30614,7 +30673,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-08",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "MG 1/100 건담베이스 한정 RX-78-2 건담 Ver.3.0 [클리어 컬러]"
     },
     {
         "id":  "4435",
@@ -30635,8 +30695,8 @@
     },
     {
         "id":  "4436",
-        "name":  "BB戦士 ガンダムベース限定 フルアーマー・ユニコーンガンダム\u0026ネオ・ジオング [クリアカラー]",
-        "nameEn":  "",
+        "name":  "BB SENSHI THE GUNDAM BASE LIMITED FULL ARMOR UNICORN GUNDAM \u0026 NEO ZEONG [CLEAR COLOR]",
+        "nameEn":  "BB SENSHI THE GUNDAM BASE LIMITED FULL ARMOR UNICORN GUNDAM \u0026 NEO ZEONG [CLEAR COLOR]",
         "nameJp":  "BB戦士 ガンダムベース限定 フルアーマー・ユニコーンガンダム\u0026ネオ・ジオング [クリアカラー]",
         "partNo":  "2420550",
         "releaseDate":  "2017-12",
@@ -30648,7 +30708,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-12",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "BB전사 건담베이스 한정 풀 아머 유니콘 건담 \u0026 네오 지옹 [클리어 컬러]"
     },
     {
         "id":  "4437",
@@ -30703,8 +30764,8 @@
     },
     {
         "id":  "4456",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット006",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 006",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 006",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット006",
         "partNo":  "2512893",
         "releaseDate":  "2020-02-08",
@@ -30716,7 +30777,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-02-08",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 006"
     },
     {
         "id":  "4457",
@@ -30737,8 +30799,8 @@
     },
     {
         "id":  "4458",
-        "name":  "MG 1/100 ガンダムベース限定 カタパルトベース",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED CATAPULT BASE",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED CATAPULT BASE",
         "nameJp":  "MG 1/100 ガンダムベース限定 カタパルトベース",
         "partNo":  "2524156",
         "releaseDate":  "2020-06-12",
@@ -30750,12 +30812,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-06-12",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "MG 1/100 건담베이스 한정 캐터펄트 베이스"
     },
     {
         "id":  "4459",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット007",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 007",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 007",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット007",
         "partNo":  "2526872",
         "releaseDate":  "2020-06-19",
@@ -30767,7 +30830,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-06-19",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 007"
     },
     {
         "id":  "446",
@@ -30788,8 +30852,8 @@
     },
     {
         "id":  "4460",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット008",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 008",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 008",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット008",
         "partNo":  "2526873",
         "releaseDate":  "2020-06-19",
@@ -30801,12 +30865,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-06-19",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 008"
     },
     {
         "id":  "4461",
-        "name":  "1/144 ガンダムベース限定 システムウェポンキット010",
-        "nameEn":  "",
+        "name":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 010",
+        "nameEn":  "1/144 THE GUNDAM BASE LIMITED SYSTEM WEAPON KIT 010",
         "nameJp":  "1/144 ガンダムベース限定 システムウェポンキット010",
         "partNo":  "2526875",
         "releaseDate":  "2020-10",
@@ -30818,12 +30883,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-10",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "1/144 건담베이스 한정 시스템 웨폰 키트 010"
     },
     {
         "id":  "4462",
-        "name":  "HG 1/144 ガンダムベース限定 ド・ダイ改(21st CENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED DO-DAI KAI (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED DO-DAI KAI (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ド・ダイ改(21st CENTURY REAL TYPE Ver.)",
         "partNo":  "2531662",
         "releaseDate":  "2020-06-06",
@@ -30835,7 +30901,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-06-06",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "HG 1/144 건담베이스 한정 도다이 커스텀 (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "4463",
@@ -30924,8 +30991,8 @@
     },
     {
         "id":  "4468",
-        "name":  "MG 1/100 ガンダムベース限定 RX-78-2ガンダム(パーフェクトガンダムVer.)[アニメカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM (PERFECT GUNDAM Ver.) [ANIME COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM (PERFECT GUNDAM Ver.) [ANIME COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 RX-78-2ガンダム(パーフェクトガンダムVer.)[アニメカラー]",
         "partNo":  "2559803",
         "releaseDate":  "2020-12-11",
@@ -30937,12 +31004,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-12-11",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "MG 1/100 건담베이스 한정 RX-78-2 건담 (퍼펙트 건담 Ver.) [애니메이션 컬러]"
     },
     {
         "id":  "4469",
-        "name":  "1/100 ガンダムベース限定 MSスパイク01\u0026エモーションマニピュレーター(ジオン系)",
-        "nameEn":  "",
+        "name":  "1/100 THE GUNDAM BASE LIMITED MS SPIKE 01 \u0026 EMOTION MANIPULATOR (ZEON)",
+        "nameEn":  "1/100 THE GUNDAM BASE LIMITED MS SPIKE 01 \u0026 EMOTION MANIPULATOR (ZEON)",
         "nameJp":  "1/100 ガンダムベース限定 MSスパイク01\u0026エモーションマニピュレーター(ジオン系)",
         "partNo":  "2569547",
         "releaseDate":  "2021-05-07",
@@ -30954,7 +31022,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-05-07",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "1/100 건담베이스 한정 MS 스파이크 01 \u0026 이모션 매니퓰레이터 (지온계)"
     },
     {
         "id":  "447",
@@ -30975,8 +31044,8 @@
     },
     {
         "id":  "4470",
-        "name":  "1/100 ガンダムベース限定 MSバーニア01\u0026エモーションマニピュレーター(連邦系)",
-        "nameEn":  "",
+        "name":  "1/100 THE GUNDAM BASE LIMITED MS VERNIER 01 \u0026 EMOTION MANIPULATOR (E.F.S.F.)",
+        "nameEn":  "1/100 THE GUNDAM BASE LIMITED MS VERNIER 01 \u0026 EMOTION MANIPULATOR (E.F.S.F.)",
         "nameJp":  "1/100 ガンダムベース限定 MSバーニア01\u0026エモーションマニピュレーター(連邦系)",
         "partNo":  "2569548",
         "releaseDate":  "2021-05-07",
@@ -30988,7 +31057,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-05-07",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "1/100 건담베이스 한정 MS 버니어 01 \u0026 이모션 매니퓰레이터 (연방계)"
     },
     {
         "id":  "4471",
@@ -31009,8 +31079,8 @@
     },
     {
         "id":  "4472",
-        "name":  "HG 1/144 ガンダムベース限定 コアガンダム\u0026コアガンダムII\u0026アルスコアガンダム[ロービジビリティVer.]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED CORE GUNDAM \u0026 CORE GUNDAM II \u0026 ALUS CORE GUNDAM [LOW VISIBILITY Ver.]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED CORE GUNDAM \u0026 CORE GUNDAM II \u0026 ALUS CORE GUNDAM [LOW VISIBILITY Ver.]",
         "nameJp":  "HG 1/144 ガンダムベース限定 コアガンダム\u0026コアガンダムII\u0026アルスコアガンダム[ロービジビリティVer.]",
         "partNo":  "2572434",
         "releaseDate":  "2021-05-14",
@@ -31022,12 +31092,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-05-14",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "HG 1/144 건담베이스 한정 코어 건담 \u0026 코어 건담 II \u0026 아루스 코어 건담 [로우 비지빌리티 Ver.]"
     },
     {
         "id":  "4473",
-        "name":  "1/48 ガンダムベース限定 ユニコーンガンダム ヘッドディスプレイベース(サイコフレームカラーバリエーションVer.)＆ユニコーンガンダム2号機 バンシィ ヘッドディスプレイベース セット",
-        "nameEn":  "",
+        "name":  "1/48 THE GUNDAM BASE LIMITED UNICORN GUNDAM HEAD DISPLAY BASE \u0026 UNICORN GUNDAM 02 BANSHEE HEAD DISPLAY BASE SET",
+        "nameEn":  "1/48 THE GUNDAM BASE LIMITED UNICORN GUNDAM HEAD DISPLAY BASE \u0026 UNICORN GUNDAM 02 BANSHEE HEAD DISPLAY BASE SET",
         "nameJp":  "1/48 ガンダムベース限定 ユニコーンガンダム ヘッドディスプレイベース(サイコフレームカラーバリエーションVer.)＆ユニコーンガンダム2号機 バンシィ ヘッドディスプレイベース セット",
         "partNo":  "2572438",
         "releaseDate":  "2021-07-10",
@@ -31039,7 +31110,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-07-10",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "1/48 건담베이스 한정 유니콘 건담 헤드 디스플레이 베이스 (싸이코프레임 컬러 베리에이션 Ver.) \u0026 유니콘 건담 2호기 밴시 헤드 디스플레이 베이스 세트"
     },
     {
         "id":  "4474",
@@ -31077,8 +31149,8 @@
     },
     {
         "id":  "4476",
-        "name":  "HG ガンダムベース限定 モビルドールメイ[ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "HG THE GUNDAM BASE LIMITED MOBILE DOLL MAY [GUNDAM BASE COLOR]",
+        "nameEn":  "HG THE GUNDAM BASE LIMITED MOBILE DOLL MAY [GUNDAM BASE COLOR]",
         "nameJp":  "HG ガンダムベース限定 モビルドールメイ[ガンダムベースカラー]",
         "partNo":  "2519707",
         "releaseDate":  "2020-09-11",
@@ -31090,7 +31162,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-09-11",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "HG 건담베이스 한정 모빌돌 메이 [건담베이스 컬러]"
     },
     {
         "id":  "4477",
@@ -31128,8 +31201,8 @@
     },
     {
         "id":  "4479",
-        "name":  "RG 1/144 ガンダムベース限定 ガンダムエクシア[トランザムクリア]",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED GUNDAM EXIA [TRANS-AM CLEAR]",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED GUNDAM EXIA [TRANS-AM CLEAR]",
         "nameJp":  "RG 1/144 ガンダムベース限定 ガンダムエクシア[トランザムクリア]",
         "partNo":  "2519710",
         "releaseDate":  "2020-11-12",
@@ -31141,7 +31214,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-11-12",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "RG 1/144 건담베이스 한정 건담 엑시아 [트란잠 클리어]"
     },
     {
         "id":  "448",
@@ -31179,8 +31253,8 @@
     },
     {
         "id":  "4481",
-        "name":  "MGEX 1/100 ガンダムベース限定 ユニコーンガンダム Ver.TWC",
-        "nameEn":  "",
+        "name":  "MGEX 1/100 THE GUNDAM BASE LIMITED UNICORN GUNDAM Ver.TWC",
+        "nameEn":  "MGEX 1/100 THE GUNDAM BASE LIMITED UNICORN GUNDAM Ver.TWC",
         "nameJp":  "MGEX 1/100 ガンダムベース限定 ユニコーンガンダム Ver.TWC",
         "partNo":  "2546282",
         "releaseDate":  "2020-12-11",
@@ -31192,7 +31266,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-12-11",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "MGEX 1/100 건담베이스 한정 유니콘 건담 Ver.TWC"
     },
     {
         "id":  "4482",
@@ -31230,8 +31305,8 @@
     },
     {
         "id":  "4484",
-        "name":  "RG 1/144 ガンダムベース限定 ストライクルージュ グランドスラム装備型",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED STRIKE ROUGE GRAND SLAM EQUIP",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED STRIKE ROUGE GRAND SLAM EQUIP",
         "nameJp":  "RG 1/144 ガンダムベース限定 ストライクルージュ グランドスラム装備型",
         "partNo":  "2558579",
         "releaseDate":  "2021-02",
@@ -31243,12 +31318,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-02",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "RG 1/144 건담베이스 한정 스트라이크 루즈 그랜드 슬램 장비형"
     },
     {
         "id":  "4485",
-        "name":  "HG 1/144 ガンダムベース限定 ガンダムMk-II(21st CENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED GUNDAM Mk-II (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED GUNDAM Mk-II (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ガンダムMk-II(21st CENTURY REAL TYPE Ver.)",
         "partNo":  "2569549",
         "releaseDate":  "2021-06-21",
@@ -31260,12 +31336,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-06-21",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "HG 1/144 건담베이스 한정 건담 Mk-II (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "4486",
-        "name":  "Figure-rise Standard BUILD FIGHTERS TRY ガンダムベース限定 ホシノ・フミナ[ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "Figure-rise Standard BUILD FIGHTERS TRY THE GUNDAM BASE LIMITED HOSHINO FUMINA [GUNDAM BASE COLOR]",
+        "nameEn":  "Figure-rise Standard BUILD FIGHTERS TRY THE GUNDAM BASE LIMITED HOSHINO FUMINA [GUNDAM BASE COLOR]",
         "nameJp":  "Figure-rise Standard BUILD FIGHTERS TRY ガンダムベース限定 ホシノ・フミナ[ガンダムベースカラー]",
         "partNo":  "2570534",
         "releaseDate":  "2021-05-14",
@@ -31277,7 +31354,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-05-14",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "Figure-rise Standard BUILD FIGHTERS TRY 건담베이스 한정 호시노 후미나 [건담베이스 컬러]"
     },
     {
         "id":  "4487",
@@ -31468,8 +31546,8 @@
     },
     {
         "id":  "4497",
-        "name":  "HG 1/144 ガンダムベース限定 コアガンダム＆コアガンダムII コアチェンジセット(リアルタイプカラー)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED CORE GUNDAM \u0026 CORE GUNDAM II CORE CHANGE SET (REAL TYPE COLOR)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED CORE GUNDAM \u0026 CORE GUNDAM II CORE CHANGE SET (REAL TYPE COLOR)",
         "nameJp":  "HG 1/144 ガンダムベース限定 コアガンダム＆コアガンダムII コアチェンジセット(リアルタイプカラー)",
         "partNo":  "2677952",
         "releaseDate":  "2023-09-23",
@@ -31481,7 +31559,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-09-23",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 건담베이스 한정 코어 건담 \u0026 코어 건담 II 코어 체인지 세트 (리얼타입 컬러)"
     },
     {
         "id":  "4498",
@@ -31553,8 +31632,8 @@
     },
     {
         "id":  "4500",
-        "name":  "HG 1/144 サイコ・ドーガ",
-        "nameEn":  "",
+        "name":  "HG 1/144 PSYCHO DOGA",
+        "nameEn":  "HG 1/144 PSYCHO DOGA",
         "nameJp":  "HG 1/144 サイコ・ドーガ",
         "partNo":  "2630733",
         "releaseDate":  "2022-12-19",
@@ -31566,7 +31645,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-12-19",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "HG 1/144 사이코 도가"
     },
     {
         "id":  "4501",
@@ -31604,8 +31684,8 @@
     },
     {
         "id":  "4503",
-        "name":  "HG 1/144 ガンダムベース限定 ゼータガンダム[U.C.0088]/百式/ガンダムMk-II(エゥーゴ仕様)セット [グリプス戦役スペシャルカラー]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED ZETA GUNDAM [U.C.0088] / HYAKU-SHIKI / GUNDAM Mk-II (A.E.U.G.) SET [GRYPHS WAR SPECIAL COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED ZETA GUNDAM [U.C.0088] / HYAKU-SHIKI / GUNDAM Mk-II (A.E.U.G.) SET [GRYPHS WAR SPECIAL COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ゼータガンダム[U.C.0088]/百式/ガンダムMk-II(エゥーゴ仕様)セット [グリプス戦役スペシャルカラー]",
         "partNo":  "2617522",
         "releaseDate":  "2023-04-22",
@@ -31617,7 +31697,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-04-22",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 건담베이스 한정 제타 건담 [U.C.0088] / 백식 / 건담 Mk-II (에우고 사양) 세트 [그리프스 전역 스페셜 컬러]"
     },
     {
         "id":  "4504",
@@ -31655,8 +31736,8 @@
     },
     {
         "id":  "4506",
-        "name":  "MG 1/100 ガンダムベース限定 ザクキャノン (ZガンダムVer.)",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED ZAKU CANNON (Z GUNDAM Ver.)",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED ZAKU CANNON (Z GUNDAM Ver.)",
         "nameJp":  "MG 1/100 ガンダムベース限定 ザクキャノン (ZガンダムVer.)",
         "partNo":  "2654095",
         "releaseDate":  "2023-11-25",
@@ -31668,12 +31749,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-11-25",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "MG 1/100 건담베이스 한정 자쿠 캐논 (Z건담 Ver.)"
     },
     {
         "id":  "4507",
-        "name":  "HG 1/144 ガンダムベース限定 ムーンガンダム (ロング・ライフル装備)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED MOON GUNDAM (LONG RIFLE EQUIP)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED MOON GUNDAM (LONG RIFLE EQUIP)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ムーンガンダム (ロング・ライフル装備)",
         "partNo":  "2654129",
         "releaseDate":  "2023-06-10",
@@ -31685,12 +31767,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-06-10",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 건담베이스 한정 문 건담 (롱 라이플 장비)"
     },
     {
         "id":  "4508",
-        "name":  "HG 1/144 ガンダムベース限定 ジム/ジムII/ジムIII セット",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED GM / GM II / GM III SET",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED GM / GM II / GM III SET",
         "nameJp":  "HG 1/144 ガンダムベース限定 ジム/ジムII/ジムIII セット",
         "partNo":  "2665788",
         "releaseDate":  "2023-06-10",
@@ -31702,12 +31785,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-06-10",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 건담베이스 한정 짐 / 짐 II / 짐 III 세트"
     },
     {
         "id":  "4509",
-        "name":  "HG 1/144 ガンダムベース限定 ガンダムMk-II(ティターンズ仕様)(21st CENTURY REAL TYPE Ver.)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED GUNDAM Mk-II (TITANS) (21st CENTURY REAL TYPE Ver.)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED GUNDAM Mk-II (TITANS) (21st CENTURY REAL TYPE Ver.)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ガンダムMk-II(ティターンズ仕様)(21st CENTURY REAL TYPE Ver.)",
         "partNo":  "2670097",
         "releaseDate":  "2023-12-22",
@@ -31719,7 +31803,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-12-22",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 건담베이스 한정 건담 Mk-II (티탄즈 사양) (21st CENTURY REAL TYPE Ver.)"
     },
     {
         "id":  "451",
@@ -31740,8 +31825,8 @@
     },
     {
         "id":  "4510",
-        "name":  "HG 1/144 GUNDAM SIDE-F限定 ギラ・ドーガ (ヴィンセント・グライスナー専用機)",
-        "nameEn":  "",
+        "name":  "HG 1/144 GUNDAM SIDE-F LIMITED GEARA DOGA (VINCENT GLEISSNER CUSTOM)",
+        "nameEn":  "HG 1/144 GUNDAM SIDE-F LIMITED GEARA DOGA (VINCENT GLEISSNER CUSTOM)",
         "nameJp":  "HG 1/144 GUNDAM SIDE-F限定 ギラ・ドーガ (ヴィンセント・グライスナー専用機)",
         "partNo":  "2611096",
         "releaseDate":  "2023-01-21",
@@ -31753,7 +31838,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-01-21",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "HG 1/144 GUNDAM SIDE-F 한정 기라 도가 (빈센트 글라이스너 전용기)"
     },
     {
         "id":  "4511",
@@ -31791,8 +31877,8 @@
     },
     {
         "id":  "4513",
-        "name":  "ガンダムベース限定 オプションパーツセット ガンプラ (カスタムウェポン \u0026 ジョイントセット 1)",
-        "nameEn":  "",
+        "name":  "THE GUNDAM BASE LIMITED OPTION PARTS SET GUNPLA (CUSTOM WEAPON \u0026 JOINT SET 1)",
+        "nameEn":  "THE GUNDAM BASE LIMITED OPTION PARTS SET GUNPLA (CUSTOM WEAPON \u0026 JOINT SET 1)",
         "nameJp":  "ガンダムベース限定 オプションパーツセット ガンプラ (カスタムウェポン \u0026 ジョイントセット 1)",
         "partNo":  "2733979",
         "releaseDate":  "2024-12-14",
@@ -31804,12 +31890,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-12-14",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "건담베이스 한정 옵션 파츠 세트 건프라 (커스텀 웨폰 \u0026 조인트 세트 1)"
     },
     {
         "id":  "4514",
-        "name":  "ガンダムベース限定 オプションパーツセット ガンプラ (カスタムウェポン \u0026 ジョイントセット 2)",
-        "nameEn":  "",
+        "name":  "THE GUNDAM BASE LIMITED OPTION PARTS SET GUNPLA (CUSTOM WEAPON \u0026 JOINT SET 2)",
+        "nameEn":  "THE GUNDAM BASE LIMITED OPTION PARTS SET GUNPLA (CUSTOM WEAPON \u0026 JOINT SET 2)",
         "nameJp":  "ガンダムベース限定 オプションパーツセット ガンプラ (カスタムウェポン \u0026 ジョイントセット 2)",
         "partNo":  "2733980",
         "releaseDate":  "2024-12-14",
@@ -31821,12 +31908,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-12-14",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "건담베이스 한정 옵션 파츠 세트 건프라 (커스텀 웨폰 \u0026 조인트 세트 2)"
     },
     {
         "id":  "4515",
-        "name":  "HG ガンダムベース限定 メッド",
-        "nameEn":  "",
+        "name":  "HG THE GUNDAM BASE LIMITED MED",
+        "nameEn":  "HG THE GUNDAM BASE LIMITED MED",
         "nameJp":  "HG ガンダムベース限定 メッド",
         "partNo":  "2773820",
         "releaseDate":  "2025-08-23",
@@ -31838,12 +31926,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-23",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 건담베이스 한정 메드"
     },
     {
         "id":  "4516",
-        "name":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム3号機 フェネクス(デストロイモード)GOLD \u0026 SILVER COATING SET",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 03 PHENEX (DESTROY MODE) GOLD \u0026 SILVER COATING SET",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 03 PHENEX (DESTROY MODE) GOLD \u0026 SILVER COATING SET",
         "nameJp":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム3号機 フェネクス(デストロイモード)GOLD \u0026 SILVER COATING SET",
         "partNo":  "2773836",
         "releaseDate":  "2025-09-13",
@@ -31855,12 +31944,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09-13",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담베이스 한정 유니콘 건담 3호기 페넥스 (디스트로이 모드) 골드 \u0026 실버 코팅 세트"
     },
     {
         "id":  "4517",
-        "name":  "ENTRY GRADE 1/144 ガンダムベース限定 ビルドストライク エクシードギャラクシー [ペインティングモデル]",
-        "nameEn":  "",
+        "name":  "ENTRY GRADE 1/144 THE GUNDAM BASE LIMITED BUILD STRIKE EXCEED GALAXY [PAINTING MODEL]",
+        "nameEn":  "ENTRY GRADE 1/144 THE GUNDAM BASE LIMITED BUILD STRIKE EXCEED GALAXY [PAINTING MODEL]",
         "nameJp":  "ENTRY GRADE 1/144 ガンダムベース限定 ビルドストライク エクシードギャラクシー [ペインティングモデル]",
         "partNo":  "2794157",
         "releaseDate":  "2025-12-27",
@@ -31872,12 +31962,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12-27",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 건담베이스 한정 빌드 스트라이크 엑시드 갤럭시 [페인팅 모델]"
     },
     {
         "id":  "4518",
-        "name":  "Figure-rise Standard SEED ガンダムベース限定 ラクス・クライン [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "Figure-rise Standard SEED THE GUNDAM BASE LIMITED LACUS CLYNE [GUNDAM BASE COLOR]",
+        "nameEn":  "Figure-rise Standard SEED THE GUNDAM BASE LIMITED LACUS CLYNE [GUNDAM BASE COLOR]",
         "nameJp":  "Figure-rise Standard SEED ガンダムベース限定 ラクス・クライン [ガンダムベースカラー]",
         "partNo":  "2611005",
         "releaseDate":  "2024-04-27",
@@ -31889,12 +31980,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-04-27",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "Figure-rise Standard SEED 건담베이스 한정 라크스 클라인 [건담베이스 컬러]"
     },
     {
         "id":  "4519",
-        "name":  "RG 1/144 ガンダムベース限定 ゴッドガンダム ハイパーモード",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED GOD GUNDAM HYPER MODE",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED GOD GUNDAM HYPER MODE",
         "nameJp":  "RG 1/144 ガンダムベース限定 ゴッドガンダム ハイパーモード",
         "partNo":  "2654119",
         "releaseDate":  "2025-03-08",
@@ -31906,7 +31998,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-03-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 건담베이스 한정 갓 건담 하이퍼 모드"
     },
     {
         "id":  "452",
@@ -31978,8 +32071,8 @@
     },
     {
         "id":  "4523",
-        "name":  "HG 1/144 ガンダムベース限定 バルギル(ガンダムヘッド\u0026サイコプレート搭載型)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED VARGUIL (GUNDAM HEAD \u0026 PSYCHO PLATE)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED VARGUIL (GUNDAM HEAD \u0026 PSYCHO PLATE)",
         "nameJp":  "HG 1/144 ガンダムベース限定 バルギル(ガンダムヘッド\u0026サイコプレート搭載型)",
         "partNo":  "2773822",
         "releaseDate":  "2025-08-23",
@@ -31991,12 +32084,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-23",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담베이스 한정 발길 (건담 헤드 \u0026 사이코 플레이트 탑재형)"
     },
     {
         "id":  "4524",
-        "name":  "RG 1/144 ガンダムベース限定 RX-78-2 ガンダム Ver.2.0 [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM Ver.2.0 [GUNDAM BASE COLOR]",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM Ver.2.0 [GUNDAM BASE COLOR]",
         "nameJp":  "RG 1/144 ガンダムベース限定 RX-78-2 ガンダム Ver.2.0 [ガンダムベースカラー]",
         "partNo":  "2783969",
         "releaseDate":  "2025-04-11",
@@ -32008,12 +32102,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 건담베이스 한정 RX-78-2 건담 Ver.2.0 [건담베이스 컬러]"
     },
     {
         "id":  "4525",
-        "name":  "Figure-rise Standard ガンダムベース限定 プルツー [ガンダムベースカラー]",
-        "nameEn":  "",
+        "name":  "Figure-rise Standard THE GUNDAM BASE LIMITED PLE TWO [GUNDAM BASE COLOR]",
+        "nameEn":  "Figure-rise Standard THE GUNDAM BASE LIMITED PLE TWO [GUNDAM BASE COLOR]",
         "nameJp":  "Figure-rise Standard ガンダムベース限定 プルツー [ガンダムベースカラー]",
         "partNo":  "2783975",
         "releaseDate":  "2025-10-11",
@@ -32025,12 +32120,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "Figure-rise Standard 건담베이스 한정 플 투 [건담베이스 컬러]"
     },
     {
         "id":  "4526",
-        "name":  "MG 1/100 ガンダムベース限定 百式 Ver.2.0 [メカニカルコアメッキ]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED HYAKU-SHIKI Ver.2.0 [MECHANICAL CORE COATING]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED HYAKU-SHIKI Ver.2.0 [MECHANICAL CORE COATING]",
         "nameJp":  "MG 1/100 ガンダムベース限定 百式 Ver.2.0 [メカニカルコアメッキ]",
         "partNo":  "2806573",
         "releaseDate":  "2025-10-25",
@@ -32042,7 +32138,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10-25",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담베이스 한정 백식 Ver.2.0 [메카니컬 코어 멕기]"
     },
     {
         "id":  "453",
@@ -32335,8 +32432,8 @@
     },
     {
         "id":  "4622",
-        "name":  "PG 1/60 ガンダムベース限定 ガンダムアストレイ レッドフレーム[メタリック]",
-        "nameEn":  "",
+        "name":  "PG 1/60 THE GUNDAM BASE LIMITED GUNDAM ASTRAY RED FRAME [METALLIC]",
+        "nameEn":  "PG 1/60 THE GUNDAM BASE LIMITED GUNDAM ASTRAY RED FRAME [METALLIC]",
         "nameJp":  "PG 1/60 ガンダムベース限定 ガンダムアストレイ レッドフレーム[メタリック]",
         "partNo":  "2390167",
         "releaseDate":  "2017-08",
@@ -32348,7 +32445,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-08",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "PG 1/60 건담베이스 한정 건담 아스트레이 레드 프레임 [메탈릭]"
     },
     {
         "id":  "4623",
@@ -32369,8 +32467,8 @@
     },
     {
         "id":  "4624",
-        "name":  "MG 1/100 ガンダムベース限定 シナンジュ[メカニカルクリア]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED SINANJU [MECHANICAL CLEAR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED SINANJU [MECHANICAL CLEAR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 シナンジュ[メカニカルクリア]",
         "partNo":  "2406583",
         "releaseDate":  "2017-11",
@@ -32382,7 +32480,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-11",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "MG 1/100 건담베이스 한정 시난주 [메카니컬 클리어]"
     },
     {
         "id":  "4625",
@@ -32420,8 +32519,8 @@
     },
     {
         "id":  "4627",
-        "name":  "RG 1/144 ガンダムベース限定 ダブルオークアンタフルセイバー [クリアカラー]",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED 00 QAN[T] FULL SABER [CLEAR COLOR]",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED 00 QAN[T] FULL SABER [CLEAR COLOR]",
         "nameJp":  "RG 1/144 ガンダムベース限定 ダブルオークアンタフルセイバー [クリアカラー]",
         "partNo":  "2437354",
         "releaseDate":  "2018-12",
@@ -32433,12 +32532,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2018-12",
-        "year":  2018
+        "year":  2018,
+        "nameKo":  "RG 1/144 건담베이스 한정 더블오 퀀터 풀 세이버 [클리어 컬러]"
     },
     {
         "id":  "4628",
-        "name":  "HG 1/144 ガンダムベース限定 シナンジュ・スタイン (ナラティブVer.) [エクストラフィニッシュ]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED SINANJU STEIN (NARRATIVE Ver.) [EXTRA FINISH]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED SINANJU STEIN (NARRATIVE Ver.) [EXTRA FINISH]",
         "nameJp":  "HG 1/144 ガンダムベース限定 シナンジュ・スタイン (ナラティブVer.) [エクストラフィニッシュ]",
         "partNo":  "2459526",
         "releaseDate":  "2019-03-29",
@@ -32450,7 +32550,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-03-29",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HG 1/144 건담베이스 한정 시난주 스타인 (내러티브 Ver.) [엑스트라 피니시]"
     },
     {
         "id":  "4629",
@@ -32505,8 +32606,8 @@
     },
     {
         "id":  "4631",
-        "name":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム3号機 フェネクス (デストロイモード) (ナラティブVer.)(最終決戦仕様)",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 03 PHENEX (DESTROY MODE) (NARRATIVE Ver.) (FINAL BATTLE SPEC)",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED UNICORN GUNDAM 03 PHENEX (DESTROY MODE) (NARRATIVE Ver.) (FINAL BATTLE SPEC)",
         "nameJp":  "HG 1/144 ガンダムベース限定 ユニコーンガンダム3号機 フェネクス (デストロイモード) (ナラティブVer.)(最終決戦仕様)",
         "partNo":  "2484780",
         "releaseDate":  "2019-04-06",
@@ -32518,12 +32619,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-04-06",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HG 1/144 건담베이스 한정 유니콘 건담 3호기 페넥스 (디스트로이 모드) (내러티브 Ver.) (최종결전 사양)"
     },
     {
         "id":  "4632",
-        "name":  "HG 1/144 ガンダムベース限定 ナラティブガンダム C装備[チタニウムフィニッシュ]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED NARRATIVE GUNDAM C-PACKS [TITANIUM FINISH]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED NARRATIVE GUNDAM C-PACKS [TITANIUM FINISH]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ナラティブガンダム C装備[チタニウムフィニッシュ]",
         "partNo":  "2505199",
         "releaseDate":  "2019-11-01",
@@ -32535,12 +32637,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-11-01",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "HG 1/144 건담베이스 한정 내러티브 건담 C장비 [티타늄 피니시]"
     },
     {
         "id":  "4633",
-        "name":  "PG 1/60 ガンダムベース限定 RX-78-2 ガンダム [チタニウムフィニッシュ]",
-        "nameEn":  "",
+        "name":  "PG 1/60 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM [TITANIUM FINISH]",
+        "nameEn":  "PG 1/60 THE GUNDAM BASE LIMITED RX-78-2 GUNDAM [TITANIUM FINISH]",
         "nameJp":  "PG 1/60 ガンダムベース限定 RX-78-2 ガンダム [チタニウムフィニッシュ]",
         "partNo":  "2516137",
         "releaseDate":  "2020-05-30",
@@ -32552,7 +32655,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-05-30",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "PG 1/60 건담베이스 한정 RX-78-2 건담 [티타늄 피니시]"
     },
     {
         "id":  "4634",
@@ -32590,8 +32694,8 @@
     },
     {
         "id":  "4636",
-        "name":  "HG 1/144 ガンダムベース限定 ペイルライダー(陸戦重装備仕様)[クリアカラー]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED PALE RIDER (GROUND HEAVY EQUIPMENT) [CLEAR COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED PALE RIDER (GROUND HEAVY EQUIPMENT) [CLEAR COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース限定 ペイルライダー(陸戦重装備仕様)[クリアカラー]",
         "partNo":  "2535246",
         "releaseDate":  "2020-09-11",
@@ -32603,7 +32707,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-09-11",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "HG 1/144 건담베이스 한정 페일라이더 (육전중장비 사양) [클리어 컬러]"
     },
     {
         "id":  "4637",
@@ -32624,8 +32729,8 @@
     },
     {
         "id":  "4638",
-        "name":  "HG 1/144 ガンダムベース限定 セカンドV[クリアカラー]",
-        "nameEn":  "",
+        "name":  "HG 1/144 THE GUNDAM BASE LIMITED SECOND V [CLEAR COLOR]",
+        "nameEn":  "HG 1/144 THE GUNDAM BASE LIMITED SECOND V [CLEAR COLOR]",
         "nameJp":  "HG 1/144 ガンダムベース限定 セカンドV[クリアカラー]",
         "partNo":  "2544024",
         "releaseDate":  "2020-10",
@@ -32637,7 +32742,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2020-10",
-        "year":  2020
+        "year":  2020,
+        "nameKo":  "HG 1/144 건담베이스 한정 세컨드 V [클리어 컬러]"
     },
     {
         "id":  "4639",
@@ -32692,8 +32798,8 @@
     },
     {
         "id":  "4641",
-        "name":  "MG 1/100 ガンダムベース限定 ウイングガンダムゼロEW Ver.Ka [クリアカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED WING GUNDAM ZERO EW Ver.Ka [CLEAR COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED WING GUNDAM ZERO EW Ver.Ka [CLEAR COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ウイングガンダムゼロEW Ver.Ka [クリアカラー]",
         "partNo":  "2569554",
         "releaseDate":  "2021-12-18",
@@ -32705,7 +32811,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-12-18",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "MG 1/100 건담베이스 한정 윙 건담 제로 EW Ver.Ka [클리어 컬러]"
     },
     {
         "id":  "4642",
@@ -32794,8 +32901,8 @@
     },
     {
         "id":  "4647",
-        "name":  "RG 1/144 ガンダムベース限定 エールストライクガンダム \u0026 スカイグラスパー ランチャー/ソードパック セット[クリアカラー]",
-        "nameEn":  "",
+        "name":  "RG 1/144 THE GUNDAM BASE LIMITED AILE STRIKE GUNDAM \u0026 SKYGRASPER LAUNCHER/SWORD PACK SET [CLEAR COLOR]",
+        "nameEn":  "RG 1/144 THE GUNDAM BASE LIMITED AILE STRIKE GUNDAM \u0026 SKYGRASPER LAUNCHER/SWORD PACK SET [CLEAR COLOR]",
         "nameJp":  "RG 1/144 ガンダムベース限定 エールストライクガンダム \u0026 スカイグラスパー ランチャー/ソードパック セット[クリアカラー]",
         "partNo":  "2624434",
         "releaseDate":  "2022-07-16",
@@ -32807,7 +32914,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2022-07-16",
-        "year":  2022
+        "year":  2022,
+        "nameKo":  "RG 1/144 건담베이스 한정 에일 스트라이크 건담 \u0026 스카이글래스퍼 런처/소드 팩 세트 [클리어 컬러]"
     },
     {
         "id":  "4648",
@@ -32879,8 +32987,8 @@
     },
     {
         "id":  "4651",
-        "name":  "MG 1/100 ガンダムベース限定 ガンダムヴァーチェ [クリアカラー]",
-        "nameEn":  "",
+        "name":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM VIRTUE [CLEAR COLOR]",
+        "nameEn":  "MG 1/100 THE GUNDAM BASE LIMITED GUNDAM VIRTUE [CLEAR COLOR]",
         "nameJp":  "MG 1/100 ガンダムベース限定 ガンダムヴァーチェ [クリアカラー]",
         "partNo":  "2723585",
         "releaseDate":  "2025-11-29",
@@ -32892,7 +33000,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11-29",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담베이스 한정 건담 바체 [클리어 컬러]"
     },
     {
         "id":  "4652",
@@ -32930,8 +33039,8 @@
     },
     {
         "id":  "4654",
-        "name":  "MGSD ガンダムベース限定 ガンダムバルバトス [アイアンブラッドコーティング]",
-        "nameEn":  "",
+        "name":  "MGSD THE GUNDAM BASE LIMITED GUNDAM BARBATOS [IRON BLOOD COATING]",
+        "nameEn":  "MGSD THE GUNDAM BASE LIMITED GUNDAM BARBATOS [IRON BLOOD COATING]",
         "nameJp":  "MGSD ガンダムベース限定 ガンダムバルバトス [アイアンブラッドコーティング]",
         "partNo":  "2762139",
         "releaseDate":  "2025-06-14",
@@ -32943,7 +33052,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06-14",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MGSD 건담베이스 한정 건담 발바토스 [아이언 블러드 코팅]"
     },
     {
         "id":  "4655",
@@ -33304,8 +33414,8 @@
     },
     {
         "id":  "4699",
-        "name":  "ポケモンプラモコレクション 12 劇場版ポケットモンスター ダイヤモンド＆パール 劇場版 幻影の覇者 ゾロアークセット",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION 12 PHANTOM CHAMPION ZOROARK SET",
+        "nameEn":  "POKEMON PLAMO COLLECTION 12 PHANTOM CHAMPION ZOROARK SET",
         "nameJp":  "ポケモンプラモコレクション 12 劇場版ポケットモンスター ダイヤモンド＆パール 劇場版 幻影の覇者 ゾロアークセット",
         "partNo":  "2105710",
         "releaseDate":  "2010-07",
@@ -33317,7 +33427,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2010-07",
-        "year":  2010
+        "year":  2010,
+        "nameKo":  "포켓몬 프라모 컬렉션 12 극장판 포켓몬스터 다이아몬드 \u0026 펄 환영의 패왕 조로아크 세트"
     },
     {
         "id":  "47",
@@ -33508,8 +33619,8 @@
     },
     {
         "id":  "4709",
-        "name":  "ポケモンプラモコレクション 19 ファーストシリーズ ピカチュウ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION 19 FIRST SERIES PIKACHU",
+        "nameEn":  "POKEMON PLAMO COLLECTION 19 FIRST SERIES PIKACHU",
         "nameJp":  "ポケモンプラモコレクション 19 ファーストシリーズ ピカチュウ",
         "partNo":  "2136247",
         "releaseDate":  "2011-07",
@@ -33521,7 +33632,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2011-07",
-        "year":  2011
+        "year":  2011,
+        "nameKo":  "포켓몬 프라모 컬렉션 19 퍼스트 시리즈 피카츄"
     },
     {
         "id":  "471",
@@ -33542,8 +33654,8 @@
     },
     {
         "id":  "4710",
-        "name":  "ポケモンプラモコレクション 20 ファーストシリーズ ビクティニ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION 20 FIRST SERIES VICTINI",
+        "nameEn":  "POKEMON PLAMO COLLECTION 20 FIRST SERIES VICTINI",
         "nameJp":  "ポケモンプラモコレクション 20 ファーストシリーズ ビクティニ",
         "partNo":  "2136246",
         "releaseDate":  "2011-07",
@@ -33555,7 +33667,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2011-07",
-        "year":  2011
+        "year":  2011,
+        "nameKo":  "포켓몬 프라모 컬렉션 20 퍼스트 시리즈 비크티니"
     },
     {
         "id":  "4711",
@@ -33644,8 +33757,8 @@
     },
     {
         "id":  "4716",
-        "name":  "ポケモンプラモコレクション 26 ファーストシリーズ ケルディオ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION 26 FIRST SERIES KELDEO",
+        "nameEn":  "POKEMON PLAMO COLLECTION 26 FIRST SERIES KELDEO",
         "nameJp":  "ポケモンプラモコレクション 26 ファーストシリーズ ケルディオ",
         "partNo":  "2175364",
         "releaseDate":  "2012-07",
@@ -33657,7 +33770,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2012-07",
-        "year":  2012
+        "year":  2012,
+        "nameKo":  "포켓몬 프라모 컬렉션 26 퍼스트 시리즈 케르디오"
     },
     {
         "id":  "4717",
@@ -33729,8 +33843,8 @@
     },
     {
         "id":  "4720",
-        "name":  "ポケモンプラモコレクション 29 進化シリーズ リザードン進化セット",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION 29 EVOLUTION SERIES CHARIZARD EVOLUTION SET",
+        "nameEn":  "POKEMON PLAMO COLLECTION 29 EVOLUTION SERIES CHARIZARD EVOLUTION SET",
         "nameJp":  "ポケモンプラモコレクション 29 進化シリーズ リザードン進化セット",
         "partNo":  "2188383",
         "releaseDate":  "2013-02",
@@ -33742,7 +33856,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2013-02",
-        "year":  2013
+        "year":  2013,
+        "nameKo":  "포켓몬 프라모 컬렉션 29 진화 시리즈 리자몽 진화 세트"
     },
     {
         "id":  "4721",
@@ -34222,8 +34337,8 @@
     },
     {
         "id":  "4788",
-        "name":  "LEGEND BB ガンダムベース限定 騎士スペリオルドラゴン［クリアカラー］",
-        "nameEn":  "",
+        "name":  "LEGEND BB THE GUNDAM BASE LIMITED KNIGHT SUPERIOR DRAGON [CLEAR COLOR]",
+        "nameEn":  "LEGEND BB THE GUNDAM BASE LIMITED KNIGHT SUPERIOR DRAGON [CLEAR COLOR]",
         "nameJp":  "LEGEND BB ガンダムベース限定 騎士スペリオルドラゴン［クリアカラー］",
         "partNo":  "2390165",
         "releaseDate":  "2017-08",
@@ -34235,7 +34350,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2017-08",
-        "year":  2017
+        "year":  2017,
+        "nameKo":  "LEGEND BB 건담베이스 한정 기사 슈페리올 드래곤 [클리어 컬러]"
     },
     {
         "id":  "4789",
@@ -34273,8 +34389,8 @@
     },
     {
         "id":  "4790",
-        "name":  "SDガンダム クロスシルエット ガンダムベース限定 ナイチンゲール [スペシャルコーティング]",
-        "nameEn":  "",
+        "name":  "SDCS THE GUNDAM BASE LIMITED NIGHTINGALE [SPECIAL COATING]",
+        "nameEn":  "SDCS THE GUNDAM BASE LIMITED NIGHTINGALE [SPECIAL COATING]",
         "nameJp":  "SDガンダム クロスシルエット ガンダムベース限定 ナイチンゲール [スペシャルコーティング]",
         "partNo":  "2474245",
         "releaseDate":  "2019-05-18",
@@ -34286,12 +34402,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-05-18",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "SD 건담 크로스 실루엣 건담베이스 한정 나이팅게일 [스페셜 코팅]"
     },
     {
         "id":  "4791",
-        "name":  "BB戦士 ガンダムベース限定 Hi-νガンダム[スペシャルコーティング]",
-        "nameEn":  "",
+        "name":  "BB SENSHI THE GUNDAM BASE LIMITED Hi-Nu GUNDAM [SPECIAL COATING]",
+        "nameEn":  "BB SENSHI THE GUNDAM BASE LIMITED Hi-Nu GUNDAM [SPECIAL COATING]",
         "nameJp":  "BB戦士 ガンダムベース限定 Hi-νガンダム[スペシャルコーティング]",
         "partNo":  "2474246",
         "releaseDate":  "2019-05-18",
@@ -34303,12 +34420,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2019-05-18",
-        "year":  2019
+        "year":  2019,
+        "nameKo":  "BB전사 건담베이스 한정 Hi-뉴 건담 [스페셜 코팅]"
     },
     {
         "id":  "4792",
-        "name":  "SDガンダムクロスシルエット ガンダムベース限定 ガンダムバルバトスルプスレクス[クリアカラー]",
-        "nameEn":  "",
+        "name":  "SDCS THE GUNDAM BASE LIMITED GUNDAM BARBATOS LUPUS REX [CLEAR COLOR]",
+        "nameEn":  "SDCS THE GUNDAM BASE LIMITED GUNDAM BARBATOS LUPUS REX [CLEAR COLOR]",
         "nameJp":  "SDガンダムクロスシルエット ガンダムベース限定 ガンダムバルバトスルプスレクス[クリアカラー]",
         "partNo":  "2569551",
         "releaseDate":  "2021-07-22",
@@ -34320,7 +34438,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2021-07-22",
-        "year":  2021
+        "year":  2021,
+        "nameKo":  "SD 건담 크로스 실루엣 건담베이스 한정 건담 발바토스 루프스 렉스 [클리어 컬러]"
     },
     {
         "id":  "4793",
@@ -34936,8 +35055,8 @@
     },
     {
         "id":  "4830",
-        "name":  "ポケモンプラモコレクション セレクトシリーズ 黒いレックウザ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION SELECT SERIES BLACK RAYQUAZA",
+        "nameEn":  "POKEMON PLAMO COLLECTION SELECT SERIES BLACK RAYQUAZA",
         "nameJp":  "ポケモンプラモコレクション セレクトシリーズ 黒いレックウザ",
         "partNo":  "2697221",
         "releaseDate":  "2023-10",
@@ -34949,7 +35068,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2023-10",
-        "year":  2023
+        "year":  2023,
+        "nameKo":  "포켓몬 프라모 컬렉션 셀렉트 시리즈 검은 레쿠쟈"
     },
     {
         "id":  "4831",
@@ -35038,8 +35158,8 @@
     },
     {
         "id":  "4836",
-        "name":  "ポケモンプラモコレクション クイック!! 11＋13＋17  ヒトカゲ＆フシギダネ＆ゼニガメセット",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! 11+13+17 CHARMANDER \u0026 BULBASAUR \u0026 SQUIRTLE SET",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! 11+13+17 CHARMANDER \u0026 BULBASAUR \u0026 SQUIRTLE SET",
         "nameJp":  "ポケモンプラモコレクション クイック!! 11＋13＋17  ヒトカゲ＆フシギダネ＆ゼニガメセット",
         "partNo":  "2762120",
         "releaseDate":  "2024-11",
@@ -35051,12 +35171,13 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-11",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! 11+13+17 파이리 \u0026 이상해씨 \u0026 꼬부기 세트"
     },
     {
         "id":  "4837",
-        "name":  "ポケモンプラモコレクション クイック!! 18＋19＋20  ニャオハ＆クワッス＆ホゲータセット",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! 18+19+20 SPRIGATITO \u0026 QUAXLY \u0026 FUECOCO SET",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! 18+19+20 SPRIGATITO \u0026 QUAXLY \u0026 FUECOCO SET",
         "nameJp":  "ポケモンプラモコレクション クイック!! 18＋19＋20  ニャオハ＆クワッス＆ホゲータセット",
         "partNo":  "2762121",
         "releaseDate":  "2024-11",
@@ -35068,7 +35189,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2024-11",
-        "year":  2024
+        "year":  2024,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! 18+19+20 나오하 \u0026 꾸왁스 \u0026 뜨아거 세트"
     },
     {
         "id":  "4838",
@@ -35310,8 +35432,8 @@
     },
     {
         "id":  "4850",
-        "name":  "ポケモンプラモコレクション カセキポケモンシリーズ ガチゴラス",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION FOSSIL SERIES TYRANTRUM",
+        "nameEn":  "POKEMON PLAMO COLLECTION FOSSIL SERIES TYRANTRUM",
         "nameJp":  "ポケモンプラモコレクション カセキポケモンシリーズ ガチゴラス",
         "partNo":  "2810119",
         "releaseDate":  "2026-02-14",
@@ -35323,12 +35445,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-02-14",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 화석 포켓몬 시리즈 견고라스"
     },
     {
         "id":  "4851",
-        "name":  "ポケモンプラモコレクション カセキポケモンシリーズ プテラ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION FOSSIL SERIES AERODACTYL",
+        "nameEn":  "POKEMON PLAMO COLLECTION FOSSIL SERIES AERODACTYL",
         "nameJp":  "ポケモンプラモコレクション カセキポケモンシリーズ プテラ",
         "partNo":  "2810160",
         "releaseDate":  "2026-02-14",
@@ -35340,12 +35463,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-02-14",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 화석 포켓몬 시리즈 프테라"
     },
     {
         "id":  "4852",
-        "name":  "ポケモンプラモコレクション クイック!! Lite ピカチュウ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! Lite PIKACHU",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! Lite PIKACHU",
         "nameJp":  "ポケモンプラモコレクション クイック!! Lite ピカチュウ",
         "partNo":  "2805100",
         "releaseDate":  "2026-03-07",
@@ -35357,12 +35481,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-03-07",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! Lite 피카츄"
     },
     {
         "id":  "4853",
-        "name":  "ポケモンプラモコレクション クイック!! Lite イーブイ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! Lite EEVEE",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! Lite EEVEE",
         "nameJp":  "ポケモンプラモコレクション クイック!! Lite イーブイ",
         "partNo":  "2805101",
         "releaseDate":  "2026-03-07",
@@ -35374,12 +35499,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-03-07",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! Lite 이브이"
     },
     {
         "id":  "4854",
-        "name":  "ポケモンプラモコレクション クイック!! Lite ヒトカゲ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! Lite CHARMANDER",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! Lite CHARMANDER",
         "nameJp":  "ポケモンプラモコレクション クイック!! Lite ヒトカゲ",
         "partNo":  "2805102",
         "releaseDate":  "2026-03-07",
@@ -35391,12 +35517,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-03-07",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! Lite 파이리"
     },
     {
         "id":  "4855",
-        "name":  "ポケモンプラモコレクション クイック!! Lite ゼニガメ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! Lite SQUIRTLE",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! Lite SQUIRTLE",
         "nameJp":  "ポケモンプラモコレクション クイック!! Lite ゼニガメ",
         "partNo":  "2805103",
         "releaseDate":  "2026-03-07",
@@ -35408,12 +35535,13 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-03-07",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! Lite 꼬부기"
     },
     {
         "id":  "4856",
-        "name":  "ポケモンプラモコレクション クイック!! Lite フシギダネ",
-        "nameEn":  "",
+        "name":  "POKEMON PLAMO COLLECTION QUICK!! Lite BULBASAUR",
+        "nameEn":  "POKEMON PLAMO COLLECTION QUICK!! Lite BULBASAUR",
         "nameJp":  "ポケモンプラモコレクション クイック!! Lite フシギダネ",
         "partNo":  "2805104",
         "releaseDate":  "2026-03-07",
@@ -35425,7 +35553,8 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-03-07",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "포켓몬 프라모 컬렉션 퀵!! Lite 이상해씨"
     },
     {
         "id":  "486",
@@ -38421,8 +38550,8 @@
     },
     {
         "id":  "583",
-        "name":  "MG 1/100 THE・O",
-        "nameEn":  "MG 1/100 THE・O",
+        "name":  "MG 1/100 THE O",
+        "nameEn":  "MG 1/100 THE O",
         "nameJp":  "MG 1/100 PMX-003 ジ・O",
         "partNo":  "2103011",
         "releaseDate":  "2010-08-07",
@@ -38434,7 +38563,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2010-08-07",
-        "year":  2010
+        "year":  2010,
+        "nameKo":  "MG 1/100 디 오"
     },
     {
         "id":  "584",

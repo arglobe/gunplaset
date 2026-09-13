@@ -781,12 +781,20 @@
       function getLocalizedKitName(kit, targetCurrency) {
         if (!kit) return '';
         const curr = targetCurrency || state.currency || 'KRW';
+        const hasKana = (str) => /[\u3040-\u309F\u30A0-\u30FF]/.test(str);
         if (curr === 'JPY') {
           return kit.nameJp || kit.nameEn || kit.name || '';
         } else if (curr === 'USD') {
+          if (kit.nameEn && !hasKana(kit.nameEn)) return kit.nameEn;
+          if (kit.name && !hasKana(kit.name)) return kit.name;
           return kit.nameEn || kit.name || kit.nameJp || '';
         } else {
-          return kit.nameKo || kit.name || kit.nameEn || kit.nameJp || '';
+          // KRW (Korean view)
+          if (kit.nameKo) return kit.nameKo;
+          // Air-Gap Gate: Never allow Japanese Kana to leak into Korean view
+          if (kit.name && !hasKana(kit.name)) return kit.name;
+          if (kit.nameEn && !hasKana(kit.nameEn)) return kit.nameEn;
+          return kit.nameEn || kit.name || '';
         }
       }
       window.getLocalizedKitName = getLocalizedKitName;
@@ -1149,11 +1157,12 @@
 
           // 6. Search query
           if (q) {
+            const nameKo = (kit.nameKo || '').toLowerCase();
             const nameEn = (kit.nameEn || kit.name || '').toLowerCase();
             const nameJp = (kit.nameJp || '').toLowerCase();
             const series = (kit.series || '').toLowerCase();
             const grade = (kit.classification || '').toLowerCase();
-            if (!nameEn.includes(q) && !nameJp.includes(q) && !series.includes(q) && !grade.includes(q)) return false;
+            if (!nameKo.includes(q) && !nameEn.includes(q) && !nameJp.includes(q) && !series.includes(q) && !grade.includes(q)) return false;
           }
 
           return true;

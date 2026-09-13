@@ -234,6 +234,18 @@ $imgDbObj = $imgDbJson | ConvertFrom-Json
 $imgMissingKits = @()
 $imgLocalMissing = @()
 $imgFinishMismatches = @()
+$imgPilotMismatches = @()
+$imgUnverifiedFallbacks = @()
+
+$pilotConflictPairs = @(
+    @("heine", "dearka"),
+    @("dearka", "heine"),
+    @("casval", "amuro"),
+    @("quattro", "amuro"),
+    @("shin-matsunaga", "johnny-ridden"),
+    @("johnny-ridden", "shin-matsunaga"),
+    @("tri-stars", "char")
+)
 
 foreach ($mk in $kitsObj) {
     $id = [string]$mk.id
@@ -242,16 +254,41 @@ foreach ($mk in $kitsObj) {
         $imgMissingKits += $id
         continue
     }
+    $pUrlLower = $entry.product_url.ToLower()
+    $kNameLower = $mk.name.ToLower()
+
+    # 1. Local Image verification
     if ($entry.product_url.StartsWith("images/")) {
         $localImgPath = Join-Path $rootDir ($entry.product_url -replace '/', '\')
         if (-not (Test-Path $localImgPath)) {
             $imgLocalMissing += "$id ($($entry.product_url))"
+        } else {
+            $fileLen = (Get-Item $localImgPath).Length
+            if ($fileLen -lt 10000) {
+                $imgLocalMissing += "$id ($($entry.product_url) too small: $fileLen bytes)"
+            }
         }
     }
-    $kName = $mk.name.ToLower()
-    $isStandard = (-not ($kName -match 'clear|coating|titanium|metallic|pearl|deactive|base color'))
-    if ($isStandard -and ($entry.product_url.ToLower() -match 'clear|coating|titanium|metallic-gloss|pearl-gloss|deactive')) {
+
+    # 2. 2026 / Recent Kits Live Image Mandate: IDs >= 5280 must NOT use unverified gunpla.fyi fallback!
+    $idInt = 0
+    if ([int]::TryParse($id, [ref]$idInt) -and $idInt -ge 5280) {
+        if ($pUrlLower.Contains("gunpla.fyi/images/boxarts/$id.jpeg")) {
+            $imgUnverifiedFallbacks += "$id ($($mk.name)) points to unverified gunpla.fyi fallback"
+        }
+    }
+
+    # 3. Finish Mismatch (Zero-Mismatch Gate)
+    $isStandard = (-not ($kNameLower -match 'clear|coating|titanium|metallic|pearl|deactive|base color'))
+    if ($isStandard -and ($pUrlLower -match 'clear|coating|titanium|metallic-gloss|pearl-gloss|deactive')) {
         $imgFinishMismatches += "$id ($($mk.name)) -> $($entry.product_url)"
+    }
+
+    # 4. Pilot/Character Symmetry (Zero-Mismatch Gate)
+    foreach ($pair in $pilotConflictPairs) {
+        if ($kNameLower.Contains($pair[0]) -and $pUrlLower.Contains($pair[1])) {
+            $imgPilotMismatches += "$id ($($mk.name)) -> character mismatch with '$($pair[1])': $($entry.product_url)"
+        }
     }
 }
 
@@ -260,14 +297,22 @@ if ($imgMissingKits.Count -gt 0) {
     exit 1
 }
 if ($imgLocalMissing.Count -gt 0) {
-    Write-Error "🚨 BUILD REJECTED: Local image files missing for: $($imgLocalMissing -join ', ')!"
+    Write-Error "🚨 BUILD REJECTED: Local image files missing or corrupted for: $($imgLocalMissing -join ', ')!"
+    exit 1
+}
+if ($imgUnverifiedFallbacks.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Recent kits using unverified gunpla.fyi fallback (404 risk):`n$($imgUnverifiedFallbacks -join "`n")"
     exit 1
 }
 if ($imgFinishMismatches.Count -gt 0) {
     Write-Error "🚨 BUILD REJECTED: Finish mismatch detected (Zero-Mismatch violation):`n$($imgFinishMismatches -join "`n")"
     exit 1
 }
-Write-Output "✅ 100% Image Integrity & Zero-Mismatch Gate: All $($kitsObj.Count) kits verified."
+if ($imgPilotMismatches.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Pilot/Character mismatch detected (Zero-Mismatch violation):`n$($imgPilotMismatches -join "`n")"
+    exit 1
+}
+Write-Output "✅ 100% Image Integrity & Zero-Mismatch Gate: All $($kitsObj.Count) kits verified (0 missing, 0 fallbacks, 0 mismatches)."
 
 # 🛡️ Onerror Hardening Gate
 $onerrorMatches = [regex]::Matches($fullHtml, '(?i)onerror="([^"]+)"')

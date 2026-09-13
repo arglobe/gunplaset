@@ -1,4 +1,4 @@
-﻿;
+;
 
     (function() {
       const STORAGE_KEY = 'gunplaset_user_collection_v2';
@@ -143,9 +143,35 @@
         return true;
       }
 
+      function isKitUnreleased(kit) {
+        if (!kit) return false;
+        const rDate = kit.release_date || kit.releaseDate || (kit.year ? String(kit.year) : '');
+        if (!rDate) return false;
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const todayStr = yyyy + '-' + mm + '-' + dd;
+        const thisMonthStr = yyyy + '-' + mm;
+
+        if (rDate.length === 7) {
+          return rDate > thisMonthStr;
+        } else if (rDate.length >= 10) {
+          return rDate.slice(0, 10) > todayStr;
+        } else if (rDate.length === 4) {
+          return parseInt(rDate, 10) > yyyy;
+        }
+        return false;
+      }
+
       window.changeBacklog = function(id, delta, event) {
         if (event) event.stopPropagation();
         if (!requireAuth()) return;
+        const kit = KITS.find(k => String(k.id) === String(id));
+        if (kit && isKitUnreleased(kit) && delta > 0) {
+          showToast('🔒 아직 공식 출시 전인 제품입니다. 위시리스트에 담아두세요!');
+          return;
+        }
         const item = getItem(id);
         const newQty = Math.max(0, (item.backlog || 0) + delta);
         updateItem(id, { backlog: newQty });
@@ -155,6 +181,11 @@
       window.changeInProgress = function(id, delta, event) {
         if (event) event.stopPropagation();
         if (!requireAuth()) return;
+        const kit = KITS.find(k => String(k.id) === String(id));
+        if (kit && isKitUnreleased(kit) && delta > 0) {
+          showToast('🔒 아직 공식 출시 전인 제품입니다. 위시리스트에 담아두세요!');
+          return;
+        }
         const item = getItem(id);
         const newQty = Math.max(0, (item.inProgress || 0) + delta);
         updateItem(id, { inProgress: newQty });
@@ -164,6 +195,11 @@
       window.changeBuilt = function(id, delta, event) {
         if (event) event.stopPropagation();
         if (!requireAuth()) return;
+        const kit = KITS.find(k => String(k.id) === String(id));
+        if (kit && isKitUnreleased(kit) && delta > 0) {
+          showToast('🔒 아직 공식 출시 전인 제품입니다. 위시리스트에 담아두세요!');
+          return;
+        }
         const item = getItem(id);
         const newQty = Math.max(0, (item.built || 0) + delta);
         updateItem(id, { built: newQty });
@@ -227,6 +263,9 @@
         }
         if (state.selectedKit) {
           renderModalContent();
+        }
+        if (typeof populateRadarDropdown === 'function') {
+          populateRadarDropdown();
         }
         if (typeof renderReleaseRadar === 'function') {
           renderReleaseRadar();
@@ -755,7 +794,7 @@
       function updateGlobalStats() {
         let totalBacklog = 0, totalInProgress = 0, totalBuilt = 0, totalVal = 0;
         Object.entries(state.userCollection).forEach(([id, data]) => {
-          const kit = KITS.find(k => k.id === id);
+          const kit = KITS.find(k => String(k.id) === String(id));
           if (!kit) return;
           const b = data.backlog || 0;
           const p = data.inProgress || 0;
@@ -1550,7 +1589,11 @@
                 '</div>' +
               '</div>' +
               '<div class="pt-2 border-t border-slate-800/80 space-y-1.5" onclick="event.stopPropagation()">' +
-                '<div class="flex items-center justify-between text-xs bg-slate-900/90 rounded-xl px-2.5 py-1.5 border border-slate-800/90">' +
+              (isKitUnreleased(kit) ?
+                '<div class="text-[11px] text-amber-300/90 bg-amber-950/40 border border-amber-500/30 rounded-xl px-3 py-2.5 text-center font-medium flex items-center justify-center gap-1.5 shadow-sm my-1">' +
+                  '<span>🔒 출시 전 (위시리스트만 가능)</span>' +
+                '</div>' :
+                ('<div class="flex items-center justify-between text-xs bg-slate-900/90 rounded-xl px-2.5 py-1.5 border border-slate-800/90">' +
                   '<div class="flex items-center gap-1.5">' +
                     '<span class="w-2 h-2 rounded-full ' + (b > 0 ? 'bg-cyan-400' : 'bg-slate-600') + '"></span>' +
                     '<span class="font-medium ' + (b > 0 ? 'text-cyan-300 font-bold' : 'text-slate-400') + '">' + t.cardBacklog + '</span>' +
@@ -1597,7 +1640,7 @@
                       t.notOwned +
                     '</span>' +
                     '<span class="text-[10px] text-slate-600 font-medium">📦 0 · ⚙️ 0 · 🔨 0</span>' +
-                  '</div>') +
+                  '</div>'))) +
               '</div>' +
             '</div>' +
           '</div>';
@@ -1619,7 +1662,7 @@
       };
 
       window.openKitModal = function(id) {
-        const kit = KITS.find(k => k.id === id);
+        const kit = KITS.find(k => String(k.id) === String(id));
         if (!kit) return;
         state.selectedKit = kit;
         state.activeImageIndex = 0;
@@ -1824,17 +1867,25 @@
                 '<div>' + lblRun + ': <span class="text-white">' + valRun + '</span></div>' +
               '</div>' +
               (krwInfo.isPromo ? '<div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-purple-300 flex items-center gap-2"><span>🎁 본 상품은 반다이 조립체험회 및 공식 이벤트에서 배포된 비매품(Not for Sale) 증정 키트입니다.</span></div>' : (!krwInfo.isVerified ? '<div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-amber-300 flex items-center gap-2"><span>⚠️ 본 상품은 반다이 공식 카탈로그에 가격이 등재되어 있지 않은 단종/구판/미등록 품목입니다.</span></div>' : '')) +
-              '<div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 mb-3 text-xs">' +
-                '<div class="font-bold text-cyan-400 mb-1.5 flex justify-between">' +
-                  '<span>' + t.modalStatusTitle + '</span>' +
-                  '<span class="text-white font-mono font-bold">' + t.modalTotal(total) + '</span>' +
-                '</div>' +
-                '<div class="grid grid-cols-3 gap-2 text-center text-[11px] font-mono">' +
-                  '<div class="bg-slate-950 p-1.5 rounded-lg border border-cyan-500/20 text-cyan-300">' + t.modalBacklog + ' <b>' + b + '</b></div>' +
-                  '<div class="bg-slate-950 p-1.5 rounded-lg border border-amber-500/20 text-amber-300">' + t.modalInProgress + ' <b>' + p + '</b></div>' +
-                  '<div class="bg-slate-950 p-1.5 rounded-lg border border-emerald-500/20 text-emerald-300">' + t.modalBuilt + ' <b>' + u + '</b></div>' +
-                '</div>' +
-              '</div>' +
+              (isKitUnreleased(kit) ?
+                '<div class="bg-amber-950/40 border border-amber-500/40 rounded-xl p-3 mb-3 text-xs text-amber-300 flex items-center gap-2.5 shadow-md">' +
+                  '<span class="text-xl">🔒</span>' +
+                  '<div>' +
+                    '<div class="font-bold text-amber-200">공식 출시 예정 상품</div>' +
+                    '<div class="text-[11px] text-amber-300/80 mt-0.5">본 상품은 공식 출시/출하 전 상품입니다. 위시리스트(💖)에 담아둘 수 있으며, 출시일 이후 실물 보유 등록이 활성화됩니다.</div>' +
+                  '</div>' +
+                '</div>' :
+                ('<div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 mb-3 text-xs">' +
+                  '<div class="font-bold text-cyan-400 mb-1.5 flex justify-between">' +
+                    '<span>' + t.modalStatusTitle + '</span>' +
+                    '<span class="text-white font-mono font-bold">' + t.modalTotal(total) + '</span>' +
+                  '</div>' +
+                  '<div class="grid grid-cols-3 gap-2 text-center text-[11px] font-mono">' +
+                    '<div class="bg-slate-950 p-1.5 rounded-lg border border-cyan-500/20 text-cyan-300">' + t.modalBacklog + ' <b>' + b + '</b></div>' +
+                    '<div class="bg-slate-950 p-1.5 rounded-lg border border-amber-500/20 text-amber-300">' + t.modalInProgress + ' <b>' + p + '</b></div>' +
+                    '<div class="bg-slate-950 p-1.5 rounded-lg border border-emerald-500/20 text-emerald-300">' + t.modalBuilt + ' <b>' + u + '</b></div>' +
+                  '</div>' +
+                '</div>')) +
               '<div class="space-y-2">' +
                 '<label class="block text-xs font-medium text-slate-400">' + t.modalNotesLabel + '</label>' +
                 '<input type="text" id="modal-notes" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400" placeholder="' + t.modalNotesPlaceholder + '" value="' + (item.notes || '') + '">' +
@@ -2054,7 +2105,7 @@
       window.exportCSV = function() {
         let csv = "\uFEFF제품명,등급,스케일,시리즈,출시일,발매구분,새것(미개봉),조립중,조립완료,총보유수량,공식정가(원화),공식정가(엔화),공식정가(달러),메모\n";
         Object.entries(state.userCollection).forEach(([id, data]) => {
-          const kit = KITS.find(k => k.id === id);
+          const kit = KITS.find(k => String(k.id) === String(id));
           if (!kit) return;
           const b = data.backlog || 0;
           const p = data.inProgress || 0;
@@ -2117,7 +2168,7 @@
         const t = UI_I18N[state.currency] || UI_I18N.KRW;
         let totalBacklog = 0, totalInProgress = 0, totalBuilt = 0, totalWishlist = 0, totalVal = 0;
         Object.entries(state.userCollection).forEach(([id, data]) => {
-          const kit = KITS.find(k => k.id === id);
+          const kit = KITS.find(k => String(k.id) === String(id));
           if (!kit) return;
           totalBacklog += (data.backlog || 0);
           totalInProgress += (data.inProgress || 0);
@@ -2382,7 +2433,7 @@
 };
 
       const radarState = {
-        currentMonthKey: '2026-09',
+        currentMonthKey: 'latest',
         selectedCategory: 'all',
         onlyWishlist: false,
         isCollapsed: false
@@ -2394,8 +2445,42 @@
         }
       } catch(e) {}
 
+      function populateRadarDropdown() {
+        const select = document.getElementById('radar-month-dropdown');
+        if (!select) return;
+        const curr = state.currency || 'KRW';
+        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
+
+        const allMonths = new Set();
+        Object.keys(localeRadar).forEach(m => allMonths.add(m));
+        for (let m = 9; m >= 1; m--) {
+          const mm = m < 10 ? '0' + m : '' + m;
+          allMonths.add('2026-' + mm);
+        }
+        const sortedMonths = Array.from(allMonths).sort().reverse();
+
+        const currentVal = radarState.currentMonthKey || 'latest';
+        let html = '<option value="latest"' + (currentVal === 'latest' ? ' selected' : '') + '>⚡ Latest (최근 순 4선)</option>';
+        sortedMonths.forEach(m => {
+          const isThisMonth = m === '2026-09';
+          const isLastMonth = m === '2026-08';
+          const suffix = isThisMonth ? (curr === 'USD' ? ' (This Month)' : (curr === 'JPY' ? ' (今月)' : ' (이번 달 출하)'))
+                       : (isLastMonth ? (curr === 'USD' ? ' (Last Month)' : (curr === 'JPY' ? ' (先月)' : ' (지난 달 출하)')) : '');
+          const label = '🗓️ ' + m.replace('-', '. ') + (suffix ? ' ' + suffix : '');
+          html += '<option value="' + m + '"' + (currentVal === m ? ' selected' : '') + '>' + label + '</option>';
+        });
+        select.innerHTML = html;
+        select.value = currentVal;
+      }
+
+      window.selectRadarMonth = function(val) {
+        radarState.currentMonthKey = val;
+        renderReleaseRadar();
+      };
+
       function initReleaseRadar() {
         applyRadarCollapseUI();
+        populateRadarDropdown();
         renderReleaseRadar();
       }
 
@@ -2486,19 +2571,54 @@
         if (descElem && t.radarDesc) descElem.textContent = t.radarDesc;
 
         const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
-        let monthData = localeRadar[radarState.currentMonthKey];
-        if (!monthData) {
-          radarState.currentMonthKey = Object.keys(localeRadar)[0];
+
+        const isLatestMode = radarState.currentMonthKey === 'latest';
+        let monthData = null;
+        let allItems = [];
+
+        if (isLatestMode) {
+          const seenIds = new Set();
+          const aggregated = [];
+          Object.values(localeRadar).forEach(m => {
+            if (m && Array.isArray(m.items)) {
+              m.items.forEach(it => {
+                if (!seenIds.has(it.id)) {
+                  seenIds.add(it.id);
+                  aggregated.push(it);
+                }
+              });
+            }
+          });
+          aggregated.sort((a, b) => {
+            const dateA = a.date || '';
+            const dateB = b.date || '';
+            return dateB.localeCompare(dateA);
+          });
+          allItems = aggregated.slice(0, 4);
+          monthData = {
+            label: curr === 'USD' ? '⚡ Latest (Recent 4)' : (curr === 'JPY' ? '⚡ Latest (直近4選)' : '⚡ Latest (최근 순 4선)'),
+            items: allItems
+          };
+        } else {
           monthData = localeRadar[radarState.currentMonthKey];
+          if (!monthData) {
+            monthData = {
+              label: radarState.currentMonthKey.replace('-', '. ') + ' 출하/입고',
+              items: []
+            };
+          }
+          allItems = monthData.items || [];
         }
-        if (!monthData) return;
+
+        // Keep dropdown selection synchronized
+        const dropdown = document.getElementById('radar-month-dropdown');
+        if (dropdown && dropdown.value !== radarState.currentMonthKey) {
+          dropdown.value = radarState.currentMonthKey;
+        }
 
         // 1. Update Month Label
         const monthLabel = document.getElementById('radar-active-month-label');
         if (monthLabel) monthLabel.textContent = monthData.label;
-
-        // 2. Compute Wishlist matching items & total budget (Zero-Assumption Fact-Only)
-        const allItems = monthData.items || [];
         const wishItems = allItems.filter(item => {
           const u = getItem(item.id);
           return !!(u && u.wishlist);
@@ -2574,7 +2694,7 @@
               '<div class="w-8 h-8 rounded-xl bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-sm shadow-sm shrink-0">💖</div>' +
               '<div>' +
                 '<div class="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">' +
-                  '<span>' + (curr === 'USD' ? 'My Wishlist Releases:' : (curr === 'JPY' ? '今月の欲しいもの出荷:' : '이번 달 내 위시리스트 출하:')) + '</span>' +
+                  '<span>' + (isLatestMode ? (curr === 'USD' ? 'Latest Wishlist Releases:' : (curr === 'JPY' ? '最新の欲しいもの出荷:' : '최근 순 내 위시리스트 출하:')) : (curr === 'USD' ? 'My Wishlist Releases:' : (curr === 'JPY' ? '今月の欲しいもの出荷:' : '이번 달 내 위시리스트 출하:'))) + '</span>' +
                   '<span class="text-pink-400 font-mono text-sm font-black">' + wishItems.length + ' ' + (curr === 'USD' ? 'kits' : (curr === 'JPY' ? '件' : '건')) + '</span>' +
                   '<span class="text-slate-600">|</span>' +
                   '<span>' + (t.radarTotalBudget || 'Budget:') + '</span>' +

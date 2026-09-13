@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="referrer" content="no-referrer">
+  <title>GunplaSet (건프라셋) - 마스터 건프라 아카이브 & 컬렉션 도감</title>
+  
+  <!-- SEO & Social Sharing Meta Tags -->
+  <meta name="description" content="GunplaSet (건프라셋) - 2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 프라모델 수집/조립/자산 관리 도구">
+  <meta name="keywords" content="건프라셋, GunplaSet, 건프라, 건담, 반다이, 건담베이스, 클럽G, PG, MG, RG, HG, 건프라 정가, 건프라 시세, 건프라 도감">
+  <meta name="author" content="GunplaSet Team">
+  <meta name="theme-color" content="#030712">
+  
+  <!-- OpenGraph (KakaoTalk, Discord, Facebook, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="GunplaSet">
+  <meta property="og:title" content="GunplaSet (건프라셋) - 마스터 건프라 아카이브 & 컬렉션 도감">
+  <meta property="og:description" content="2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 프라모델 수집/조립/자산 관리 도구">
+  <meta property="og:image" content="https://gunpla.fyi/images/boxarts/1097.jpeg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GunplaSet (건프라셋) - 마스터 건프라 아카이브">
+  <meta name="twitter:description" content="2,716종 건프라 전 테마 반다이 공식 정가 카탈로그 및 나만의 컬렉션 관리">
+  <meta name="twitter:image" content="https://gunpla.fyi/images/boxarts/1097.jpeg">
+  
+  <!-- PWA & Mobile Web App Settings -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="GunplaSet">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="images/icon-192.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Identity Services (GIS) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --bg-main: #0b0f19;
+  --bg-card: #131b2e;
+  --bg-card-hover: #1c2640;
+  --border-color: #23304d;
+  --accent-cyan: #00f2fe;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-unowned {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(100, 116, 139, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.card-unowned:hover {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(148, 163, 184, 0.7);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.card-owned {
+  background: linear-gradient(180deg, rgba(8, 51, 68, 0.45) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.25), 0 8px 24px rgba(0, 0, 0, 0.5);
+  transform: scale(1.005);
+}
+.card-owned:hover {
+  background: linear-gradient(180deg, rgba(8, 51, 68, 0.6) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 0 28px rgba(0, 242, 254, 0.4), 0 14px 32px rgba(0, 0, 0, 0.6);
+  transform: translateY(-3px) scale(1.01);
+}
+
+.badge-pg { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; font-weight: 800; }
+.badge-mg { background: linear-gradient(135deg, #ff3366, #ff007f); color: #fff; font-weight: 800; }
+.badge-rg { background: linear-gradient(135deg, #00f2fe, #4facfe); color: #000; font-weight: 800; }
+.badge-hg { background: linear-gradient(135deg, #38ef7d, #11998e); color: #000; font-weight: 800; }
+.badge-eg { background: linear-gradient(135deg, #a8ff78, #78ffd6); color: #000; font-weight: 800; }
+.badge-sd { background: linear-gradient(135deg, #f6d365, #fda085); color: #000; font-weight: 800; }
+.badge-fm { background: linear-gradient(135deg, #b224ef, #7579ff); color: #fff; font-weight: 800; }
+.badge-default { background: #334155; color: #fff; font-weight: 800; }
+
+.year-pill, .subfacet-pill {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.year-pill.active, .subfacet-pill.active {
+  background: #00f2fe !important;
+  color: #0b0f19 !important;
+  font-weight: 800 !important;
+  border-color: #00f2fe !important;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.subfacet-mode-btn.active {
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  border-color: rgba(0, 242, 254, 0.4);
+}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- TOP APP HEADER -->
+  <!-- TOP APP HEADER -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-4 lg:px-8 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
+      
+      <!-- Left: Unified Brand Logo Block -->
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 font-black text-sm tracking-tight text-slate-950">
+          GS
+        </div>
+        <div>
+          <h1 class="text-lg font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-transparent flex items-center gap-1.5">
+            GunplaSet
+          </h1>
+          <p class="text-[10px] text-slate-400 tracking-wider font-mono uppercase">MASTER GUNPLA ARCHIVE & COLLECTION</p>
+        </div>
+      </div>
+
+      <!-- Right: 2-Row Stacked Dashboard Control Area (Takes all available width) -->
+      <div class="flex flex-col gap-2 flex-1 w-full justify-end">
+        
+        <!-- Row 1: Currency Selector & Utilities -->
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 text-xs">
+          <!-- Currency Selector Tabs -->
+          <div class="flex items-center bg-slate-950 p-0.5 rounded-xl border border-slate-800 text-[11px] font-bold font-mono shrink-0 shadow-inner">
+            <button id="curr-btn-KRW" onclick="window.setCurrency('KRW')" class="px-2.5 py-1 rounded-lg transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40" title="반다이남코코리아 공식 등록 정가 기준">
+              🇰🇷 KRW
+            </button>
+            <button id="curr-btn-JPY" onclick="window.setCurrency('JPY')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="반다이 일본 공식 엔화(MSRP) 기준">
+              🇯🇵 JPY
+            </button>
+            <button id="curr-btn-USD" onclick="window.setCurrency('USD')" class="px-2.5 py-1 rounded-lg transition-all text-slate-400 hover:text-white border border-transparent" title="반다이 아메리카(BNTCA) 공식 달러 기준">
+              🇺🇸 USD
+            </button>
+          </div>
+
+          <!-- Modern Google Login & User Profile Dropdown -->
+          <div id="user-auth-container" class="relative">
+            <!-- 1. Logged-out State: Clean Prominent Google Login Button -->
+            <button id="btn-login" onclick="window.handleLoginClick()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+              <span id="btn-login-text">Google 로그인</span>
+            </button>
+
+            <!-- 2. Logged-in State: Profile Button -->
+            <button id="user-profile-btn" onclick="window.toggleUserMenu(event)" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 shadow-md transition-all cursor-pointer">
+              <img id="user-avatar" src="" class="w-5 h-5 rounded-full object-cover border border-cyan-400">
+              <span id="user-display-name" class="text-xs font-semibold text-slate-200 truncate max-w-[90px]"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+
+            <!-- 3. User Dropdown Menu Card (My Page) -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-72 rounded-2xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl p-4 z-50 text-xs">
+              <div class="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <img id="menu-user-avatar" src="" class="w-10 h-10 rounded-full object-cover border border-cyan-400">
+                <div class="overflow-hidden">
+                  <div id="menu-user-name" class="font-bold text-white text-sm truncate">컬렉터</div>
+                  <div id="menu-user-email" class="text-slate-400 text-[11px] truncate"></div>
+                </div>
+              </div>
+
+              <div class="py-3 border-b border-slate-800 space-y-1.5 text-slate-300">
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">📍 거주 지역:</span>
+                  <span id="menu-user-region" class="font-semibold text-slate-200">설정 안 됨</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-slate-400">🎂 연령대:</span>
+                  <span id="menu-user-age" class="font-semibold text-slate-200">설정 안 됨</span>
+                </div>
+                <div class="pt-1 text-right">
+                  <button onclick="window.openOnboardingModal(); window.closeUserMenu();" class="text-[11px] text-cyan-400 hover:text-cyan-300 underline font-medium">✏️ 프로필 정보 수정</button>
+                </div>
+              </div>
+
+              <div class="py-3 border-b border-slate-800 space-y-2">
+                <button onclick="window.exportCSV(); window.closeUserMenu();" class="w-full py-2 px-3 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 font-bold border border-emerald-800/40 flex items-center justify-center gap-2 transition-all shadow-sm">
+                  <span>📊 내 소장 목록 엑셀(CSV) 받기</span>
+                </button>
+              </div>
+
+              <div class="pt-3 flex items-center justify-between">
+                <div class="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>클라우드 자동 동기화 켬</span>
+                </div>
+                <button onclick="window.handleLogout(); window.closeUserMenu();" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-red-400 font-bold hover:bg-red-950/40 transition-colors">
+                  🚪 로그아웃
+                </button>
+              </div>
+
+              <div class="pt-2 mt-2 border-t border-slate-800/80 space-y-2 text-center">
+                <button id="pwa-menu-install-btn" onclick="window.triggerPwaInstall(); window.closeUserMenu();" class="w-full py-1.5 px-2 rounded-xl bg-cyan-950/50 hover:bg-cyan-900/60 border border-cyan-500/40 text-cyan-300 font-semibold flex items-center justify-center gap-1.5 transition-all text-xs">
+                  <span>📲 홈 화면에 앱 설치 (PWA)</span>
+                </button>
+                <button onclick="window.handleAccountDeletion(); window.closeUserMenu();" class="w-full py-1 text-[11px] text-slate-500 hover:text-red-400 hover:bg-red-950/20 rounded-lg transition-colors flex items-center justify-center gap-1" title="계정과 모든 소장품 데이터를 영구 삭제합니다">
+                  <span>🗑️ 회원 탈퇴 (데이터 영구 삭제)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: 5 Stats Metric Badges (Full Natural Width, Zero Wrapping) -->
+        <div class="flex flex-nowrap items-center justify-start md:justify-end gap-1.5 md:gap-2 text-xs font-mono overflow-x-auto md:overflow-x-visible scrollbar-none">
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
+            <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+            <span class="text-slate-400" id="header-label-total">총 보유:</span>
+            <span class="text-white font-bold" id="header-total-all">0 개</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span class="text-slate-400" id="header-label-backlog">새것(미개봉):</span>
+            <span class="text-cyan-400 font-bold" id="header-backlog-count">0 박스</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span class="text-slate-400" id="header-label-inprogress">조립중/부품:</span>
+            <span class="text-amber-400 font-bold" id="header-inprogress-count">0 개</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="text-slate-400" id="header-label-built">조립완료:</span>
+            <span class="text-emerald-400 font-bold" id="header-built-count">0 개</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm shrink-0">
+            <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+            <span class="text-slate-400" id="header-label-value">미개봉 가치:</span>
+            <span class="text-yellow-400 font-bold font-mono" id="header-total-value">₩0</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="bg-slate-950/60 border-b border-slate-800 px-4 lg:px-8 py-2">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto pb-1">
+      <button id="nav-tab-all" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-cyan-500/40 bg-cyan-500/20 text-cyan-400 flex items-center gap-1.5 whitespace-nowrap" data-view="all" onclick="window.switchView('all')">
+        🔍 전체 탐색
+      </button>
+      <button id="nav-tab-backlog" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="backlog" onclick="window.switchView('backlog')">
+        📦 새것 / 미개봉
+      </button>
+      <button id="nav-tab-inprogress" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="inprogress" onclick="window.switchView('inprogress')">
+        ⚙️ 조립 중 / 부품
+      </button>
+      <button id="nav-tab-built" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="built" onclick="window.switchView('built')">
+        🔨 조립 완료
+      </button>
+      <button id="nav-tab-wishlist" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="wishlist" onclick="window.switchView('wishlist')">
+        💖 위시리스트
+      </button>
+      <button id="nav-tab-radar" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="radar" onclick="window.scrollToRadar()">
+        📅 출하 캘린더
+        <span class="px-1.5 py-0.2 rounded-full bg-rose-500 text-white text-[9px] font-black animate-pulse">NEW</span>
+      </button>
+      <button id="nav-tab-analytics" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="analytics" onclick="window.switchView('analytics')">
+        📊 컬렉션 통계
+      </button>
+      <button id="nav-tab-bigdata" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap" data-view="bigdata" onclick="window.switchView('bigdata')">
+        🏆 글로벌 트렌드 TOP 50
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 flex-1">
+
+    <div id="kits-section">
+
+      <!-- 0. RELEASE & RESTOCK RADAR (월간 건프라 출하 & 재입고 레이더) -->
+      <section id="radar-section" class="mb-5 border border-cyan-500/50 rounded-2xl bg-[#0c111e] shadow-2xl overflow-hidden transition-all duration-300">
+        <!-- Radar Section Header -->
+        <div class="p-3.5 sm:p-4 bg-gradient-to-r from-slate-900 via-[#0f172a] to-slate-900 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="w-2.5 h-6 bg-cyan-400 rounded-full shadow-[0_0_12px_rgba(0,242,254,0.7)]"></span>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-black text-white heading-font tracking-wide">
+                  RELEASE & RESTOCK RADAR
+                </h2>
+                <span id="radar-header-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40">
+                  월간 출하 & 재입고 레이더
+                </span>
+                <span id="radar-header-wish-badge" class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-pink-950 text-pink-300 border border-pink-500/40 hidden sm:inline-block">
+                  💖 내 위시 매칭 계산 중...
+                </span>
+              </div>
+              <p id="radar-header-desc" class="text-[11px] text-slate-400 mt-0.5">
+                반다이 코리아 공식 일반판 출하일, 클럽G 온라인 수주·발송, 건담베이스 한정 입고 일정
+              </p>
+            </div>
+          </div>
+
+          <!-- Controls: Month Dropdown Selector & Collapse Toggle -->
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center">
+              <select id="radar-month-dropdown" onchange="window.selectRadarMonth(this.value)" class="bg-slate-950 text-cyan-400 font-bold font-mono border border-cyan-500/40 rounded-xl px-2.5 py-1.5 text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none cursor-pointer shadow-lg">
+                <option value="latest" selected>⚡ Latest (최근 순 4선)</option>
+                <option value="2026-09">🗓️ 2026. 09 (이번 달 출하)</option>
+                <option value="2026-08">🗓️ 2026. 08 (지난 달 출하)</option>
+                <option value="2026-07">🗓️ 2026. 07</option>
+                <option value="2026-06">🗓️ 2026. 06</option>
+                <option value="2026-05">🗓️ 2026. 05</option>
+                <option value="2026-04">🗓️ 2026. 04</option>
+                <option value="2026-03">🗓️ 2026. 03</option>
+                <option value="2026-02">🗓️ 2026. 02</option>
+                <option value="2026-01">🗓️ 2026. 01</option>
+              </select>
+            </div>
+            <button onclick="window.toggleRadarCollapse()" id="radar-btn-collapse" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-colors" title="접기/펼치기">
+              <span id="radar-collapse-arrow">▲</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Radar Collapsible Body -->
+        <div id="radar-collapsible-body" class="p-3.5 sm:p-4 space-y-3">
+          <!-- Summary Banner & Channels Filter -->
+          <div id="radar-summary-container"></div>
+          
+          <!-- Compact Scrollable Rows -->
+          <div id="radar-list-container" class="space-y-2.5 max-h-[295px] overflow-y-auto custom-scroll pr-1"></div>
+        </div>
+
+        <!-- Collapsed Summary Bar (1-Line View when collapsed) -->
+        <div id="radar-collapsed-summary" class="hidden p-3 bg-slate-950/90 flex items-center justify-between text-xs cursor-pointer hover:bg-slate-900/90 transition-colors" onclick="window.toggleRadarCollapse()">
+          <div class="flex flex-wrap items-center gap-2" id="radar-mini-summary-content">
+            <span class="text-pink-400 font-bold">💖 위시리스트 매칭 계산 중...</span>
+          </div>
+          <button class="text-xs text-cyan-400 hover:underline font-bold flex items-center gap-1 shrink-0">
+            <span>캘린더 펼쳐보기</span>
+            <span>▼</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 1. DEDICATED RELEASE YEAR DECADE & TIMELINE BAR (Multi-Select Enabled) -->
+      <div class="mb-4 glass-card p-3 rounded-2xl border border-slate-800/90">
+        <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-1.5">
+            <span id="label-year-title">📅 시대 및 연도별 발매 탐색</span>
+            <span id="label-year-sub" class="text-[11px] text-cyan-400/80 font-normal font-sans">(10년 단위 탭 & 여러 연도 복수 선택 가능)</span>
+          </div>
+          <span class="text-[11px] text-cyan-400 font-mono" id="filtered-count">0 개의 건프라 카탈로그</span>
+        </div>
+        
+        <!-- Decade Tabs Row -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-800/70 scrollbar-none" id="decade-tabs"></div>
+        
+        <!-- Sub-row of Individual Years for Active Decade -->
+        <div class="flex flex-wrap items-center gap-1.5 pt-2" id="year-slider"></div>
+      </div>
+
+      <!-- 2. QUICK FILTER MODE BAR (Grade & Series Quick Filters - Multi-Select Enabled) -->
+      <div class="mb-5 glass-card p-3.5 rounded-2xl border border-slate-800/90">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-800/80 mb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-300" id="label-quickfilter-title">⚡ 빠른 필터:</span>
+            <div class="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800">
+              <button id="subfacet-btn-grade" class="subfacet-mode-btn active px-3 py-1 rounded-lg text-xs font-bold transition-all" onclick="window.switchSubfacetMode('grade')">
+                🏷️ 등급별
+              </button>
+              <button id="subfacet-btn-series" class="subfacet-mode-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all" onclick="window.switchSubfacetMode('series')">
+                🎬 시리즈별
+              </button>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-400 font-mono" id="label-quickfilter-sub">
+            연도 + 등급 + 시리즈 복수 선택 결합 가능
+          </div>
+        </div>
+
+        <!-- Grade & Series Horizontal Pill Slider -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none" id="subfacet-slider"></div>
+
+        <!-- Active Compound Filter Chips -->
+        <div id="active-filters-bar" class="flex flex-wrap items-center gap-2 pt-2.5 mt-2.5 border-t border-slate-800/60 hidden">
+          <span class="text-[11px] text-slate-400 font-medium" id="label-applied-filters">적용된 조건:</span>
+          <div id="active-filter-chips" class="flex flex-wrap items-center gap-1.5"></div>
+          <button id="btn-reset-filters" onclick="window.resetAllFilters()" class="ml-auto text-[11px] text-rose-400 hover:text-rose-300 font-semibold underline flex items-center gap-1">
+            ↺ 전체 필터 초기화
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. SEARCH & DETAILED SELECT BAR -->
+      <div class="glass-card p-4 rounded-2xl mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        
+        <!-- Search Input -->
+        <div class="relative w-full md:w-80">
+          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="건담 이름, 등급, 시리즈 검색 (예: z, seed, mg)...">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+
+        <!-- Filter Selects (Year, Grade, Series, Run, Sort, Image Mode) -->
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+          
+          <!-- Image View Mode Switcher (Product / Boxart) -->
+          <div class="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-800 text-xs">
+            <button id="img-mode-product" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center gap-1" onclick="window.setImageMode('product')" title="완성품 전신 스튜디오 사진으로 보기">
+              🤖 완성품 뷰
+            </button>
+            <button id="img-mode-boxart" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1" onclick="window.setImageMode('boxart')" title="박스 패키지 일러스트로 보기">
+              📦 박스아트 뷰
+            </button>
+          </div>
+
+          <select id="filter-year-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+            <option value="all">모든 연도 (All Years)</option>
+          </select>
+
+          <select id="filter-grade" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+            <option value="all">모든 등급 (All Grades)</option>
+            <option value="HG">HG / HGUC (High Grade)</option>
+            <option value="MG">MG / MGEX / MGSD (Master Grade)</option>
+            <option value="RG">RG (Real Grade)</option>
+            <option value="PG">PG (Perfect Grade)</option>
+            <option value="EG">ENTRY GRADE (EG)</option>
+            <option value="FM">Full Mechanics / RE/100</option>
+            <option value="SD">SD / SDCS / BB전사</option>
+            <option value="Mega">Mega Size (1/48)</option>
+            <option value="30MM">30 MINUTES (30MM/30MS)</option>
+            <option value="Pokemon">포켓몬 프라모델</option>
+            <option value="Other">기타 반다이 프라</option>
+          </select>
+
+          <select id="filter-series-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400 max-w-[150px] truncate">
+            <option value="all">모든 시리즈 (All Series)</option>
+          </select>
+
+          <select id="filter-run" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+            <option value="all">모든 발매구분</option>
+            <option value="Standard">일반 발매판 (Standard)</option>
+            <option value="P-Bandai">한정판 / 클럽G (P-Bandai)</option>
+          </select>
+
+          <select id="sort-by" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+            <option value="release_desc">최신 출시순 (Newest)</option>
+            <option value="release_asc">오래된 출시순 (Oldest)</option>
+            <option value="name_asc">이름 가나다순 (A-Z)</option>
+            <option value="msrp_desc">가격 높은순 (Price: High)</option>
+            <option value="msrp_asc">가격 낮은순 (Price: Low)</option>
+            <option value="owned_desc">내 보유 많은순</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- KITS GRID -->
+      <div id="kits-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5"></div>
+
+      <!-- LOAD MORE -->
+      <div id="load-more-container" class="mt-8 text-center"></div>
+
+    </div>
+
+    <!-- ANALYTICS SECTION -->
+    <div id="analytics-section" class="hidden">
+      <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">📊 내 건프라 컬렉션 & 자산 가치 분석</h2>
+          <p class="text-xs text-slate-400 font-mono">My Gunpla Portfolio & Valuation Dashboard</p>
+        </div>
+        <button onclick="window.exportCSV()" class="px-3.5 py-2 rounded-xl bg-emerald-950/70 hover:bg-emerald-900 text-emerald-300 text-xs font-bold border border-emerald-800/40 transition-all flex items-center gap-1.5 shadow-sm">
+          <span>📊 내 소장 목록 엑셀(CSV) 다운로드</span>
+        </button>
+      </div>
+      <div id="analytics-view"></div>
+    </div>
+
+    <!-- 3. GLOBAL BIG DATA RANKINGS SECTION -->
+    <div id="bigdata-section" class="hidden">
+      <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">🏆 전 세계 건프라 빅데이터 트렌드 & 랭킹</h2>
+          <p class="text-xs text-cyan-400 font-mono">Global Gunpla Collector Trends & Popularity Index</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-400">실시간 유저 소장 데이터 기반 집계</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+      </div>
+      <div id="bigdata-view"></div>
+    </div>
+
+  </main>
+
+  <!-- GLOBAL USER ONBOARDING MODAL (Cascading Country & Region Selector) -->
+  <div id="onboarding-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-md w-full rounded-3xl p-6 relative border border-cyan-500/40 shadow-2xl bg-slate-900/95">
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-cyan-500/30 text-2xl">
+          🤖
+        </div>
+        <h3 id="onboard-title" class="text-lg font-bold text-white mb-1">🎉 구글 인증 완료! 마지막 필수 단계</h3>
+        <p id="onboard-sub" class="text-xs text-slate-400 leading-relaxed">
+          거주 지역과 연령대를 선택하시면 회원가입이 완료됩니다.<br>
+          <span class="text-cyan-400 font-medium">※ 이름, 전화번호 등 민감 정보는 일절 수집되지 않는 100% 익명 통계입니다.</span>
+        </p>
+      </div>
+
+      <div class="space-y-4 text-xs font-medium">
+        <!-- 1. 국가 선택 (Country) -->
+        <div>
+          <label id="onboard-lbl-country" class="block text-slate-300 font-semibold mb-1.5">🌍 거주 국가 (Country)</label>
+          <select id="onboard-country" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors" onchange="window.handleOnboardCountryChange()">
+            <option value="KR">🇰🇷 대한민국 (South Korea)</option>
+            <option value="JP">🇯🇵 日本 (Japan)</option>
+            <option value="US">🇺🇸 United States (미국)</option>
+            <option value="CA">🇨🇦 Canada (캐나다)</option>
+            <option value="GB">🇬🇧 United Kingdom (영국)</option>
+            <option value="FR">🇫🇷 France (프랑스)</option>
+            <option value="DE">🇩🇪 Germany (독일)</option>
+            <option value="TW">🇹🇼 台灣 (Taiwan)</option>
+            <option value="HK">🇭🇰 香港 (Hong Kong)</option>
+            <option value="SG">🇸🇬 Singapore (싱가포르)</option>
+            <option value="AU">🇦🇺 Australia (호주)</option>
+            <option value="OT">🌐 기타 국가 (Other Countries)</option>
+          </select>
+        </div>
+
+        <!-- 2. 세부 거주 지역 (Cascading Sub-Region) -->
+        <div>
+          <label id="onboard-lbl-region" class="block text-slate-300 font-semibold mb-1.5">📍 세부 거주 지역 (State / Province / Region)</label>
+          <select id="onboard-region" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors">
+            <!-- Dynamically populated by JS based on Country -->
+          </select>
+        </div>
+
+        <!-- 3. 연령대 (Age Group) -->
+        <div>
+          <label id="onboard-lbl-age" class="block text-slate-300 font-semibold mb-1.5">🎂 연령대 (Age Group)</label>
+          <select id="onboard-age" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors">
+            <option value="10s">10대 이하 (Under 20)</option>
+            <option value="20s">20대 (20 ~ 29세)</option>
+            <option value="30s" selected>30대 (30 ~ 39세)</option>
+            <option value="40s">40대 (40 ~ 49세)</option>
+            <option value="50s+">50대 이상 (50+)</option>
+          </select>
+        </div>
+
+        <!-- 4. 성별 (Gender) -->
+        <div>
+          <label id="onboard-lbl-gender" class="block text-slate-300 font-semibold mb-1.5">👤 성별 (Gender - 선택 사항)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" class="gender-btn py-2 rounded-xl border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 font-bold transition-all" data-val="M" onclick="window.setGenderSelect('M')">남성</button>
+            <button type="button" class="gender-btn py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all" data-val="F" onclick="window.setGenderSelect('F')">여성</button>
+            <button type="button" class="gender-btn py-2 rounded-xl border border-slate-800 bg-slate-950 text-slate-400 transition-all" data-val="U" onclick="window.setGenderSelect('U')">선택 안 함</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button onclick="window.submitOnboarding()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 transition-all">
+          ✨ 온보딩 완료 및 클라우드 동기화 시작
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH PROMPT MODAL (Triggered on collection mutation attempt without login) -->
+  <div id="auth-prompt-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden" onclick="window.closeAuthPromptModal(event)">
+    <div class="glass-card max-w-sm w-full rounded-3xl p-6 relative border border-cyan-500/40 shadow-2xl bg-slate-900/95 text-center" onclick="event.stopPropagation()">
+      <button onclick="window.closeAuthPromptModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors">✕</button>
+      
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-500/30 text-3xl">
+        📦
+      </div>
+      
+      <h3 class="text-lg font-bold text-white mb-1.5">나만의 건프라 컬렉션 저장</h3>
+      <p class="text-xs text-slate-400 leading-relaxed mb-6">
+        소장 수량과 위시리스트를 안전하게 보관하려면<br>
+        <span class="text-cyan-400 font-semibold">Google 간편 로그인</span>이 필요합니다.<br>
+        <span class="text-slate-500 text-[11px] mt-1 inline-block">스마트폰 & PC 어디서든 실시간 자동 동기화!</span>
+      </p>
+
+      <div class="space-y-3 mb-4">
+        <!-- Direct Google Login Trigger Button inside Modal -->
+        <button onclick="window.triggerModalGoogleLogin()" class="w-full py-3 rounded-2xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2.5 border border-slate-200">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          <span>Google 계정으로 계속하기</span>
+        </button>
+
+        <div id="modal-gis-btn" class="flex justify-center"></div>
+      </div>
+
+      <button onclick="window.closeAuthPromptModal()" class="w-full py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-750 text-slate-400 hover:text-slate-200 text-xs font-medium transition-all">
+        나중에 하기 (둘러보기)
+      </button>
+    </div>
+  </div>
+
+  <!-- KIT DETAIL MODAL -->
+  <div id="kit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-4xl w-full rounded-3xl p-6 relative max-h-[92vh] overflow-y-auto border border-slate-700 shadow-2xl">
+      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closeKitModal()">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN LIGHTBOX ZOOM MODAL -->
+  <div id="lightbox-modal" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center p-4 hidden select-none" onclick="window.closeLightbox(event)">
+    <button class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-lg border border-slate-700 shadow-2xl z-20" onclick="window.closeLightbox(event)">✕</button>
+    <div class="relative max-w-[95vw] max-h-[85vh] flex items-center justify-center" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Zoomed Gunpla" class="max-w-[95vw] max-h-[85vh] object-contain rounded-xl shadow-2xl border border-slate-800/80">
+      <button id="lightbox-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(-1)">‹</button>
+      <button id="lightbox-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/90 hover:bg-slate-800 text-white flex items-center justify-center text-xl font-bold border border-slate-700 shadow-2xl" onclick="window.nextLightboxImage(1)">›</button>
+    </div>
+    <div class="mt-4 flex items-center gap-3">
+      <span id="lightbox-counter" class="px-3 py-1 rounded-full bg-slate-900 text-cyan-400 text-xs font-mono border border-slate-800">1 / 1</span>
+      <span id="lightbox-title" class="text-xs text-slate-300 font-medium"></span>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-2xl bg-slate-900/95 border border-cyan-500/40 text-cyan-300 text-xs font-semibold shadow-2xl shadow-cyan-500/20 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+    알림 메시지
+  </div>
+
+  <!-- PWA INSTALL FLOATING BANNER (Mobile / Desktop prompt) -->
+  <div id="pwa-install-banner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:w-96 z-50 p-4 rounded-2xl bg-slate-900/95 border border-cyan-500/40 shadow-2xl backdrop-blur-xl transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <div class="flex items-start gap-3">
+      <img src="images/icon-192.png" class="w-11 h-11 rounded-xl object-cover shadow-md border border-cyan-400/40 shrink-0" alt="GunplaSet App">
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-white text-xs flex items-center gap-1.5">
+            <span>GunplaSet 전용 앱 설치</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30 font-mono">PWA</span>
+          </h4>
+          <button onclick="window.dismissPwaBanner()" class="text-slate-400 hover:text-slate-200 text-xs p-1" aria-label="닫기">✕</button>
+        </div>
+        <p class="text-[11px] text-slate-300 mt-1 leading-snug">
+          홈 화면에 추가하면 브라우저 주소창 없이 전체 화면으로 쾌적하게 즐길 수 있습니다.
+        </p>
+        <div id="ios-install-guide" class="hidden text-[11px] text-amber-300 bg-amber-950/40 border border-amber-500/30 rounded-lg p-2 mt-2">
+          💡 <b>아이폰/iPad 설치 안내</b>: 사파리 하단의 <b>공유 버튼(⎋)</b>을 누른 후 <b>[홈 화면에 추가]</b>를 선택해 주세요.
+        </div>
+        <div class="flex items-center gap-2 mt-3">
+          <button id="pwa-btn-install" onclick="window.triggerPwaInstall()" class="flex-1 py-1.5 px-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black text-xs shadow-md transition-all">
+            홈 화면에 추가
+          </button>
+          <button onclick="window.dismissPwaBanner()" class="py-1.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-xs font-medium transition-all">
+            나중에
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-16 py-10 border-t border-slate-800 bg-slate-950/80 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+        <div class="flex items-center gap-2">
+          <span class="text-base font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">GunplaSet (건프라셋)</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-mono">v2.0 Official</span>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 font-medium">
+          <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors">서비스 소개</button>
+          <span class="text-slate-700">&bull;</span>
+          <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors">개인정보처리방침</button>
+          <span class="text-slate-700">&bull;</span>
+          <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors">이용약관</button>
+          <span class="text-slate-700">&bull;</span>
+          <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors">문의 및 오류 제보</button>
+        </div>
+      </div>
+      <div class="pt-6 text-center md:text-left space-y-2 text-[11px] text-slate-500">
+        <p class="leading-relaxed">
+          &copy; 2026 GunplaSet. 본 웹사이트는 건프라 팬 및 수집가를 위한 비영리 정보 아카이브이자 개인 소장품 관리 도구입니다.<br class="hidden sm:inline">
+          모든 건담 및 건프라 관련 명칭, 박스아트, 패키지 디자인의 저작권과 상표권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속됩니다.
+        </p>
+        <p class="text-slate-600">
+          게재된 배너 광고 및 자발적 후원금은 서비스 호스팅 유지비 및 정기 데이터베이스 큐레이션 비용으로 사용됩니다.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- POLICY / ABOUT MODAL -->
+  <div id="policy-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-2xl w-full rounded-3xl p-6 relative max-h-[85vh] overflow-y-auto border border-slate-700 shadow-2xl bg-slate-900/95 text-slate-300 text-xs leading-relaxed space-y-4">
+      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-10" onclick="window.closePolicyModal()">✕</button>
+      <div id="policy-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- LOAD AUTO-SYNCED USER COLLECTION SCRIPT -->
+  <script src="my_collection.js"></script>

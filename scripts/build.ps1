@@ -225,6 +225,50 @@ if ($rIdx -ge 0) {
     }
 }
 
+# 🛡️ Image Integrity & Zero-Mismatch Gate
+Write-Output "🔍 Verifying Kit Image DB integrity and Zero-Mismatch compliance..."
+$imgDbRaw = [System.IO.File]::ReadAllText($imgDbPath, [System.Text.Encoding]::UTF8)
+$imgDbJson = $imgDbRaw.Substring($imgDbRaw.IndexOf('{')).Trim().TrimEnd(';')
+$imgDbObj = $imgDbJson | ConvertFrom-Json
+
+$imgMissingKits = @()
+$imgLocalMissing = @()
+$imgFinishMismatches = @()
+
+foreach ($mk in $kitsObj) {
+    $id = [string]$mk.id
+    $entry = $imgDbObj.$id
+    if (-not $entry -or -not $entry.product_url) {
+        $imgMissingKits += $id
+        continue
+    }
+    if ($entry.product_url.StartsWith("images/")) {
+        $localImgPath = Join-Path $rootDir ($entry.product_url -replace '/', '\')
+        if (-not (Test-Path $localImgPath)) {
+            $imgLocalMissing += "$id ($($entry.product_url))"
+        }
+    }
+    $kName = $mk.name.ToLower()
+    $isStandard = (-not ($kName -match 'clear|coating|titanium|metallic|pearl|deactive|base color'))
+    if ($isStandard -and ($entry.product_url.ToLower() -match 'clear|coating|titanium|metallic-gloss|pearl-gloss|deactive')) {
+        $imgFinishMismatches += "$id ($($mk.name)) -> $($entry.product_url)"
+    }
+}
+
+if ($imgMissingKits.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Kit Image DB missing entries for $($imgMissingKits.Count) kits!"
+    exit 1
+}
+if ($imgLocalMissing.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Local image files missing for: $($imgLocalMissing -join ', ')!"
+    exit 1
+}
+if ($imgFinishMismatches.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Finish mismatch detected (Zero-Mismatch violation):`n$($imgFinishMismatches -join "`n")"
+    exit 1
+}
+Write-Output "✅ 100% Image Integrity & Zero-Mismatch Gate: All $($kitsObj.Count) kits verified."
+
 # 🛡️ Onerror Hardening Gate
 $onerrorMatches = [regex]::Matches($fullHtml, '(?i)onerror="([^"]+)"')
 foreach ($m in $onerrorMatches) {

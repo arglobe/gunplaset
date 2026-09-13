@@ -1542,7 +1542,8 @@
           const isPbandai = kit.run === 'Limited' || kit.run === 'P-Bandai' || kit.run === 'Exclusive';
           const badgeClass = getGradeBadgeClass(kit.classification);
           
-          const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
+          const kitIdNum = parseInt(kit.id, 10);
+          const defaultBoxartCdn = (kitIdNum < 5000) ? ('https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg') : ((kit.product_url && !kit.product_url.includes('gunpla.fyi')) ? kit.product_url : '');
           const isWeb = window.location.protocol.startsWith('http');
           const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
 
@@ -1550,7 +1551,7 @@
           const productUrl = isWeb ? ((dbEntry && dbEntry.product_cdn_url) || boxartUrl) : (kit.product_url || boxartUrl);
 
           const imgUrl = (state.cardImageMode === 'boxart' ? boxartUrl : productUrl) || boxartUrl;
-          const cdnFallback = (imgUrl !== boxartUrl) ? boxartUrl : defaultBoxartCdn;
+          const cdnFallback = (imgUrl !== boxartUrl && boxartUrl) ? boxartUrl : ((defaultBoxartCdn && defaultBoxartCdn !== imgUrl) ? defaultBoxartCdn : '');
 
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -1832,14 +1833,18 @@
 
         const currentImgObj = gallery[state.activeImageIndex] || gallery[0] || {};
         const currentImgUrl = currentImgObj.url || kit.product_url || kit.boxart_url;
-        const currentCdnUrl = currentImgObj.cdn_url || kit.boxart_url || currentImgUrl;
+        const fallbackBoxart = (kit.boxart_url && kit.boxart_url !== currentImgUrl) ? kit.boxart_url : ((currentImgObj.cdn_url && currentImgObj.cdn_url !== currentImgUrl) ? currentImgObj.cdn_url : '');
 
         const zoomHint = state.currency === 'USD' ? '🔍 Click to view 1200px fullscreen HD zoom' : (state.currency === 'JPY' ? '🔍 クリックして1200px原寸全画面拡大' : '🔍 클릭하여 1200px 원본 전체화면 확대');
 
         modalBody.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">' +
           '<div class="flex flex-col">' +
             '<div class="relative w-full h-[420px] md:h-[460px] bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center p-3 border border-slate-800 group cursor-zoom-in" onclick="window.openLightbox()">' +
-              '<img src="' + currentImgUrl + '" data-fallback="' + currentCdnUrl + '" alt="' + (getLocalizedKitName(kit, state.currency) || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; }">' +
+              '<img src="' + currentImgUrl + '" data-fallback="' + fallbackBoxart + '" alt="' + (getLocalizedKitName(kit, state.currency) || '') + '" class="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; if(this.nextElementSibling){ this.nextElementSibling.classList.remove(\'hidden\'); } }">' +
+              '<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-slate-500 p-4 text-center z-0">' +
+                '<span class="text-5xl mb-2">🤖</span>' +
+                '<span class="text-xs text-slate-400 font-medium">' + (getLocalizedKitName(kit, state.currency) || '') + '</span>' +
+              '</div>' +
               (gallery.length > 1 ? '<button class="absolute left-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(-1)">‹</button>' : '') +
               (gallery.length > 1 ? '<button class="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-slate-900/85 hover:bg-slate-800 text-white flex items-center justify-center font-bold text-base border border-slate-700 shadow-xl z-10" onclick="event.stopPropagation(); window.nextModalImage(1)">›</button>' : '') +
               '<div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] bg-slate-900/90 text-cyan-400 font-mono border border-slate-800 shadow-md">' + (state.activeImageIndex + 1) + ' / ' + gallery.length + '</div>' +
@@ -3174,18 +3179,19 @@
                 '<span class="text-slate-500 text-[10px]">(MSRP)</span>';
             }
 
-            const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + item.id + '.jpeg';
+            const itemIdNum = parseInt(item.id, 10);
+            const defaultBoxartCdn = (itemIdNum < 5000) ? ('https://gunpla.fyi/images/boxarts/' + item.id + '.jpeg') : (item.img || '');
             const isWeb = window.location.protocol.startsWith('http');
             const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[item.id];
             let radarImgUrl = item.img || defaultBoxartCdn;
-            if (isWeb && dbEntry && dbEntry.boxart_cdn_url && !dbEntry.boxart_cdn_url.startsWith('images/')) {
+            if (isWeb && dbEntry && dbEntry.boxart_cdn_url) {
               radarImgUrl = dbEntry.boxart_cdn_url;
             }
 
             html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
               '<div class="flex items-center gap-3 min-w-0">' +
                 '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-slate-900 border ' + (isWish ? 'border-pink-500/40' : 'border-slate-800') + ' shrink-0 p-1 flex items-center justify-center cursor-pointer" onclick="window.openKitModal(\'' + item.id + '\')">' +
-                  '<img src="' + radarImgUrl + '" data-fallback="' + defaultBoxartCdn + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; }">' +
+                  '<img src="' + radarImgUrl + '" data-fallback="' + (defaultBoxartCdn !== radarImgUrl ? defaultBoxartCdn : '') + '" alt="" loading="lazy" referrerpolicy="no-referrer" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200" onerror="this.onerror=null; if(this.dataset.fallback && this.src !== this.dataset.fallback){ this.src = this.dataset.fallback; } else { this.style.display=\'none\'; }">' +
                   '<span class="absolute bottom-0.5 left-0.5 px-1 rounded text-[8px] font-mono font-bold bg-slate-950/90 text-cyan-300 border border-slate-800">' + item.grade + '</span>' +
                 '</div>' +
                 '<div class="min-w-0">' +
@@ -3746,7 +3752,7 @@
           html += '<div class="glass-card rounded-2xl p-2.5 border border-slate-800 hover:border-cyan-500/50 transition-all cursor-pointer group" onclick="window.openKitModal(\'' + kit.id + '\')">';
           html += '<div class="relative w-full aspect-square rounded-xl overflow-hidden bg-slate-950 mb-2">';
           html += '<span class="absolute top-1.5 left-1.5 z-10 px-2 py-0.5 rounded-lg text-[10px] ' + rankBadge + ' shadow-md">#' + rank + '</span>';
-          html += '<img src="' + imgUrl + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.onerror=null; this.src=\'' + (kit.boxart_url || imgUrl) + '\';">';
+          html += '<img src="' + imgUrl + '" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.onerror=null; if(kit.boxart_url && kit.boxart_url !== this.src){ this.src = kit.boxart_url; } else { this.style.display=\'none\'; }">';
           html += '</div>';
           html += '<div class="text-[10px] font-bold text-cyan-400 font-mono">' + (kit.grade || 'ETC') + '</div>';
           html += '<div class="text-xs font-medium text-slate-200 line-clamp-1 group-hover:text-cyan-300 transition-colors" title="' + localizedTitle + '">' + localizedTitle + '</div>';

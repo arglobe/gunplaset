@@ -2272,8 +2272,12 @@
       // ==============================================================================
       window.GUNPLA_RELEASE_RADAR_DATA = {
   "KRW": {
+    "2026-11": {
+      "label": "2026. 11 (다음 달 출하 예정)",
+      "items": []
+    },
     "2026-10": {
-      "label": "2026. 10 (다음 달 출하 예정)",
+      "label": "2026. 10 (이번 달 출하)",
       "items": [
         {
           "id": "2184",
@@ -2692,8 +2696,33 @@
     }
   },
   "JPY": {
+    "2026-11": {
+      "label": "2026年 11月 (来月の出荷予定)",
+      "items": []
+    },
+    "2026-10": {
+      "label": "2026年 10月 (今月の出荷)",
+      "items": [
+        {
+          "id": "5290",
+          "name": "HG 1/144 ガンダムヴァサーゴ",
+          "grade": "HG",
+          "cat": "retail",
+          "catName": "一般発売",
+          "date": "10月31日 (土)",
+          "time": "出荷確定",
+          "krw": null,
+          "jpy": 3190,
+          "usd": 24.00,
+          "note": "バンダイホビーサイト公式10月確定出荷日",
+          "img": "images/5290_1.jpg",
+          "officialSourceUrl": "https://bandai-hobby.net/item/01_7249/",
+          "verifiedAt": "2026-10-02T00:00:00Z"
+        }
+      ]
+    },
     "2026-09": {
-      "label": "2026年 09月 (今月の出荷)",
+      "label": "2026年 09月 (先月の出荷)",
       "items": [
         {
           "id": "5283",
@@ -2794,7 +2823,7 @@
       ]
     },
     "2026-08": {
-      "label": "2026年 08月 (先月の出荷)",
+      "label": "2026年 08月 (出荷完了)",
       "items": [
         {
           "id": "5281",
@@ -2813,23 +2842,23 @@
           "verifiedAt": "2026-09-13T15:45:00Z"
         }
       ]
-    },
-    "2026-10": {
-      "label": "2026年 10月 (来月の出荷予定)",
-      "items": []
     }
   },
   "USD": {
-    "2026-09": {
-      "label": "September 2026",
-      "items": []
-    },
-    "2026-08": {
-      "label": "August 2026",
+    "2026-11": {
+      "label": "November 2026 (Upcoming)",
       "items": []
     },
     "2026-10": {
-      "label": "October 2026",
+      "label": "October 2026 (Current Month)",
+      "items": []
+    },
+    "2026-09": {
+      "label": "September 2026 (Past Releases)",
+      "items": []
+    },
+    "2026-08": {
+      "label": "August 2026 (Past Releases)",
       "items": []
     }
   }
@@ -2856,7 +2885,7 @@
 
         const allMonths = new Set();
         Object.keys(localeRadar).forEach(m => allMonths.add(m));
-        for (let m = 9; m >= 1; m--) {
+        for (let m = 11; m >= 1; m--) {
           const mm = m < 10 ? '0' + m : '' + m;
           allMonths.add('2026-' + mm);
         }
@@ -2865,8 +2894,8 @@
         const currentVal = radarState.currentMonthKey || 'latest';
         let html = '<option value="latest"' + (currentVal === 'latest' ? ' selected' : '') + '>⚡ Latest (최근 순 4선)</option>';
         sortedMonths.forEach(m => {
-          const isThisMonth = m === '2026-09';
-          const isLastMonth = m === '2026-08';
+          const isThisMonth = m === '2026-10';
+          const isLastMonth = m === '2026-09';
           const suffix = isThisMonth ? (curr === 'USD' ? ' (This Month)' : (curr === 'JPY' ? ' (今月)' : ' (이번 달 출하)'))
                        : (isLastMonth ? (curr === 'USD' ? ' (Last Month)' : (curr === 'JPY' ? ' (先月)' : ' (지난 달 출하)')) : '');
           const label = '🗓️ ' + m.replace('-', '. ') + (suffix ? ' ' + suffix : '');
@@ -2983,7 +3012,7 @@
           const seenIds = new Set();
           const aggregated = [];
           Object.entries(localeRadar).forEach(([mKey, m]) => {
-            if (m && Array.isArray(m.items) && mKey <= '2026-09') {
+            if (m && Array.isArray(m.items) && mKey <= '2026-10') {
               m.items.forEach(it => {
                 if (!seenIds.has(it.id)) {
                   seenIds.add(it.id);

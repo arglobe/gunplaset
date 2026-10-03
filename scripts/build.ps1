@@ -25,9 +25,9 @@ if (Test-Path (Join-Path $rootDir "table1_both_jp_kr_all.csv")) {
 }
 
 # ==============================================================================
-# 🛡️ ARCHITECTURAL INTEGRITY GATE: 2,716 KITS FULL PRICE VERIFICATION
+# 🛡️ ARCHITECTURAL INTEGRITY GATE: MASTER AUDIT PRICE VERIFICATION
 # ==============================================================================
-Write-Output "🔍 Verifying 2,716 kits price integrity against Master Audit Tables..."
+Write-Output "🔍 Verifying kits price integrity against Master Audit Tables..."
 
 $table1 = Import-Csv $table1Path -Encoding UTF8
 $table2 = Import-Csv $table2Path -Encoding UTF8
@@ -72,7 +72,7 @@ if ($mismatchCount -gt 0) {
     exit 1
 }
 
-Write-Output "✅ 100% Price Integrity Passed: All 2,716 kits perfectly match Master Audit Tables (0 discrepancies)."
+Write-Output "✅ 100% Price Integrity Passed: All kits perfectly match Master Audit Tables (0 discrepancies)."
 
 # ==============================================================================
 # BUILD PACKAGING
@@ -145,10 +145,22 @@ if ($usdLocalizationViolations.Count -gt 0) {
 
 Write-Output "✅ 100% Master Catalog Air-Gap Passed: All $($kitsObj.Count) kits strictly adhere to 3-Language isolation (0 language leaks)."
 
-# Clean injection markers
-$headerClean = $headerContent.TrimEnd()
+# ==============================================================================
+# 🛡️ AUTOMATED KIT COUNT & METADATA AUTO-SYNC GATE
+# ==============================================================================
+$kitCountFormatted = $kitsObj.Count.ToString("N0")
+$headerClean = $headerContent.TrimEnd() -replace '\b\d{1,3}(,\d{3})*종 건프라', "$kitCountFormatted`종 건프라"
+$headerClean = $headerClean -replace '\b\d{1,3}(,\d{3})*종 마스터', "$kitCountFormatted`종 마스터"
+$footerClean = $footerContent -replace '\b\d{1,3}(,\d{3})*종 이상의 반다이 정품 건프라', "$kitCountFormatted`종 이상의 반다이 정품 건프라"
+$footerClean = $footerClean -replace '\b\d{1,3}(,\d{3})*종 전 테마 반다이남코코리아', "$kitCountFormatted`종 전 테마 반다이남코코리아"
 
-$fullHtml = $headerClean + "`n<script>`n" + $imgDbContent + "`n" + $priceDbContent + "`nwindow.GUNPLA_MASTER_DATA = " + $masterKitsJson + ";`n" + $footerContent
+$fullHtml = $headerClean + "`n<script>`n" + $imgDbContent + "`n" + $priceDbContent + "`nwindow.GUNPLA_MASTER_DATA = " + $masterKitsJson + ";`n" + $footerClean
+
+if ($fullHtml -match '2,716종') {
+    Write-Error "🚨 BUILD REJECTED: Stale 2,716 count detected in generated HTML!"
+    exit 1
+}
+Write-Output "✅ 100% Kit Count Auto-Sync Gate: All catalog descriptions dynamically synchronized to $kitCountFormatted kits."
 
 # 🛡️ RADAR STRICT PROVENANCE & ZERO-FAKE DATA GATE
 $masterIdSet = New-Object System.Collections.Generic.HashSet[string]
@@ -172,7 +184,7 @@ if ($rIdx -ge 0) {
         $missingRadarIds = @()
         $unverifiedProvenance = @()
         $airGapViolations = @()
-        $whitelistedDomains = @("bandai-hobby.net", "bnkrmall.co.kr", "p-bandai.jp", "gundam-base.net", "gundam-side-f.net")
+        $whitelistedDomains = @("bandai-hobby.net", "bnkrmall.co.kr", "p-bandai.jp", "gundam-base.net", "gundam-side-f.net", "p-bandai.com", "bandai.com")
         $totalItemsCount = 0
 
         foreach ($lang in @('KRW', 'JPY', 'USD')) {
@@ -205,6 +217,9 @@ if ($rIdx -ge 0) {
                     }
                     if ($lang -eq 'JPY' -and $item.name -match '[\uAC00-\uD7AF]') {
                         $airGapViolations += "JPY item contains Korean hangul: '$($item.name)'"
+                    }
+                    if ($lang -eq 'USD' -and ($item.name -match '[\u3040-\u309F\u30A0-\u30FF]' -or $item.name -match '[\uAC00-\uD7AF]')) {
+                        $airGapViolations += "USD item contains Japanese or Korean characters: '$($item.name)'"
                     }
                 }
             }

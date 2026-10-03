@@ -144,16 +144,28 @@ body {
   <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-4 lg:px-8 py-2.5">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
       
-      <!-- Left: Unified Brand Logo Block -->
+      <!-- Left: Unified Brand Logo Block (Modeler Runner Gate Theme) -->
       <div class="flex items-center gap-3 shrink-0">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 font-black text-sm tracking-tight text-slate-950">
-          GS
+        <!-- Runner Sprue Gate Badge (w-10 h-10 identical footprint) -->
+        <div class="relative w-10 h-10 rounded-xl bg-slate-950 border-2 border-cyan-400/90 flex items-center justify-center shadow-lg shadow-cyan-500/20 group">
+          <!-- Runner Gate Sprue Mold Joint Ticks -->
+          <span class="absolute -top-1 w-2.5 h-0.5 bg-amber-400 rounded-full shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span>
+          <span class="absolute -bottom-1 w-2.5 h-0.5 bg-cyan-400 rounded-full shadow-[0_0_6px_rgba(34,211,238,0.8)]"></span>
+          <span class="absolute -left-1 h-2.5 w-0.5 bg-cyan-400 rounded-full shadow-[0_0_6px_rgba(34,211,238,0.8)]"></span>
+          <span class="absolute -right-1 h-2.5 w-0.5 bg-amber-400 rounded-full shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span>
+          <span class="font-mono font-black text-sm tracking-tighter bg-gradient-to-br from-amber-300 via-white to-cyan-300 bg-clip-text text-transparent">GS</span>
         </div>
         <div>
-          <h1 class="text-lg font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-cyan-300 bg-clip-text text-transparent flex items-center gap-1.5">
-            GunplaSet
-          </h1>
-          <p class="text-[10px] text-slate-400 tracking-wider font-mono uppercase">MASTER GUNPLA ARCHIVE & COLLECTION</p>
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-lg font-black tracking-tight text-white flex items-center">
+              Gunpla<span class="text-cyan-400">Set</span>
+            </h1>
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-300 border border-amber-400/30 font-mono tracking-tight">RUNNER CRAFT</span>
+          </div>
+          <p class="text-[10px] text-cyan-300/80 tracking-wider font-mono uppercase flex items-center gap-1">
+            <span>THE MASTER BUILDER ARCHIVE</span>
+            <span class="text-amber-400 text-[8px]">❖</span>
+          </p>
         </div>
       </div>
 
@@ -697,31 +709,64 @@ body {
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="mt-16 py-10 border-t border-slate-800 bg-slate-950/80 text-xs text-slate-400">
-    <div class="max-w-7xl mx-auto px-4">
+  <!-- FOOTER (Modeler Runner Frame Theme) -->
+  <footer class="mt-16 pt-10 pb-12 border-t-2 border-slate-800/90 bg-gradient-to-b from-slate-950/90 via-slate-950/95 to-slate-950 text-xs text-slate-400 relative">
+    <!-- Subtle Blueprint Grid Top Accent Line -->
+    <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
+
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 space-y-6">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
-        <div class="flex items-center gap-2">
-          <span class="text-base font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">GunplaSet (건프라셋)</span>
-          <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-mono">v2.0 Official</span>
+        
+        <!-- Left: Brand with Runner Sprue Gate Emblem -->
+        <div class="flex items-center gap-3">
+          <div class="relative w-8 h-8 rounded-lg bg-slate-950 border border-cyan-400/80 flex items-center justify-center shadow-md shadow-cyan-500/10">
+            <span class="absolute -top-0.5 w-2 h-0.5 bg-amber-400 rounded-full"></span>
+            <span class="absolute -bottom-0.5 w-2 h-0.5 bg-cyan-400 rounded-full"></span>
+            <span class="font-mono font-black text-xs bg-gradient-to-br from-amber-300 to-cyan-300 bg-clip-text text-transparent">GS</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-black tracking-tight text-white">Gunpla<span class="text-cyan-400">Set</span></span>
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-mono font-bold">v2.4.3 BUILDER'S SUITE</span>
+            </div>
+            <div class="text-[10px] text-amber-400/90 font-mono flex items-center gap-1">
+              <span>❖</span>
+              <span>THE MASTER GUNPLA ARCHIVE & BUILDER COLLECTION TRACKER</span>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 font-medium">
-          <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors">서비스 소개</button>
+
+        <!-- Right: Policy Navigation Links (Preserving all click handlers) -->
+        <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-300 font-medium">
+          <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <span>🤖</span> <span>서비스 소개</span>
+          </button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors">개인정보처리방침</button>
+          <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <span>🔒</span> <span>개인정보처리방침</span>
+          </button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors">이용약관</button>
+          <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <span>📜</span> <span>이용약관</span>
+          </button>
           <span class="text-slate-700">&bull;</span>
-          <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors">문의 및 오류 제보</button>
+          <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <span>📬</span> <span>문의 및 제보</span>
+          </button>
         </div>
       </div>
-      <div class="pt-6 text-center md:text-left space-y-2 text-[11px] text-slate-500">
-        <p class="leading-relaxed">
-          &copy; 2026 GunplaSet. 본 웹사이트는 건프라 팬 및 수집가를 위한 비영리 정보 아카이브이자 개인 소장품 관리 도구입니다.<br class="hidden sm:inline">
-          모든 건담 및 건프라 관련 명칭, 박스아트, 패키지 디자인의 저작권과 상표권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속됩니다.
-        </p>
-        <p class="text-slate-600">
-          게재된 배너 광고 및 자발적 후원금은 서비스 호스팅 유지비 및 정기 데이터베이스 큐레이션 비용으로 사용됩니다.
+
+      <!-- Legal Disclaimer Box -->
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center md:text-left space-y-2 text-[11px] text-slate-400 leading-relaxed">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
+          <span class="text-amber-400/90 font-mono font-semibold flex items-center gap-1.5">
+            <span>❖</span> <span>Unofficial Fan-Made Model Kit Archive & Asset Management Tool</span>
+          </span>
+          <span class="text-slate-500 font-mono text-[10px]">&copy; 2026 GunplaSet. All Rights Reserved.</span>
+        </div>
+        <p class="text-slate-400">
+          본 웹사이트는 건프라 팬 및 모형 제작 수집가를 위한 비영리 팬 아카이브이자 개인 컬렉션 포트폴리오 관리 도구입니다.<br class="hidden sm:inline">
+          모든 건담 및 건프라 관련 상표 및 저작권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속되며, 본 서비스는 반다이남코와 공식 제휴 관계가 없습니다.
         </p>
       </div>
     </div>

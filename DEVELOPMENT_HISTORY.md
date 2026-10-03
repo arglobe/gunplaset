@@ -1,7 +1,7 @@
 # 🚀 GunplaSet 마스터 프로젝트 개발 히스토리 & 아키텍처 문서
 
-> **문서 버전**: v2.4.0  
-> **최종 갱신 일시**: 2026-10-02 기준  
+> **문서 버전**: v2.4.1  
+> **최종 갱신 일시**: 2026-10-03 기준  
 > **프로젝트 위치**: `G:\내 드라이브\GunplaSet\` 및 `c:\Users\arglo\OneDrive\문서\Antigravity\Shopping\gunplaset\`  
 > **공식 프로덕션 URL**: [https://gunplaset.arglobe.workers.dev](https://gunplaset.arglobe.workers.dev)  
 > **GitHub 저장소**: `arglobe/gunplaset` (Branch: `main`)
@@ -28,6 +28,17 @@
 ---
 
 ## 🛠️ 2. 버전별 마일스톤 및 개선 히스토리 (Changelog)
+
+### v2.4.1 (2026-10-03) - MGSD 크샤트리아(MGSD Kshatriya, ID: 5283) 한국 공식 발매 및 정가(84,000원) 정식 반영
+- **MGSD 크샤트리아(ID: 5283) 한국 공식 발매 데이터 정식 인제스트**:
+  - 반다이남코코리아몰(`bnkrmall.co.kr`) 공식 발매(2026-10-03) 확인 및 실시간 판매가 **84,000 KRW** 정식 반영.
+  - `master_kits.json`: `nameKo: "MGSD 크샤트리아"`, `krw: 84000`, `isVerifiedKrw: true` 업데이트.
+  - 건프라 출하 레이더 KRW `2026-10`에 발매 완료 항목 신규 등록 (`officialSourceUrl: https://www.bnkrmall.co.kr/goods/detail.do?gno=52864315`, `verifiedAt: 2026-10-03T21:57:00Z`).
+  - JPY `2026-09` 레이더 내 키트 5283의 KRW 정가를 84,000원으로 1:1 동기화.
+- **출하 레이더 월간 라벨 정합성 고도화**:
+  - KRW `2026-09` 라벨을 "2026. 09 (지난 달 출하)", `2026-08` 라벨을 "2026. 08 (출하 완료)"로 정규화 완료.
+- **CI/CD 7대 무결성 게이트 전원 통과 (Zero Discrepancy)**:
+  - 2,716종 가격 감사 테이블 1:1 무결성, 2,723종 3개국어 Air-Gap 격리 검증, 레이더 공식 출처 실명제(Strict Provenance 32종), 이미지 소프트-404 및 제로-미스매치, 무한루프 방지 onerror 가드 100% 통과.
 
 ### v2.4.0 (2026-10-02) - 2026년 10월 롤오버 & 반다이 공식 신규 출하/발매 키트(HG 1/144 건담 바사고) 전수 반영
 - **건프라 출하 레이더 10월 월간 롤오버 (Month Rollover)**:

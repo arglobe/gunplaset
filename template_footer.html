@@ -1695,11 +1695,12 @@
         if (!modal || !content) return;
 
         if (type === 'about') {
+          const totalKitsCount = (window.GUNPLA_MASTER_DATA ? window.GUNPLA_MASTER_DATA.length.toLocaleString() : '2,723');
           content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">🤖 GunplaSet 서비스 소개</h2>' +
-            '<p class="mb-2"><b>GunplaSet (건프라셋)</b>은 1980년부터 현재까지 출시된 2,716종 이상의 반다이 정품 건프라 및 프라모델을 한눈에 조회하고, 나만의 프라모델 수집/조립 상태(새것/조립중/조립완료)와 자산 가치를 체계적으로 관리할 수 있는 글로벌 팬 아카이브 도구입니다.</p>' +
+            '<p class="mb-2"><b>GunplaSet (건프라셋)</b>은 1980년부터 현재까지 출시된 ' + totalKitsCount + '종 이상의 반다이 정품 건프라 및 프라모델을 한눈에 조회하고, 나만의 프라모델 수집/조립 상태(새것/조립중/조립완료)와 자산 가치를 체계적으로 관리할 수 있는 글로벌 팬 아카이브 도구입니다.</p>' +
             '<div class="bg-slate-950/60 p-3.5 rounded-2xl border border-cyan-500/20 space-y-1.5 mt-3">' +
               '<div class="text-cyan-400 font-bold">✨ 주요 핵심 기능</div>' +
-              '<div>&bull; 2,716종 전 테마 반다이남코코리아 공식 등록 정가 100% 반영 및 실시간 조회</div>' +
+              '<div>&bull; ' + totalKitsCount + '종 전 테마 반다이남코코리아 공식 등록 정가 100% 반영 및 실시간 조회</div>' +
               '<div>&bull; 새것(미개봉), 조립중/부품, 조립완료 3단계 실시간 보유 현황 및 자산 가치 포트폴리오</div>' +
               '<div>&bull; 한국어, 일본어, 영어 3개국어 검색 및 KRW, JPY, USD 3대 통화 지원</div>' +
             '</div>';
@@ -3926,7 +3927,7 @@
         // Summary Cards Row
         html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-3">';
         html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-cyan-400"><div class="text-xs text-slate-400 mb-1">🌍 총 활성 컬렉터</div><div class="text-2xl font-bold text-cyan-400 font-mono">' + (statsData.totalUsers || 1) + ' 명</div></div>';
-        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-blue-500"><div class="text-xs text-slate-400 mb-1">🤖 집계 건프라 DB</div><div class="text-2xl font-bold text-blue-400 font-mono">2,716 종</div></div>';
+        html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-blue-500"><div class="text-xs text-slate-400 mb-1">🤖 집계 건프라 DB</div><div class="text-2xl font-bold text-blue-400 font-mono">' + (window.GUNPLA_MASTER_DATA ? window.GUNPLA_MASTER_DATA.length.toLocaleString() : '2,723') + ' 종</div></div>';
         html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-amber-400"><div class="text-xs text-slate-400 mb-1">🏆 1위 인기 시리즈</div><div class="text-xl font-bold text-amber-300 truncate">機動戦士ガンダム</div></div>';
         html += '<div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-400"><div class="text-xs text-slate-400 mb-1">✨ 주 소장 연령대</div><div class="text-2xl font-bold text-emerald-400 font-mono">30대 (58%)</div></div>';
         html += '</div>';

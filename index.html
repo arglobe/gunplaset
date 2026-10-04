@@ -440,7 +440,7 @@ body {
         
         <!-- Search Input -->
         <div class="relative w-full md:w-80">
-          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="건담 이름, 등급, 시리즈 검색 (예: z, seed, mg)...">
+          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="건담 이름, 초성, 줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...">
           <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
 
@@ -1000,11 +1000,25 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
         }, 2000);
       }
 
-      // 3-CURRENCY OFFICIAL BANDAI PRICING ENGINE
+      // 3-CURRENCY OFFICIAL BANDAI PRICING ENGINE (With Global Browser Auto-Detection)
       const CURRENCY_STORAGE_KEY = 'gunpladex_active_currency';
       const _urlParams = new URLSearchParams(window.location.search);
       const _urlCurrency = _urlParams.get('currency') || _urlParams.get('lang');
-      state.currency = (_urlCurrency && ['KRW','JPY','USD'].includes(_urlCurrency.toUpperCase())) ? _urlCurrency.toUpperCase() : (localStorage.getItem(CURRENCY_STORAGE_KEY) || 'KRW');
+
+      // Auto-detect visitor's browser language on first visit (zero storage)
+      function detectDefaultCurrency() {
+        try {
+          const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+          if (navLang.startsWith('ja')) return 'JPY';
+          if (navLang.startsWith('ko')) return 'KRW';
+          if (navLang.startsWith('en')) return 'USD';
+        } catch(e) {}
+        return 'KRW';
+      }
+
+      state.currency = (_urlCurrency && ['KRW','JPY','USD'].includes(_urlCurrency.toUpperCase()))
+        ? _urlCurrency.toUpperCase()
+        : (localStorage.getItem(CURRENCY_STORAGE_KEY) || detectDefaultCurrency());
 
       window.setCurrency = function(curr) {
         if (curr !== 'KRW' && curr !== 'JPY' && curr !== 'USD') return;
@@ -1024,6 +1038,18 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
             btn.classList.toggle('border-transparent', !isActive);
           }
         });
+
+        // Localized search bar placeholder
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+          if (curr === 'USD') {
+            searchInput.placeholder = "Search by kit name, grade, series (e.g. Aerial, Wing, MG)...";
+          } else if (curr === 'JPY') {
+            searchInput.placeholder = "キット名、グレード、シリーズ検索 (例: Z, SEED, RG)...";
+          } else {
+            searchInput.placeholder = "건담 이름, 초성, 줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...";
+          }
+        }
 
         updateGlobalStats();
         populateDropdownSelects();
@@ -1747,6 +1773,177 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
         '4924': 'https://gunpla.fyi/images/boxarts/4924.jpeg'  // HG Ruka's Zaku
       };
 
+      // HANGUL CHOSUNG SEARCH ENGINE (Mathematical Unicode Initial Consonant Decomposition)
+      const HANGUL_CHOSUNG_LIST = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+      function getHangulChosung(str) {
+        if (!str) return '';
+        let res = '';
+        for (let i = 0; i < str.length; i++) {
+          const code = str.charCodeAt(i) - 0xAC00;
+          if (code >= 0 && code <= 11171) {
+            res += HANGUL_CHOSUNG_LIST[Math.floor(code / 588)];
+          } else {
+            res += str[i];
+          }
+        }
+        return res;
+      }
+
+      // KOREAN GUNPLA SLANG, NICKNAMES & POPULAR ALIAS DICTIONARY
+      const GUNPLA_ALIASES = {
+        // First Gundam / O.Y.W
+        '퍼건': ['rx782', 'rx78', '퍼스트'],
+        'ㅍㄱ': ['rx782', 'rx78', '퍼스트'],
+        '퍼스트': ['rx782', 'rx78', '퍼스트'],
+        '지옹': ['zeong', '지옹'],
+        'ㅈㅇ': ['zeong', '지옹'],
+        '알지옹': ['zeong'],
+        '샤자쿠': ['char', 'zaku'],
+        '자쿠': ['zaku', '자쿠'],
+        '구프': ['gouf', '구프'],
+        '돔': ['dom', '돔'],
+        '릭돔': ['rickdom', '릭돔'],
+        '즈곡크': ['zgok', "z'gok", '즈곡크'],
+        '곡그': ['gogg', '곡그'],
+        '앗가이': ['acguy', '앗가이'],
+        '볼': ['rb79', 'ball', '볼'],
+        '건탱크': ['guntank', '건탱크'],
+        '건캐논': ['guncannon', '건캐논'],
+
+        // Z / ZZ / CCA
+        '마크투': ['mkii', 'mk2', '마크ii', '마크2'],
+        '마크2': ['mkii', 'mk2', '마크ii', '마크2'],
+        'ㅁㅋㅌ': ['mkii', 'mk2'],
+        '백식': ['hyakushiki', '백식'],
+        'ㅂㅅ': ['hyakushiki', '백식', 'banshee', '밴시'],
+        '제타': ['zgundam', 'zeta', '제타'],
+        'ㅈㅌ': ['zgundam', 'zeta'],
+        '더블제타': ['zzgundam', 'doublezeta', '더블제타'],
+        'ㄷㅂㅈㅌ': ['zzgundam', 'doublezeta'],
+        '디오': ['theo', 'the-o', '디오'],
+        '큐베레이': ['qubeley', '큐베레이'],
+        '뉴건': ['νgundam', 'nugundam', 'ν건담', '뉴건담'],
+        'ㄴㄱ': ['νgundam', 'nugundam', 'ν건담', '뉴건담'],
+        '뉴건담': ['νgundam', 'nugundam', 'ν건담'],
+        '하이뉴': ['hiν', 'hinu', '하이뉴'],
+        'ㅎㅇㄴ': ['hiν', 'hinu', '하이뉴'],
+        '사자비': ['sazabi', '사자비'],
+        'ㅅㅈㅂ': ['sazabi', '사자비'],
+        '야크트도가': ['jagddoga', '야크트도가'],
+        '기라도가': ['gearadoga', '기라도가'],
+        '제간': ['jegan', '제간'],
+        '리가지': ['regz', 're-gz', '리가지'],
+        '나이팅게일': ['nightingale', '나이팅게일'],
+        'ㄴㅇㅌㄱㅇ': ['nightingale', '나이팅게일'],
+
+        // SEED / SEED Destiny / SEED Freedom
+        '스리덤': ['strikefreedom', '스트라이크프리덤'],
+        'ㅅㄹㄷ': ['strikefreedom', '스트라이크프리덤'],
+        '인저': ['infinitejustice', '인피니트저스티스'],
+        'ㅇㅈ': ['infinitejustice', '인피니트저스티스'],
+        '마리덤': ['mightystrikefreedom', '마이티스트라이크프리덤'],
+        '라리덤': ['risingfreedom', '라이징프리덤'],
+        '임저': ['immortaljustice', '임모탈저스티스'],
+        '데스티니': ['destiny', '데스티니'],
+        'ㄷㅅㅌㄴ': ['destiny'],
+        '프리덤': ['freedom', '프리덤'],
+        '스트라이크': ['strike', '스트라이크'],
+        '저스티스': ['justice', '저스티스'],
+        '아카츠키': ['akatsuki', '아카츠키'],
+        '레프': ['redframe', '레드프레임'],
+        '블프': ['blueframe', '블루프레임'],
+        '골프': ['goldframe', '골드프레임'],
+
+        // 00 (Double O)
+        '더블오': ['00gundam', '00raiser', '더블오'],
+        'ㄷㅂㅇ': ['00gundam', '00raiser'],
+        '퀀터': ['qant', '00qant', '퀀터'],
+        'ㅋㅌ': ['qant', '00qant'],
+        '엑시아': ['exia', '엑시아'],
+        'ㅇㅅㅇ': ['exia'],
+        '듀나메스': ['dynames', '듀나메스'],
+        '큐리오스': ['kyrios', '큐리오스'],
+        '바체': ['virtue', '바체'],
+        '아리오스': ['arios', '아리오스'],
+        '세라비': ['seravee', '세라비'],
+        '하루트': ['harute', '하루트'],
+        '사바냐': ['zabanya', '사바냐'],
+        '라파엘': ['raphael', '라파엘'],
+        '트란잠': ['transam', '트란잠'],
+        '트랜잠': ['transam', '트랜잠'],
+
+        // Wing / G / X / Turn A
+        '윙제커': ['wingzero', 'winggundamzero', 'zeroew', '윙제로'],
+        'ㅇㅈㅋ': ['wingzero', 'winggundamzero', 'zeroew'],
+        '윙제로': ['wingzero', '윙제로'],
+        '톨기스': ['tallgeese', '톨기스'],
+        '에피온': ['epyon', '에피온'],
+        '데스사이즈': ['deathscythe', '데스사이즈'],
+        '헤비암즈': ['heavyarms', '헤비암즈'],
+        '샌드록': ['sandrock', '샌드록'],
+        '알트론': ['altron', '알트론', 'nataku', '나탁'],
+        '나탁': ['altron', 'nataku', '나탁'],
+        '갓건담': ['godgundam', '갓건담'],
+        'ㄱㄱㄷ': ['godgundam'],
+        '마스터건담': ['mastergundam', '마스터건담'],
+        '샤이닝': ['shininggundam', '샤이닝'],
+        '턴에이': ['turna', '∀', '턴에이'],
+        'ㅌㅇㅇ': ['turna', '∀'],
+        '턴엑스': ['turnx', '턴엑스'],
+
+        // UC (Unicorn / Narrative / Hathaway)
+        '유니콘': ['unicorn', '유니콘'],
+        'ㅇㄴㅋ': ['unicorn', '유니콘'],
+        '풀콩': ['fullarmorunicorn', '풀아머유니콘'],
+        '밴시': ['banshee', '밴시'],
+        '페넥스': ['phenex', '페넥스'],
+        'ㅍㄴㅅ': ['phenex'],
+        '크샤': ['kshatriya', '크샤트리아'],
+        '크샤트리아': ['kshatriya', '크샤트리아'],
+        'ㅋㅅ': ['kshatriya', '크샤트리아'],
+        '시난주': ['sinanju', '시난주'],
+        'ㅅㄴㅈ': ['sinanju'],
+        '시주': ['sinanju', '시난주'],
+        '스타인': ['stein', '스타인'],
+        '크시': ['xigundam', '크시', '하사웨이'],
+        'ㅋㅅㄱㄷ': ['xigundam', '크시'],
+        '페넬로페': ['penelope', '페넬로페'],
+        'ㅍㄴㄹㅍ': ['penelope'],
+        '하사웨이': ['hathaway', '하사웨이'],
+        '메서': ['messer', '메서'],
+        '내러티브': ['narrative', '내러티브'],
+
+        // IBO (Iron-Blooded Orphans)
+        '발바': ['barbatos', '발바토스'],
+        '발바토스': ['barbatos', '발바토스'],
+        'ㅂㅂㅌㅅ': ['barbatos'],
+        '루프스': ['lupus', '루프스'],
+        '루프스렉스': ['lupusrex', '루프스렉스'],
+        '비다르': ['vidar', '비다르'],
+        '바알': ['bael', '바알'],
+        '키마리스': ['kimaris', '키마리스'],
+
+        // G-Witch (The Witch from Mercury)
+        '에어리얼': ['aerial', '에어리얼'],
+        'ㅇㅇㄹㅇ': ['aerial', '에어리얼'],
+        '캘리번': ['calibarn', '캘리번'],
+        'ㅋㄹㅂ': ['calibarn'],
+        '슈바르제테': ['schwarzette', '슈바르제테'],
+        '다릴바르데': ['darilbalde', '다릴바르데'],
+        '파라디온': ['pharaoh', 'phara'],
+        '미카엘리스': ['michaelis', '미카엘리스'],
+
+        // Grades & Editions
+        '언리': ['unleashed', '언리쉬드'],
+        '언리쉬드': ['unleashed', '언리쉬드'],
+        '버카': ['verka', 'ver.ka', '버카'],
+        'ㅂㅋ': ['verka', 'ver.ka', '버카'],
+        '클G': ['pbandai', 'limited', '한정판'],
+        '클럽G': ['pbandai', 'limited', '한정판'],
+        '한정': ['limited', 'pbandai', '한정'],
+        '건베': ['gundambase', '건담베이스', 'limited']
+      };
+
       function enrichKit(kit) {
         if (!kit.name) kit.name = kit.nameEn || kit.nameJp;
         const b = (kit.brand || '').trim();
@@ -1853,6 +2050,20 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
           kit.run = isL ? 'P-Bandai' : 'Standard';
         }
         if (!kit.msrp_jpy) kit.msrp_jpy = (window.KIT_PRICE_DB && window.KIT_PRICE_DB[kit.id]) || kit.msrp || null;
+
+        // Search precomputations (Zero-latency O(1) text & Chosung indexing)
+        const sNameKo = kit.nameKo || '';
+        const sNameEn = kit.nameEn || kit.name || '';
+        const sNameJp = kit.nameJp || '';
+        const sSeries = kit.series || '';
+        const sClass = kit.classification || '';
+        const sBrand = kit.brand || '';
+        const sId = String(kit.id || '');
+
+        kit._searchStr = (sNameKo + ' ' + sNameEn + ' ' + sNameJp + ' ' + sSeries + ' ' + sClass + ' ' + sBrand + ' ' + sId).toLowerCase();
+        kit._searchNoSpace = kit._searchStr.replace(/[\s\-_/.]/g, '');
+        kit._chosung = (getHangulChosung(sNameKo) + ' ' + getHangulChosung(sSeries)).replace(/[\s\-_/.]/g, '').toLowerCase();
+
         return kit;
       }
 
@@ -1888,6 +2099,39 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
         if (c.includes('super') || c.includes('sd')) return 'badge-sd';
         if (c.includes('full') || c === 'fm' || c.includes('re/100')) return 'badge-fm';
         return 'badge-default';
+      }
+
+      // HANGUL CHOSUNG & GUNPLA ALIAS MATCHING UNIT
+      function matchKitQueryTerm(kit, term) {
+        if (!term) return true;
+        const termLower = term.toLowerCase();
+        const termNoSpace = termLower.replace(/[\s\-_/.]/g, '');
+        if (!termNoSpace) return true;
+
+        // 1. Direct standard substring match
+        if (kit._searchStr && kit._searchStr.includes(termLower)) return true;
+
+        // 2. Space/punctuation-insensitive match (e.g. "rx782" matches "rx-78-2", "뉴건담" matches "뉴 건담")
+        if (kit._searchNoSpace && kit._searchNoSpace.includes(termNoSpace)) return true;
+
+        // 3. Hangul Chosung match (e.g. "ㅍㄱ", "ㅅㄹㄷ", "ㅅㅈㅂ")
+        const isChosung = /^[ㄱ-ㅎ]+$/.test(termNoSpace);
+        if (isChosung && kit._chosung && kit._chosung.includes(termNoSpace)) return true;
+
+        // 4. Korean Gunpla slang & alias dictionary expansion (e.g. "퍼건", "스리덤", "인저", "버카", "마크2")
+        const aliasExpansions = GUNPLA_ALIASES[termLower] || GUNPLA_ALIASES[termNoSpace];
+        if (aliasExpansions && aliasExpansions.length > 0) {
+          for (let i = 0; i < aliasExpansions.length; i++) {
+            const exp = aliasExpansions[i].toLowerCase();
+            const expNoSpace = exp.replace(/[\s\-_/.]/g, '');
+            const expIsChosung = /^[ㄱ-ㅎ]+$/.test(expNoSpace);
+            if (expIsChosung && kit._chosung && kit._chosung.includes(expNoSpace)) return true;
+            if (kit._searchNoSpace && kit._searchNoSpace.includes(expNoSpace)) return true;
+            if (kit._searchStr && kit._searchStr.includes(exp)) return true;
+          }
+        }
+
+        return false;
       }
 
       // MULTI-SELECT COMPOUND FILTERING
@@ -1928,14 +2172,17 @@ window.GUNPLA_MASTER_DATA = [{"id":"1","name":"1/144 HG AILE STRIKE GUNDAM","nam
             if (state.selectedRun === 'Standard' && kit.run !== 'Standard') return false;
           }
 
-          // 6. Search query
+          // 6. Search query (Multi-Word, Space-Insensitive, Hangul Chosung & Alias Expansion)
           if (q) {
-            const nameKo = (kit.nameKo || '').toLowerCase();
-            const nameEn = (kit.nameEn || kit.name || '').toLowerCase();
-            const nameJp = (kit.nameJp || '').toLowerCase();
-            const series = (kit.series || '').toLowerCase();
-            const grade = (kit.classification || '').toLowerCase();
-            if (!nameKo.includes(q) && !nameEn.includes(q) && !nameJp.includes(q) && !series.includes(q) && !grade.includes(q)) return false;
+            if (!matchKitQueryTerm(kit, q)) {
+              const tokens = q.split(/\s+/).filter(Boolean);
+              if (tokens.length > 1) {
+                const allMatch = tokens.every(tok => matchKitQueryTerm(kit, tok));
+                if (!allMatch) return false;
+              } else {
+                return false;
+              }
+            }
           }
 
           return true;

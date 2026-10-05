@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "title": "GunplaSet Official LQA Master Glossary & Proper Noun Standard",
+  "lastUpdated": "2026-10-05T09:45:00+09:00",
+  "description": "Single Source of Truth for GunplaSet 3-Language (KRW/JPY/USD) UI, Grades, Series, Editions, and Proper Noun Immutability",
+  "proper_noun_rules": {
+    "immutable_trademarks": [
+      "Ver.Ka",
+      "RE/100",
+      "MGSD",
+      "MGEX",
+      "ENTRY GRADE",
+      "FULL MECHANICS",
+      "30 MINUTES MISSIONS",
+      "30 MINUTES SISTERS",
+      "30 MINUTES FANTASY",
+      "SDCS"
+    ],
+    "airgap_isolation": {
+      "KRW": {
+        "disallowed_regex": "[\\u3040-\\u309F\\u30A0-\\u30FF]",
+        "description": "Zero Japanese Kana allowed in Korean view"
+      },
+      "JPY": {
+        "disallowed_regex": "[\\uAC00-\\uD7AF\\u1100-\\u11FF]",
+        "description": "Zero Korean Hangul allowed in Japanese view"
+      }
+    }
+  },
+  "grades": {
+    "PG": { "KRW": "PG (퍼펙트 그레이드)", "JPY": "PG (パーフェクトグレード)", "USD": "PG (Perfect Grade)" },
+    "MG": { "KRW": "MG (마스터 그레이드)", "JPY": "MG (マスターグレード)", "USD": "MG (Master Grade)" },
+    "RG": { "KRW": "RG (리얼 그레이드)", "JPY": "RG (リアルグレード)", "USD": "RG (Real Grade)" },
+    "HG": { "KRW": "HG (하이 그레이드)", "JPY": "HG (ハイグレード)", "USD": "HG (High Grade)" },
+    "EG": { "KRW": "ENTRY GRADE (EG)", "JPY": "ENTRY GRADE (EG)", "USD": "ENTRY GRADE (EG)" },
+    "FM": { "KRW": "풀 메카닉스 / RE/100", "JPY": "フルメカニクス / RE/100", "USD": "Full Mechanics / RE/100" },
+    "SD": { "KRW": "SD / SDCS / BB전사", "JPY": "SD / SDCS / BB戦士", "USD": "SD / SDCS / BB Senshi" },
+    "Mega": { "KRW": "메가사이즈 (1/48)", "JPY": "メガサイズ (1/48)", "USD": "Mega Size (1/48)" },
+    "30MM": { "KRW": "30 MINUTES (30MM/30MS)", "JPY": "30 MINUTES (30MM/30MS)", "USD": "30 MINUTES (30MM/30MS)" },
+    "Pokemon": { "KRW": "포켓몬 프라모", "JPY": "ポケプラ", "USD": "Pokemon Plamo" },
+    "Other": { "KRW": "기타 반다이 프라", "JPY": "その他", "USD": "Others" }
+  },
+  "editions": {
+    "all": { "KRW": "모든 판매 형태", "JPY": "全ての販売形態", "USD": "All Release Types" },
+    "Standard": { "KRW": "일반 판매품 (Standard)", "JPY": "一般販売品 (Standard)", "USD": "Standard Release" },
+    "P-Bandai": { "KRW": "한정판 / 클럽G (P-Bandai)", "JPY": "限定品 / プレバン (P-Bandai)", "USD": "P-Bandai / Limited" }
+  },
+  "collection_status": {
+    "totalOwned": { "KRW": "총 보유 합계", "JPY": "総所蔵数 合計", "USD": "Total Owned" },
+    "backlog": { "KRW": "새것 (미개봉)", "JPY": "新品 (未開封)", "USD": "Backlog (Unopened)" },
+    "inProgress": { "KRW": "조립 중 / 부품", "JPY": "組立中 / パーツ", "USD": "In-Progress / Parts" },
+    "built": { "KRW": "조립 완료", "JPY": "組立完了", "USD": "Built (Completed)" },
+    "wishlist": { "KRW": "위시리스트 (찜)", "JPY": "欲しいもの", "USD": "Wishlist" },
+    "valuation": { "KRW": "미개봉 자산 가치", "JPY": "未開封 資産価値", "USD": "Backlog Valuation" }
+  },
+  "navigation_tabs": {
+    "navAll": { "KRW": "🔍 전체 건프라", "JPY": "🔍 全て探す", "USD": "🔍 All Kits" },
+    "navBacklog": { "KRW": "📦 새것 / 미개봉", "JPY": "📦 新品 / 未開封", "USD": "📦 Backlog" },
+    "navInProgress": { "KRW": "⚙️ 조립 중 / 부품", "JPY": "⚙️ 組立中 / パーツ", "USD": "⚙️ In-Progress" },
+    "navBuilt": { "KRW": "🔨 조립 완료", "JPY": "🔨 組立完了", "USD": "🔨 Built" },
+    "navWishlist": { "KRW": "💖 위시리스트", "JPY": "💖 欲しいもの", "USD": "💖 Wishlist" },
+    "navAnalytics": { "KRW": "📊 컬렉션 통계", "JPY": "📊 コレクション統計", "USD": "📊 Analytics" }
+  },
+  "release_radar": {
+    "badge": { "KRW": "월간 출하 & 재입고 레이더", "JPY": "月間出荷・再販レーダー", "USD": "Monthly Release & Restock Radar" },
+    "filterRetail": { "KRW": "🔵 일반 발매", "JPY": "🔵 一般発売", "USD": "🔵 Retail Release" },
+    "filterClubG": { "KRW": "🔴 클럽G", "JPY": "🔴 プレバン", "USD": "🔴 P-Bandai" },
+    "filterGBase": { "KRW": "🟡 건베 한정", "JPY": "🟡 ガンダムベース限定", "USD": "🟡 The Gundam Base" }
+  }
+}

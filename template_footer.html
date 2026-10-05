@@ -398,7 +398,7 @@
           clearFilters: '↺ 전체 필터 초기화',
           allSeriesPill: (n) => '전체 시리즈 (' + n.toLocaleString() + ')',
           allGradesPill: (n) => '전체 등급 (' + n.toLocaleString() + ')',
-          searchPlaceholder: '건담 이름, 등급, 시리즈 검색 (예: z, seed, mg)...',
+          searchPlaceholder: '건담 이름, 등급, 시리즈, 초성/줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...',
           imgModeProduct: '🤖 완성품 뷰',
           imgModeBoxart: '📦 박스아트 뷰',
           optAllYears: '모든 연도 (All Years)',
@@ -497,7 +497,7 @@
           clearFilters: '↺ フィルター初期化',
           allSeriesPill: (n) => '全シリーズ (' + n.toLocaleString() + ')',
           allGradesPill: (n) => '全グレード (' + n.toLocaleString() + ')',
-          searchPlaceholder: '機体名、グレード、シリーズを検索...',
+          searchPlaceholder: 'キット名、グレード、シリーズ、略称検索 (例: フリーダム, エアリアル, RG)...',
           imgModeProduct: '🤖 完成品表示',
           imgModeBoxart: '📦 パッケージ表示',
           optAllYears: '全ての年代 (All Years)',
@@ -596,7 +596,7 @@
           clearFilters: '↺ Clear Filters',
           allSeriesPill: (n) => 'All Series (' + n.toLocaleString() + ')',
           allGradesPill: (n) => 'All Grades (' + n.toLocaleString() + ')',
-          searchPlaceholder: 'Search Gunpla by name, grade, series...',
+          searchPlaceholder: 'Search by kit name, grade, series, slang (e.g. Aerial, Strike, MG)...',
           imgModeProduct: '🤖 Product View',
           imgModeBoxart: '📦 Box Art View',
           optAllYears: 'All Years',
@@ -3604,6 +3604,8 @@
         if (searchInput) {
           let debounceTimer;
           searchInput.addEventListener('input', (e) => {
+            const clearBtn = document.getElementById('btn-search-clear');
+            if (clearBtn) clearBtn.classList.toggle('hidden', !e.target.value);
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
               state.searchQuery = e.target.value;

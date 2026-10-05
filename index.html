@@ -48198,6 +48198,25 @@ window.GUNPLA_MASTER_DATA = [
         return res;
       }
 
+      // HANGUL VOWEL NORMALIZER (Maps 'ㅐ' <-> 'ㅔ' to absorb common Korean typing/spelling variations e.g. 해비 <-> 헤비)
+      function normalizeHangulVowels(str) {
+        if (!str) return '';
+        let res = '';
+        for (let i = 0; i < str.length; i++) {
+          const code = str.charCodeAt(i) - 0xAC00;
+          if (code >= 0 && code <= 11171) {
+            const vIndex = Math.floor((code % 588) / 28);
+            if (vIndex === 1) {
+              // ㅐ -> ㅔ (+112)
+              res += String.fromCharCode(str.charCodeAt(i) + 112);
+              continue;
+            }
+          }
+          res += str[i];
+        }
+        return res;
+      }
+
       // KOREAN GUNPLA SLANG, NICKNAMES & POPULAR ALIAS DICTIONARY
       const GUNPLA_ALIASES = {
         // First Gundam / O.Y.W
@@ -48242,6 +48261,7 @@ window.GUNPLA_MASTER_DATA = [
         '기라도가': ['gearadoga', '기라도가'],
         '제간': ['jegan', '제간'],
         '리가지': ['regz', 're-gz', '리가지'],
+        '나이팅': ['nightingale', '나이팅게일'],
         '나이팅게일': ['nightingale', '나이팅게일'],
         'ㄴㅇㅌㄱㅇ': ['nightingale', '나이팅게일'],
 
@@ -48269,6 +48289,9 @@ window.GUNPLA_MASTER_DATA = [
         '퀀터': ['qant', '00qant', '퀀터'],
         'ㅋㅌ': ['qant', '00qant'],
         '엑시아': ['exia', '엑시아'],
+        '엑시': ['exia', '엑시아'],
+        '액시아': ['exia', '엑시아'],
+        '액시': ['exia', '엑시아'],
         'ㅇㅅㅇ': ['exia'],
         '듀나메스': ['dynames', '듀나메스'],
         '큐리오스': ['kyrios', '큐리오스'],
@@ -48285,10 +48308,20 @@ window.GUNPLA_MASTER_DATA = [
         '윙제커': ['wingzero', 'winggundamzero', 'zeroew', '윙제로'],
         'ㅇㅈㅋ': ['wingzero', 'winggundamzero', 'zeroew'],
         '윙제로': ['wingzero', '윙제로'],
+        '톨기': ['tallgeese', '톨기스'],
         '톨기스': ['tallgeese', '톨기스'],
+        '에피': ['epyon', '에피온'],
         '에피온': ['epyon', '에피온'],
+        '애피온': ['epyon', '에피온'],
+        '데스': ['deathscythe', '데스사이즈'],
         '데스사이즈': ['deathscythe', '데스사이즈'],
+        '헤비': ['heavyarms', '헤비암즈'],
+        '해비': ['heavyarms', '헤비암즈'],
         '헤비암즈': ['heavyarms', '헤비암즈'],
+        '해비암즈': ['heavyarms', '헤비암즈'],
+        'ㅎㅂ': ['heavyarms', '헤비암즈'],
+        'ㅎㅂㅇㅈ': ['heavyarms', '헤비암즈'],
+        '샌드': ['sandrock', '샌드록'],
         '샌드록': ['sandrock', '샌드록'],
         '알트론': ['altron', '알트론', 'nataku', '나탁'],
         '나탁': ['altron', 'nataku', '나탁'],
@@ -48471,6 +48504,7 @@ window.GUNPLA_MASTER_DATA = [
 
         kit._searchStr = (sNameKo + ' ' + sNameEn + ' ' + sNameJp + ' ' + sSeries + ' ' + sClass + ' ' + sBrand + ' ' + sId).toLowerCase();
         kit._searchNoSpace = kit._searchStr.replace(/[\s\-_/.]/g, '');
+        kit._searchVowelNorm = normalizeHangulVowels(kit._searchNoSpace);
         kit._chosung = (getHangulChosung(sNameKo) + ' ' + getHangulChosung(sSeries)).replace(/[\s\-_/.]/g, '').toLowerCase();
 
         return kit;
@@ -48510,32 +48544,92 @@ window.GUNPLA_MASTER_DATA = [
         return 'badge-default';
       }
 
-      // HANGUL CHOSUNG & GUNPLA ALIAS MATCHING UNIT
+      // HANGUL CHOSUNG & GUNPLA ALIAS MATCHING UNIT (With Prefix & Vowel Normalization)
+      let _lastQueryStr = null;
+      let _cachedParsedQuery = null;
+
+      function parseQueryTokens(term) {
+        if (!term) return null;
+        if (term === _lastQueryStr && _cachedParsedQuery) return _cachedParsedQuery;
+
+        const termLower = term.toLowerCase().trim();
+        const termNoSpace = termLower.replace(/[\s\-_/.]/g, '');
+        if (!termNoSpace) return null;
+
+        const termVowelNorm = normalizeHangulVowels(termNoSpace);
+        const tokens = new Set();
+        tokens.add(termLower);
+        tokens.add(termNoSpace);
+        if (termVowelNorm && termVowelNorm !== termNoSpace) {
+          tokens.add(termVowelNorm);
+        }
+
+        // 1. Direct and Vowel-normalized Alias Lookup
+        const directTargets = [termLower, termNoSpace, termVowelNorm];
+        for (let i = 0; i < directTargets.length; i++) {
+          const t = directTargets[i];
+          if (t && GUNPLA_ALIASES[t]) {
+            const list = GUNPLA_ALIASES[t];
+            for (let j = 0; j < list.length; j++) {
+              tokens.add(list[j].toLowerCase());
+              tokens.add(list[j].toLowerCase().replace(/[\s\-_/.]/g, ''));
+            }
+          }
+        }
+
+        // 2. Prefix & Substring Alias Matching (Handles partial typing e.g. "헤비", "해비", "데스", "샌드", "나이팅")
+        if (termNoSpace.length >= 2 || (termVowelNorm && termVowelNorm.length >= 2)) {
+          const aliasKeys = Object.keys(GUNPLA_ALIASES);
+          for (let i = 0; i < aliasKeys.length; i++) {
+            const k = aliasKeys[i];
+            const kNorm = normalizeHangulVowels(k);
+            if (k.startsWith(termNoSpace) || kNorm.startsWith(termNoSpace) ||
+                (termVowelNorm && (k.startsWith(termVowelNorm) || kNorm.startsWith(termVowelNorm)))) {
+              const list = GUNPLA_ALIASES[k];
+              for (let j = 0; j < list.length; j++) {
+                tokens.add(list[j].toLowerCase());
+                tokens.add(list[j].toLowerCase().replace(/[\s\-_/.]/g, ''));
+              }
+            }
+          }
+        }
+
+        const isChosung = /^[ㄱ-ㅎ]+$/.test(termNoSpace);
+        _lastQueryStr = term;
+        _cachedParsedQuery = {
+          raw: termLower,
+          clean: termNoSpace,
+          vowelNorm: termVowelNorm,
+          isChosung: isChosung,
+          tokenList: Array.from(tokens)
+        };
+        return _cachedParsedQuery;
+      }
+
       function matchKitQueryTerm(kit, term) {
         if (!term) return true;
-        const termLower = term.toLowerCase();
-        const termNoSpace = termLower.replace(/[\s\-_/.]/g, '');
-        if (!termNoSpace) return true;
+        const pq = parseQueryTokens(term);
+        if (!pq) return true;
 
         // 1. Direct standard substring match
-        if (kit._searchStr && kit._searchStr.includes(termLower)) return true;
+        if (kit._searchStr && kit._searchStr.includes(pq.raw)) return true;
 
         // 2. Space/punctuation-insensitive match (e.g. "rx782" matches "rx-78-2", "뉴건담" matches "뉴 건담")
-        if (kit._searchNoSpace && kit._searchNoSpace.includes(termNoSpace)) return true;
+        if (kit._searchNoSpace && kit._searchNoSpace.includes(pq.clean)) return true;
 
-        // 3. Hangul Chosung match (e.g. "ㅍㄱ", "ㅅㄹㄷ", "ㅅㅈㅂ")
-        const isChosung = /^[ㄱ-ㅎ]+$/.test(termNoSpace);
-        if (isChosung && kit._chosung && kit._chosung.includes(termNoSpace)) return true;
+        // 3. Vowel-normalized match (e.g. "해비" matches "헤비", "액시아" matches "엑시아")
+        if (pq.vowelNorm && kit._searchVowelNorm && kit._searchVowelNorm.includes(pq.vowelNorm)) return true;
 
-        // 4. Korean Gunpla slang & alias dictionary expansion (e.g. "퍼건", "스리덤", "인저", "버카", "마크2")
-        const aliasExpansions = GUNPLA_ALIASES[termLower] || GUNPLA_ALIASES[termNoSpace];
-        if (aliasExpansions && aliasExpansions.length > 0) {
-          for (let i = 0; i < aliasExpansions.length; i++) {
-            const exp = aliasExpansions[i].toLowerCase();
-            const expNoSpace = exp.replace(/[\s\-_/.]/g, '');
-            const expIsChosung = /^[ㄱ-ㅎ]+$/.test(expNoSpace);
-            if (expIsChosung && kit._chosung && kit._chosung.includes(expNoSpace)) return true;
-            if (kit._searchNoSpace && kit._searchNoSpace.includes(expNoSpace)) return true;
+        // 4. Hangul Chosung match (e.g. "ㅍㄱ", "ㅅㄹㄷ", "ㅅㅈㅂ")
+        if (pq.isChosung && kit._chosung && kit._chosung.includes(pq.clean)) return true;
+
+        // 5. Korean Gunpla slang, prefix & alias dictionary expansion (e.g. "헤비", "해비", "퍼건", "스리덤", "인저")
+        for (let i = 0; i < pq.tokenList.length; i++) {
+          const exp = pq.tokenList[i];
+          if (/^[ㄱ-ㅎ]+$/.test(exp)) {
+            if (kit._chosung && kit._chosung.includes(exp)) return true;
+          } else {
+            if (kit._searchNoSpace && kit._searchNoSpace.includes(exp)) return true;
             if (kit._searchStr && kit._searchStr.includes(exp)) return true;
           }
         }

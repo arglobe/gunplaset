@@ -14,6 +14,7 @@ $footerPath = Join-Path $srcDir "template_footer.html"
 $imgDbPath = Join-Path $srcDir "kit_image_db.js"
 $priceDbPath = Join-Path $srcDir "kit_price_db.js"
 $masterKitsPath = Join-Path $srcDir "master_kits.json"
+$lqaPath = Join-Path $srcDir "lqa_glossary.json"
 $outPath = Join-Path $rootDir "index.html"
 
 if (Test-Path (Join-Path $rootDir "table1_both_jp_kr_all.csv")) {
@@ -358,6 +359,99 @@ foreach ($m in $onerrorMatches) {
     }
 }
 Write-Output "✅ 100% Onerror Hardening: All $($onerrorMatches.Count) image error handlers have anti-infinite-loop guards."
+
+# ==============================================================================
+# 🛡️ GATE 09: LQA MASTER GLOSSARY, PROPER NOUN & STRUCTURAL INTEGRITY GATE
+# ==============================================================================
+Write-Output "🔍 Verifying LQA Master Glossary, proper noun casing, and structural HTML integrity..."
+
+if (-not (Test-Path $lqaPath)) {
+    $lqaPath = Join-Path $rootDir "lqa_glossary.json"
+}
+
+if (-not (Test-Path $lqaPath)) {
+    Write-Error "🚨 BUILD REJECTED: lqa_glossary.json is missing! Single Source of Truth required for LQA Gate."
+    exit 1
+}
+
+try {
+    $lqaObj = Get-Content $lqaPath -Raw -Encoding UTF8 | ConvertFrom-Json
+} catch {
+    Write-Error "🚨 BUILD REJECTED: lqa_glossary.json is invalid JSON! Error: $_"
+    exit 1
+}
+
+# 1. Master Catalog Proper Noun Immutability Check (e.g., Ver.Ka)
+$vkaMatches = [regex]::Matches($masterKitsJson, '(?i)\bver[\.\s]?ka\b')
+$invalidVka = @()
+foreach ($m in $vkaMatches) {
+    if ($m.Value -cne 'Ver.Ka') {
+        $invalidVka += $m.Value
+    }
+}
+if ($invalidVka.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Discrepant Ver.Ka casing in master catalog! Violations: $($invalidVka -join ', ')"
+    exit 1
+}
+
+# 2. Immutable Trademarks Check across master catalog
+$trademarkDict = @{
+    're/100' = 'RE/100'
+    'mgsd' = 'MGSD'
+    'mgex' = 'MGEX'
+    'sdcs' = 'SDCS'
+}
+$trademarkViolations = @()
+foreach ($k in $kitsObj) {
+    foreach ($prop in @('name', 'nameKo', 'nameJp', 'nameEn')) {
+        $val = $k.$prop
+        if ($val) {
+            foreach ($key in $trademarkDict.Keys) {
+                if ($val.ToLower().Contains($key)) {
+                    $expected = $trademarkDict[$key]
+                    if (-not $val.Contains($expected)) {
+                        $trademarkViolations += "Kit $($k.id) ($prop): '$val' must contain '$expected'"
+                    }
+                }
+            }
+        }
+    }
+}
+if ($trademarkViolations.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Immutable trademark violation detected in master catalog:`n$($trademarkViolations -join "`n")"
+    exit 1
+}
+
+# 3. Unique HTML ID Integrity Check
+$idMatches = [regex]::Matches($fullHtml, 'id=[\x22\x27]([^\x22\x27\s>]+)[\x22\x27]')
+$idSet = New-Object System.Collections.Generic.HashSet[string]
+$duplicateIds = @()
+foreach ($m in $idMatches) {
+    $id = $m.Groups[1].Value
+    if (-not $idSet.Add($id)) {
+        $duplicateIds += $id
+    }
+}
+if ($duplicateIds.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Duplicate HTML element IDs detected: $($duplicateIds -join ', ')"
+    exit 1
+}
+
+# 4. Critical Layout Tag Balance Check
+$tagViolations = @()
+foreach ($tag in @('div', 'script', 'main', 'header', 'footer', 'section')) {
+    $openCount = ([regex]::Matches($fullHtml, '(?i)<' + $tag + '(\s+[^>]*)?>')).Count
+    $closeCount = ([regex]::Matches($fullHtml, '(?i)</' + $tag + '>')).Count
+    if ($openCount -ne $closeCount) {
+        $tagViolations += "<$tag>: open=$openCount, close=$closeCount (diff=$($openCount - $closeCount))"
+    }
+}
+if ($tagViolations.Count -gt 0) {
+    Write-Error "🚨 BUILD REJECTED: Structural tag imbalance detected: $($tagViolations -join '; ')"
+    exit 1
+}
+
+Write-Output "✅ 100% LQA Glossary & Proper Noun Gate Passed: All trademark standards, casing rules, unique IDs ($($idSet.Count)), and structural tag balances strictly verified."
 
 if ($fullHtml.Length -lt 3500000) {
     Write-Error "🚨 BUILD REJECTED: Generated index.html size ($($fullHtml.Length) bytes) is below 3.5MB safety threshold!"

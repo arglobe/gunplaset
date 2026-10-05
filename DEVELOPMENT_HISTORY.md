@@ -1,7 +1,7 @@
 # 🚀 GunplaSet 마스터 프로젝트 개발 히스토리 & 아키텍처 문서
 
-> **문서 버전**: v2.4.2  
-> **최종 갱신 일시**: 2026-10-03 기준  
+> **문서 버전**: v2.5.0  
+> **최종 갱신 일시**: 2026-10-05 기준  
 > **프로젝트 위치**: `G:\내 드라이브\GunplaSet\` 및 `c:\Users\arglo\OneDrive\문서\Antigravity\Shopping\gunplaset\`  
 > **공식 프로덕션 URL**: [https://gunplaset.arglobe.workers.dev](https://gunplaset.arglobe.workers.dev)  
 > **GitHub 저장소**: `arglobe/gunplaset` (Branch: `main`)
@@ -12,22 +12,60 @@
 
 | 구분 | 파일/폴더 경로 | 설명 |
 | :--- | :--- | :--- |
-| **실행 파일** | `index.html` (3.78 MB) | 전체 건프라 2,716종, 다국어/다통화, 컬렉션 관리, 레이더 캘린더 일체형 번들 |
+| **실행 파일** | `index.html` (6.06 MB) | 전체 건프라 2,723종, 다국어/다통화, 컬렉션 관리, 레이더 캘린더, 전면 지능형 검색 일체형 번들 |
 | **컬렉션 데이터** | `my_collection.js` / `.json` | 사용자 보유 수량(새것/조립중/완료), 위시리스트(찜), 개인 메모 실시간 저장 파일 |
-| **이미지 자산** | `images/` (7,481개 파일) | 1:1 매핑된 전 건프라 고화질 패키지/완성품 로컬 및 CDN 이미지 아카이브 |
-| **소스 코드** | `template_header.html` | 헤더 UI, 5대 통계 메트릭 대시보드, 다통화 셀렉터, 반응형 레이아웃 템플릿 |
-| **소스 코드** | `template_footer.html` | UI 인터랙션 엔진, 2중 세이브, 모달, 비매품 뱃지, 안전 정렬, 다국어 명칭 렌더러 |
-| **소스 코드** | `master_kits.json` | 2,716개 건프라 마스터 카탈로그 메타데이터 (1980 ~ 2026년 예정작 전수 수록) |
+| **품질/LQA 사전** | `lqa_glossary.json` | LQA 마스터 글로서리 (상표권, 고유명사 대소문자 규칙, Ver.Ka 표준, 103개 고유 ID 무결성 사전) |
+| **이미지 자산** | `images/` (7,482개 파일) | 1:1 매핑된 전 건프라 고화질 패키지/완성품 및 100% Legal-Safe 공식 OG 배너 |
+| **소스 코드** | `template_header.html` | 상단 전면 와이드 검색창, 5대 통계 대시보드, 다통화 셀렉터, 반응형 레이아웃 템플릿 |
+| **소스 코드** | `template_footer.html` | 유니코드 모음 정규화 검색 엔진, 캘린더(.ics/구글) 연동, 모달 XSS 방어, 렌더러 |
+| **소스 코드** | `master_kits.json` | 2,723개 건프라 마스터 카탈로그 메타데이터 (1980 ~ 2026년 예정작 전수 수록) |
 | **소스 코드** | `kit_price_db.js` | 반다이 공식 MSRP 정가 데이터베이스 (반코 12배 정가 & 특수 코팅 114종 전수 검증) |
 | **소스 코드** | `kit_image_db.js` | 424건 중복 충돌 해제 완료된 순수 JSON 이미지 매핑 DB |
 | **배포 워커** | `worker.js` | Cloudflare Workers 글로벌 엣지 라우팅, 이미지 서빙, 캐시 최적화 스크립트 |
-| **빌드 엔진** | `scripts/build.ps1` | 2,716종 가격 감사 테이블 1:1 대조 및 HTML 단일 번들 패키징 스크립트 |
+| **빌드 엔진** | `scripts/build.ps1` | 9대 무결점 CI/CD 게이트 (가격 감사, 언어 격리, 수량 동기화, 엄격 출처 실명제, LQA 글로서리) |
 | **배포 파이프라인** | `scripts/deploy_to_production.ps1` | GitHub API 커밋 푸시 및 Cloudflare 글로벌 엣지 무결성 검증 배포기 |
 | **출하 레이더** | `scripts/weekly_radar_pipeline.py` | 반다이 하비 사이트 주간 출하표 자동 파싱 및 팩트 교차 검증 파이프라인 |
 
 ---
 
 ## 🛠️ 2. 버전별 마일스톤 및 개선 히스토리 (Changelog)
+
+### v2.5.0 (2026-10-05) - LQA 무결점 파이프라인(Gate 09) 탑재 & 지능형 한글 검색 엔진 및 UI/UX 리뉴얼
+- **LQA 마스터 글로서리 구축 및 무결점 빌드 게이트 09(Gate 09) 신설 (`lqa_glossary.json`, `scripts/build.ps1`)**:
+  - 상표권 및 고유명사 대소문자 표준(`Gunpla`, `Bandai Spirits`, `Master Grade` 등)을 정의한 단일 진실 원천(`lqa_glossary.json`) 구축.
+  - 마스터 카탈로그(`master_kits.json`) 내 `Ver. Ka`, `ver.ka`, `Ver.KA` 등 혼재된 10건의 표기를 공식 표준인 `Ver.Ka`로 100% 정규화.
+  - 빌드 스크립트에 9번째 무결성 게이트(Gate 09)를 추가하여 103개 고유 DOM ID 유일성, 고유명사 표기 표준 준수, HTML 구조적 태그 밸런스(`<section>`, `<div>`) 자동 검증.
+- **레거시 데드코드 전면 정제 및 모달 XSS 방어벽 강화 (`template_footer.html`)**:
+  - 과거 브라우저 로컬 파일 동기화 용도로 작성되었으나 미사용 상태이던 File System Access API 및 IndexedDB 잔재 188라인 영구 삭제.
+  - 실제 DOM에 존재하지 않는 요소를 참조하던 유령 이벤트 리스너 5건 정리.
+  - 모달 개인 메모에 큰따옴표(`"`)나 작은따옴표(`'`)가 포함될 때 HTML 속성 파싱 에러로 텍스트가 잘리던 현상을 해결하기 위해 `escapeHtml()` 유틸리티 함수 신설 및 안전 렌더링 적용.
+- **릴리즈 레이더 캘린더 연동 확장 (`template_footer.html`)**:
+  - 릴리즈 레이더 개별 발매 품목에 대한 '구글 캘린더 등록(`addToGoogleCalendar`)' 원클릭 링크 신설.
+  - 사용자의 위시리스트(찜) 항목들을 스마트폰 및 데스크톱 캘린더 앱(Apple Calendar, Google Calendar, Outlook)에 일괄 등록할 수 있는 표준 RFC 5545 `.ics` 파일 내보내기(`exportWishlistIcs`) 구현.
+- **상단 전면 검색창 UI/UX 리뉴얼 (`template_header.html`)**:
+  - 스크롤 980px 아래에 위치하던 검색창을 릴리즈 레이더 직하단 최상단 2열 독립 글래스모피즘 카드로 재배치.
+  - 1열: 100% 풀위드 와이드 인풋, 네온 시안 검색 아이콘, 포커스 링, 즉시 지우기(`btn-search-clear`) 버튼 탑재.
+  - 2열: 완성품 뷰/박스아트 뷰 토글 및 5대 드롭다운 필터(연도, 등급, 시리즈, 발매구분, 정렬) 배치로 조작 직관성 극대화.
+- **한국어 모음(ㅐ/ㅔ) 정규화 및 접두어 지능형 검색 엔진 탑재 (`template_footer.html`)**:
+  - 유니코드 한글 음절 중성 연산(`(code - 0xAC00) / 28 % 21`) 기반의 `normalizeHangulVowels()` 함수 개발 (`ㅐ` 인덱스 1 ↔ `ㅔ` 인덱스 5 상호 변환).
+  - 영문명 중심 킷(2,570종)을 위한 2글자 이상 부분 접두어 자동 확장 엔진(`parseQueryTokens`) 구축.
+  - '해비', '헤비', '해비암즈', '헤비암즈' 등 오타 및 축약어 입력 시 `GUNDAM HEAVYARMS` 등 해당 킷 100% 매칭 검증 완료.
+- **빌드 및 배포 무결성 검증**:
+  - 9대 무결점 CI/CD 게이트 전원 통과 (`build.ps1`).
+  - Google Drive 미러(`G:\내 드라이브\GunplaSet\index.html`) 및 Cloudflare 글로벌 엣지 프로덕션 실시간 배포 완료.
+
+### v2.4.3 (2026-10-03) - 100% 저작권 안전 영구형 러너 OG 배너 탑재 & 2,723종 수량 완전 자동 동기화 시스템
+- **저작권·상표권 100% 클린 공식 OG 배너 신규 제작 및 배포 (`images/og_banner.jpg`)**:
+  - 소츠/선라이즈의 특정 건담 기체 외형(RX-78-2 일러스트) 및 반다이의 V-Fin(안테나) 엠블럼을 100% 원천 배제.
+  - 프라모델 조립 취미의 상징인 **'정밀 사출 러너(Runner/스프루) 프레임'**과 골드/시안 테크니컬 배지로 브랜드 정체성 확립.
+  - 가변 숫자(`2,723 KITS`)를 이미지 그래픽에서 영구 제거하고 **`THE MASTER GUNPLA ARCHIVE & BUILDER COLLECTION TRACKER`**라는 영구형 지속 가능 슬로건 탑재.
+  - 하단 공식 비공식 팬 아카이브 법적 면책 조항(*Unofficial Fan-Made Model Kit Archive*) 명시.
+- **카탈로그 수량 완전 자동화 게이트(Kit Count Auto-Sync Gate) 신설 (`scripts/build.ps1`)**:
+  - 템플릿 내의 정적 메타 태그(`template_header.html`, `template_footer.html`) 수량 표기를 `build.ps1`이 `master_kits.json`의 실제 킷 수량(`$kitsObj.Count` = 2,723종)으로 자동 치환.
+  - 빌드 후 잔존하는 과거 하드코딩 수량(`2,716종`) 탐지 시 빌드를 즉각 거부하는 무결성 가드 탑재.
+  - 향후 신규 킷 추가 시 배너 이미지를 수정할 필요 없이 카톡 미리보기 텍스트만 100% 자동 동기화되는 영구 유지보수 프리 체계 완성.
+- **클라우드플레어 프로덕션 엣지 실시간 배포 및 검증 통과**:
+  - 커밋: `3bbfc3d` (OG Banner), `aaad0eb` (Header), `1e41f81` (Footer), `96f2726` (Build Script), `b9ba507` (index.html).
 
 ### v2.4.2 (2026-10-03) - 북미 프리미엄 반다이(P-Bandai US) 공식 예약 배송 캘린더 탑재 & USD 레이더 전면 활성화
 - **북미 시장 전용 팩트(P-Bandai US Scheduled Shipping) 기반 USD 레이더 신규 개통**:

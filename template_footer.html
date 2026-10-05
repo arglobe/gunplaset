@@ -36,9 +36,6 @@
         return local;
       }
 
-      let autoSyncTimeout = null;
-      let autoSyncFileHandle = null;
-
       function saveUserCollection() {
         try {
           // 1. Instant Synchronous Save to LocalStorage (Zero Risk of Data Loss)
@@ -48,24 +45,6 @@
           // 2. Local-First Cloud Database Realtime Sync (Debounced Zero-Lag)
           if (typeof syncCollectionToCloud === 'function') {
             syncCollectionToCloud();
-          }
-
-          // 3. Safe Debounced Write to Google Drive File (If Active)
-          if (autoSyncFileHandle) {
-            if (autoSyncTimeout) clearTimeout(autoSyncTimeout);
-            autoSyncTimeout = setTimeout(async () => {
-              try {
-                const writable = await autoSyncFileHandle.createWritable();
-                await writable.write(JSON.stringify(state.userCollection, null, 2));
-                await writable.close();
-                updateSyncUI(true, '☁️ 드라이브 저장 완료 ✓');
-                setTimeout(() => {
-                  if (autoSyncFileHandle) updateSyncUI(true);
-                }, 1500);
-              } catch(e) {
-                console.warn('Auto sync write warning:', e);
-              }
-            }, 300);
           }
         } catch(e) {
           console.error('Storage save error:', e);
@@ -888,25 +867,7 @@
       function updateAllUILocalization() {
         const t = UI_I18N[state.currency] || UI_I18N.KRW;
         
-        // 1. Header & Utilities
-        const sub = document.getElementById('app-subtitle');
-        if (sub) sub.textContent = t.appSubtitle;
-        const syncText = document.getElementById('sync-status-text');
-        if (syncText) {
-          if (autoSyncFileHandle) {
-            syncText.textContent = state.currency === 'USD' ? '☁️ Drive Auto-Sync ON' : (state.currency === 'JPY' ? '☁️ ドライブ自動同期 ON' : '☁️ 드라이브 자동연동 ON');
-          } else {
-            syncText.textContent = t.syncAuto;
-          }
-        }
-        const btnBackup = document.getElementById('btn-text-backup');
-        if (btnBackup) btnBackup.textContent = t.btnBackup;
-        const btnRestore = document.getElementById('btn-text-restore');
-        if (btnRestore) btnRestore.textContent = t.btnRestore;
-        const btnCsv = document.getElementById('btn-text-csv');
-        if (btnCsv) btnCsv.textContent = t.btnCsv;
-
-        // 2. Navigation Tabs
+        // 1. Navigation Tabs
         const tabAll = document.getElementById('nav-tab-all');
         if (tabAll) tabAll.textContent = t.navAll;
         const tabBacklog = document.getElementById('nav-tab-backlog');
@@ -2150,7 +2111,7 @@
                 '</div>')) +
               '<div class="space-y-2">' +
                 '<label class="block text-xs font-medium text-slate-400">' + t.modalNotesLabel + '</label>' +
-                '<input type="text" id="modal-notes" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400" placeholder="' + t.modalNotesPlaceholder + '" value="' + (item.notes || '') + '">' +
+                '<input type="text" id="modal-notes" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-cyan-400" placeholder="' + t.modalNotesPlaceholder + '" value="' + escapeHtml(item.notes || '') + '">' +
               '</div>' +
             '</div>' +
             '<div class="pt-4 border-t border-slate-800 flex justify-between items-center gap-2 mt-4">' +
@@ -2167,201 +2128,22 @@
         '</div>';
       }
 
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
       window.saveModalData = function(id) {
         if (!requireAuth()) return;
         const notes = document.getElementById('modal-notes')?.value || '';
         updateItem(id, { notes });
         showToast('저장되었습니다.');
         window.closeKitModal();
-      };
-
-      const DB_NAME = 'gunpladex_sync_db';
-      const DB_STORE = 'handles';
-
-      function openSyncDB() {
-        return new Promise((resolve, reject) => {
-          const req = indexedDB.open(DB_NAME, 1);
-          req.onupgradeneeded = (e) => {
-            e.target.result.createObjectStore(DB_STORE);
-          };
-          req.onsuccess = (e) => resolve(e.target.result);
-          req.onerror = (e) => reject(e);
-        });
-      }
-
-      async function saveHandleToDB(handle) {
-        try {
-          const db = await openSyncDB();
-          return new Promise((resolve, reject) => {
-            const tx = db.transaction(DB_STORE, 'readwrite');
-            tx.objectStore(DB_STORE).put(handle, 'sync_file_handle');
-            tx.oncomplete = () => resolve();
-            tx.onerror = (e) => reject(e);
-          });
-        } catch(e) {}
-      }
-
-      async function getHandleFromDB() {
-        try {
-          const db = await openSyncDB();
-          return new Promise((resolve) => {
-            const tx = db.transaction(DB_STORE, 'readonly');
-            const req = tx.objectStore(DB_STORE).get('sync_file_handle');
-            req.onsuccess = () => resolve(req.result || null);
-            req.onerror = () => resolve(null);
-          });
-        } catch(e) { return null; }
-      }
-
-      function updateSyncUI(isOn, msg) {
-        const dot = document.getElementById('sync-dot');
-        const text = document.getElementById('sync-status-text');
-        const btn = document.getElementById('btn-cloud-sync');
-        if (dot) {
-          dot.className = isOn ? 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400' : 'w-2 h-2 rounded-full bg-slate-500';
-        }
-        if (btn) {
-          if (isOn) {
-            btn.className = 'px-2.5 py-1 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 text-xs font-semibold border border-emerald-500/60 transition-all flex items-center gap-1.5 shadow-md shadow-emerald-500/10';
-          } else {
-            btn.className = 'px-2.5 py-1 rounded-xl bg-cyan-950/70 hover:bg-cyan-900 text-cyan-300 text-xs font-semibold border border-cyan-500/40 transition-all flex items-center gap-1.5 shadow-sm';
-          }
-        }
-        if (text) {
-          if (msg) {
-            text.textContent = msg;
-          } else if (isOn) {
-            text.textContent = state.currency === 'USD' ? '☁️ Drive Sync ON' : (state.currency === 'JPY' ? '☁️ ドライブ同期 ON' : '☁️ 드라이브 자동연동 ON');
-          } else {
-            const t = UI_I18N[state.currency] || UI_I18N.KRW;
-            text.textContent = t.syncAuto;
-          }
-        }
-      }
-
-      async function restoreAutoSyncOnLoad() {
-        try {
-          const handle = await getHandleFromDB();
-          if (handle) {
-            autoSyncFileHandle = handle;
-            const perm = await handle.queryPermission({ mode: 'readwrite' });
-            if (perm === 'granted') {
-              updateSyncUI(true);
-              try {
-                const file = await handle.getFile();
-                const text = await file.text();
-                if (text && text.trim().startsWith('{')) {
-                  const data = JSON.parse(text);
-                  if (data && typeof data === 'object') {
-                    state.userCollection = data;
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.userCollection));
-                    updateGlobalStats();
-                    renderKits();
-                  }
-                }
-              } catch(e) {}
-            } else {
-              const reconnectMsg = state.currency === 'USD' ? '☁️ Reconnect Drive' : (state.currency === 'JPY' ? '☁️ ドライブ再接続' : '☁️ 드라이브 재연결');
-              updateSyncUI(false, reconnectMsg);
-            }
-          }
-        } catch(e) {}
-      }
-
-      window.initOrToggleAutoSync = async function() {
-        try {
-          let handle = autoSyncFileHandle || await getHandleFromDB();
-          if (handle) {
-            const perm = await handle.requestPermission({ mode: 'readwrite' });
-            if (perm === 'granted') {
-              autoSyncFileHandle = handle;
-              await saveHandleToDB(handle);
-              try {
-                const file = await handle.getFile();
-                const text = await file.text();
-                if (text && text.trim().startsWith('{')) {
-                  const data = JSON.parse(text);
-                  if (data && typeof data === 'object') {
-                    state.userCollection = data;
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.userCollection));
-                    updateGlobalStats();
-                    renderKits();
-                  }
-                }
-              } catch(e) {}
-              updateSyncUI(true, '☁️ 드라이브 자동연동 ON');
-              showToast('🟢 구글 드라이브 실시간 자동 동기화가 활성화되었습니다!');
-              return;
-            }
-          }
-
-          if (!window.showOpenFilePicker) {
-            alert('현재 브라우저 환경에서는 파일 시스템 연동 API를 지원하지 않습니다. Chrome 또는 Edge 브라우저를 이용해 주세요.');
-            return;
-          }
-          const [newHandle] = await window.showOpenFilePicker({
-            types: [{
-              description: 'Gunpla Collection File (my_collection.json)',
-              accept: { 'application/json': ['.json'], 'text/javascript': ['.js'] }
-            }],
-            multiple: false
-          });
-          if (newHandle) {
-            autoSyncFileHandle = newHandle;
-            await saveHandleToDB(newHandle);
-            const file = await newHandle.getFile();
-            const text = await file.text();
-            if (text) {
-              try {
-                let data = null;
-                if (text.includes('window.SAVED_COLLECTION_DATA')) {
-                  const match = text.match(/window\.SAVED_COLLECTION_DATA\s*=\s*(\{[\s\S]*\});?/);
-                  if (match) data = JSON.parse(match[1]);
-                } else {
-                  data = JSON.parse(text);
-                }
-                if (data && typeof data === 'object') {
-                  state.userCollection = { ...state.userCollection, ...data };
-                  saveUserCollection();
-                  renderKits();
-                }
-              } catch(e) {}
-            }
-            updateSyncUI(true, '☁️ 드라이브 자동연동 ON');
-            showToast('🟢 구글 드라이브 폴더의 파일과 실시간 자동 연동이 활성화되었습니다!');
-          }
-        } catch(err) {
-          console.log('Sync picker closed:', err);
-        }
-      };
-
-      window.exportJSON = function() {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state.userCollection, null, 2));
-        const dlAnchor = document.createElement('a');
-        dlAnchor.setAttribute("href", dataStr);
-        dlAnchor.setAttribute("download", 'gunplaset_backup_' + new Date().toISOString().slice(0,10) + '.json');
-        dlAnchor.click();
-        showToast('💾 백업 파일(JSON)이 다운로드되었습니다.');
-      };
-
-      window.importJSON = function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          try {
-            const imported = JSON.parse(e.target.result);
-            if (typeof imported === 'object') {
-              state.userCollection = imported;
-              saveUserCollection();
-              renderKits();
-              showToast('📂 백업 데이터가 성공적으로 복원되었습니다!');
-            }
-          } catch (err) {
-            alert('올바른 백업 JSON 파일이 아닙니다.');
-          }
-        };
-        reader.readAsText(file);
       };
 
       window.exportCSV = function() {
@@ -3353,18 +3135,6 @@
         applyRadarCollapseUI();
       };
 
-      window.changeRadarMonth = function(delta) {
-        const curr = state.currency || 'KRW';
-        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
-        const months = Object.keys(localeRadar);
-        const idx = months.indexOf(radarState.currentMonthKey);
-        const newIdx = idx + delta;
-        if (newIdx >= 0 && newIdx < months.length) {
-          radarState.currentMonthKey = months[newIdx];
-          renderReleaseRadar();
-        }
-      };
-
       window.setRadarCategory = function(cat) {
         radarState.selectedCategory = cat;
         renderReleaseRadar();
@@ -3403,6 +3173,158 @@
       function updateRadarWishlistUI() {
         renderReleaseRadar();
       }
+
+      // CALENDAR INTEGRATION ENGINE (Single Item Google Calendar & Batch Wishlist .ics Export)
+      function parseRadarItemDate(item, monthKey) {
+        const rawDate = item.date || '';
+        let year = '2026';
+        let month = '10';
+        let day = '15';
+
+        if (monthKey && /^\d{4}-\d{2}$/.test(monthKey)) {
+          const parts = monthKey.split('-');
+          year = parts[0];
+          month = parts[1];
+        }
+
+        const dayMatch = rawDate.match(/(\d{1,2})\s*일/) || rawDate.match(/(\d{1,2})\s*日/) || rawDate.match(/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z.]*\s*(\d{1,2})/i);
+        if (dayMatch) {
+          day = String(dayMatch[1]).padStart(2, '0');
+        } else {
+          day = '15';
+        }
+
+        const startStr = year + month + day;
+        const dObj = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
+        dObj.setDate(dObj.getDate() + 1);
+        const nextY = dObj.getFullYear();
+        const nextM = String(dObj.getMonth() + 1).padStart(2, '0');
+        const nextD = String(dObj.getDate()).padStart(2, '0');
+        const endStr = nextY + nextM + nextD;
+
+        return { start: startStr, end: endStr, dateFormatted: year + '-' + month + '-' + day };
+      }
+
+      window.addToGoogleCalendar = function(id, event) {
+        if (event) event.stopPropagation();
+        const curr = state.currency || 'KRW';
+        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
+        
+        let foundItem = null;
+        let foundMKey = radarState.currentMonthKey;
+
+        if (localeRadar[radarState.currentMonthKey] && localeRadar[radarState.currentMonthKey].items) {
+          foundItem = localeRadar[radarState.currentMonthKey].items.find(it => String(it.id) === String(id));
+        }
+        if (!foundItem) {
+          for (const mKey of Object.keys(localeRadar)) {
+            const it = localeRadar[mKey] && localeRadar[mKey].items && localeRadar[mKey].items.find(x => String(x.id) === String(id));
+            if (it) {
+              foundItem = it;
+              foundMKey = mKey;
+              break;
+            }
+          }
+        }
+        if (!foundItem) return;
+
+        const dateInfo = parseRadarItemDate(foundItem, foundMKey);
+        const titlePrefix = curr === 'USD' ? '[Gunpla Release] ' : (curr === 'JPY' ? '【ガンプラ出荷】' : '[건프라 출하] ');
+        const eventTitle = titlePrefix + (foundItem.name || '');
+
+        let priceText = '';
+        if (curr === 'KRW' && foundItem.krw) priceText = '정가: ₩' + foundItem.krw.toLocaleString();
+        else if (curr === 'JPY' && foundItem.jpy) priceText = '定価: ¥' + foundItem.jpy.toLocaleString();
+        else if (curr === 'USD' && foundItem.usd) priceText = 'MSRP: $' + foundItem.usd.toFixed(2);
+
+        const eventDetails = eventTitle + '\n' +
+          (priceText ? '• ' + priceText + '\n' : '') +
+          '• 구분: ' + (foundItem.catName || '') + '\n' +
+          '• 상태: ' + (foundItem.time || '') + '\n' +
+          (foundItem.note ? '• 비고: ' + foundItem.note + '\n' : '') +
+          (foundItem.officialSourceUrl ? '• 공식 출처: ' + foundItem.officialSourceUrl + '\n' : '') +
+          '• GunplaSet: https://gunplaset.arglobe.workers.dev';
+
+        const locationStr = curr === 'USD' ? 'The Gundam Base / P-Bandai' : (curr === 'JPY' ? 'ガンダムベース / プレミアムバンダイ' : '건담베이스 / 반다이남코코리아몰');
+
+        const gCalUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+          '&text=' + encodeURIComponent(eventTitle) +
+          '&dates=' + dateInfo.start + '/' + dateInfo.end +
+          '&details=' + encodeURIComponent(eventDetails) +
+          '&location=' + encodeURIComponent(locationStr);
+
+        window.open(gCalUrl, '_blank');
+        showToast(curr === 'USD' ? '📅 Google Calendar event opened in new tab!' : (curr === 'JPY' ? '📅 Googleカレンダーの登録画面を開きました' : '📅 구글 캘린더 일정 등록 창이 열렸습니다.'));
+      };
+
+      window.exportWishlistIcs = function() {
+        const curr = state.currency || 'KRW';
+        const localeRadar = window.GUNPLA_RELEASE_RADAR_DATA[curr] || window.GUNPLA_RELEASE_RADAR_DATA.KRW;
+        
+        const wishListItems = [];
+        const seenIds = new Set();
+
+        Object.entries(localeRadar).forEach(([mKey, monthData]) => {
+          if (monthData && Array.isArray(monthData.items)) {
+            monthData.items.forEach(it => {
+              const u = getItem(it.id);
+              if (u && u.wishlist && !seenIds.has(it.id)) {
+                seenIds.add(it.id);
+                wishListItems.push({ ...it, _mKey: mKey });
+              }
+            });
+          }
+        });
+
+        if (wishListItems.length === 0) {
+          showToast(curr === 'USD' ? '💖 No upcoming wishlist releases to export.' : (curr === 'JPY' ? '💖 出荷予定の欲しいもの(登録済み)がありません。' : '💖 위시리스트(찜)에 담긴 출하 예정 건프라가 없습니다.'));
+          return;
+        }
+
+        const nowStamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        let icsContent = 'BEGIN:VCALENDAR\r\n' +
+          'VERSION:2.0\r\n' +
+          'PRODID:-//GunplaSet//Master Builder Release Radar//KO\r\n' +
+          'CALSCALE:GREGORIAN\r\n' +
+          'METHOD:PUBLISH\r\n' +
+          'X-WR-CALNAME:GunplaSet 내 위시리스트 출하 일정\r\n' +
+          'X-WR-TIMEZONE:Asia/Seoul\r\n';
+
+        wishListItems.forEach(it => {
+          const dateInfo = parseRadarItemDate(it, it._mKey);
+          const title = (curr === 'USD' ? '[Gunpla Release] ' : (curr === 'JPY' ? '【ガンプラ出荷】' : '[건프라 출하] ')) + (it.name || '');
+          const desc = title + '\\n구분: ' + (it.catName || '') + '\\n상태: ' + (it.time || '') + '\\n출처: ' + (it.officialSourceUrl || '') + '\\nGunplaSet: https://gunplaset.arglobe.workers.dev';
+
+          icsContent += 'BEGIN:VEVENT\r\n' +
+            'UID:gunplaset-' + it.id + '-' + dateInfo.start + '@arglobe.workers.dev\r\n' +
+            'DTSTAMP:' + nowStamp + '\r\n' +
+            'DTSTART;VALUE=DATE:' + dateInfo.start + '\r\n' +
+            'DTEND;VALUE=DATE:' + dateInfo.end + '\r\n' +
+            'SUMMARY:' + title.replace(/[,;]/g, ' ') + '\r\n' +
+            'DESCRIPTION:' + desc.replace(/[\r\n]/g, '\\n') + '\r\n' +
+            'STATUS:CONFIRMED\r\n' +
+            'BEGIN:VALARM\r\n' +
+            'TRIGGER:-PT15H\r\n' +
+            'ACTION:DISPLAY\r\n' +
+            'DESCRIPTION:' + title.replace(/[,;]/g, ' ') + '\r\n' +
+            'END:VALARM\r\n' +
+            'END:VEVENT\r\n';
+        });
+
+        icsContent += 'END:VCALENDAR\r\n';
+
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute('href', url);
+        dlAnchor.setAttribute('download', 'gunplaset_wishlist_schedule_' + new Date().toISOString().slice(0,10) + '.ics');
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        document.body.removeChild(dlAnchor);
+        URL.revokeObjectURL(url);
+
+        showToast(curr === 'USD' ? '📅 Exported ' + wishListItems.length + ' wishlist releases to .ics!' : (curr === 'JPY' ? '📅 ' + wishListItems.length + '件の出荷日程を.ics出力しました！' : '📅 ' + wishListItems.length + '건의 위시 출하 일정을 .ics 파일로 내보냈습니다!'));
+      };
 
       function renderReleaseRadar() {
         const curr = state.currency || 'KRW';
@@ -3462,9 +3384,6 @@
           dropdown.value = radarState.currentMonthKey;
         }
 
-        // 1. Update Month Label
-        const monthLabel = document.getElementById('radar-active-month-label');
-        if (monthLabel) monthLabel.textContent = monthData.label;
         const wishItems = allItems.filter(item => {
           const u = getItem(item.id);
           return !!(u && u.wishlist);
@@ -3557,6 +3476,9 @@
               '<button onclick="window.setRadarCategory(\'gbase\')" class="px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap ' + chipGbaseClass + '">' + (t.radarFilterGBase || 'Gundam Base') + '</button>' +
               '<button onclick="window.toggleRadarOnlyWishlist()" class="px-2.5 py-1 rounded-lg transition-all whitespace-nowrap ' + btnWishClass + '">' +
                 (radarState.onlyWishlist ? (t.radarWishFilterOn || 'View All') : (typeof t.radarWishFilterOff === 'function' ? t.radarWishFilterOff(wishItems.length) : 'Wishlist Only')) +
+              '</button>' +
+              '<button onclick="window.exportWishlistIcs()" class="px-2.5 py-1 rounded-lg border border-pink-500/40 bg-pink-950/40 hover:bg-pink-900/60 text-pink-300 transition-all whitespace-nowrap flex items-center gap-1 shadow-sm" title="' + (curr === 'USD' ? 'Export Wishlist releases to Calendar (.ics)' : (curr === 'JPY' ? '欲しいもの出荷日程を一括カレンダー出力 (.ics)' : '내 위시 출하 일정을 스마트폰 캘린더(.ics)로 일괄 내보내기')) + '">' +
+                '<span>📅 ' + (curr === 'USD' ? '.ics Export' : (curr === 'JPY' ? '.ics 出力' : '.ics 내보내기')) + '</span>' +
               '</button>' +
             '</div>' +
           '</div>';
@@ -3653,6 +3575,7 @@
                 '</div>' +
               '</div>' +
               '<div class="flex items-center gap-1.5 shrink-0">' +
+                '<button onclick="window.addToGoogleCalendar(\'' + item.id + '\', event)" class="p-1.5 rounded-lg bg-slate-900 hover:bg-cyan-950/80 text-slate-400 hover:text-cyan-300 text-xs border border-slate-800 hover:border-cyan-500/40 transition-colors" title="' + (curr === 'USD' ? 'Add to Google Calendar' : (curr === 'JPY' ? 'Googleカレンダーに登録' : '구글 캘린더에 일정 등록')) + '">📅</button>' +
                 '<button onclick="window.toggleRadarWishlist(\'' + item.id + '\', event)" class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all ' + wishBtnClass + '">' +
                   (isWish ? '<span>' + (t.radarWishDone || '💖 찜 완료') + '</span>' : '<span>' + (t.radarWishDo || '🤍 찜하기') + '</span>') +
                 '</button>' +
@@ -3675,7 +3598,6 @@
         renderActiveFilterChips();
         renderKits();
         initReleaseRadar();
-        restoreAutoSyncOnLoad();
         initGoogleAuth();
 
         const searchInput = document.getElementById('search-input');

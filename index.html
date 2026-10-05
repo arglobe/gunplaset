@@ -386,7 +386,73 @@ body {
         </div>
       </section>
 
-      <!-- 1. DEDICATED RELEASE YEAR DECADE & TIMELINE BAR (Multi-Select Enabled) -->
+      <!-- 1. PRIMARY SEARCH & EXPLORATION BAR (Top-level, full-width, high-visibility) -->
+      <div class="glass-card p-3 sm:p-4 rounded-2xl mb-4 border border-cyan-500/40 shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
+        <!-- Top Row: Large Prominent Full-Width Search Input -->
+        <div class="relative w-full mb-3">
+          <input type="text" id="search-input" class="w-full bg-slate-900/95 border-2 border-slate-700/80 hover:border-cyan-500/60 focus:border-cyan-400 rounded-xl pl-11 pr-10 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 transition-all shadow-inner" placeholder="건담 이름, 등급, 시리즈, 초성/줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...">
+          <svg class="w-5 h-5 text-cyan-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <button id="btn-search-clear" onclick="document.getElementById('search-input').value=''; state.searchQuery=''; applyFilters(); this.classList.add('hidden');" class="absolute right-3.5 top-3 text-slate-400 hover:text-white hidden text-xs bg-slate-800 hover:bg-slate-700 w-5 h-5 rounded-full flex items-center justify-center font-bold transition-colors" title="검색어 지우기">✕</button>
+        </div>
+
+        <!-- Bottom Row: Filter Selects & Mode Switchers -->
+        <div class="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-slate-800/80">
+          
+          <!-- Image View Mode Switcher (Product / Boxart) -->
+          <div class="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-800 text-xs shrink-0">
+            <button id="img-mode-product" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center gap-1.5" onclick="window.setImageMode('product')" title="완성품 전신 스튜디오 사진으로 보기">
+              🤖 완성품 뷰
+            </button>
+            <button id="img-mode-boxart" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5" onclick="window.setImageMode('boxart')" title="박스 패키지 일러스트로 보기">
+              📦 박스아트 뷰
+            </button>
+          </div>
+
+          <!-- Filter Selects -->
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="filter-year-select" class="bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+              <option value="all">모든 연도 (All Years)</option>
+            </select>
+
+            <select id="filter-grade" class="bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+              <option value="all">모든 등급 (All Grades)</option>
+              <option value="HG">HG / HGUC (High Grade)</option>
+              <option value="MG">MG / MGEX / MGSD (Master Grade)</option>
+              <option value="RG">RG (Real Grade)</option>
+              <option value="PG">PG (Perfect Grade)</option>
+              <option value="EG">ENTRY GRADE (EG)</option>
+              <option value="FM">Full Mechanics / RE/100</option>
+              <option value="SD">SD / SDCS / BB전사</option>
+              <option value="Mega">Mega Size (1/48)</option>
+              <option value="30MM">30 MINUTES (30MM/30MS)</option>
+              <option value="Pokemon">포켓몬 프라모델</option>
+              <option value="Other">기타 반다이 프라</option>
+            </select>
+
+            <select id="filter-series-select" class="bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-cyan-400 max-w-[140px] truncate">
+              <option value="all">모든 시리즈 (All Series)</option>
+            </select>
+
+            <select id="filter-run" class="bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+              <option value="all">모든 발매구분</option>
+              <option value="Standard">일반 발매판 (Standard)</option>
+              <option value="P-Bandai">한정판 / 클럽G (P-Bandai)</option>
+            </select>
+
+            <select id="sort-by" class="bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
+              <option value="release_desc">최신 출시순 (Newest)</option>
+              <option value="release_asc">오래된 출시순 (Oldest)</option>
+              <option value="name_asc">이름 가나다순 (A-Z)</option>
+              <option value="msrp_desc">가격 높은순 (Price: High)</option>
+              <option value="msrp_asc">가격 낮은순 (Price: Low)</option>
+              <option value="owned_desc">내 보유 많은순</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. DEDICATED RELEASE YEAR DECADE & TIMELINE BAR (Multi-Select Enabled) -->
       <div class="mb-4 glass-card p-3 rounded-2xl border border-slate-800/90">
         <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-1.5">
@@ -403,7 +469,7 @@ body {
         <div class="flex flex-wrap items-center gap-1.5 pt-2" id="year-slider"></div>
       </div>
 
-      <!-- 2. QUICK FILTER MODE BAR (Grade & Series Quick Filters - Multi-Select Enabled) -->
+      <!-- 3. QUICK FILTER MODE BAR (Grade & Series Quick Filters - Multi-Select Enabled) -->
       <div class="mb-5 glass-card p-3.5 rounded-2xl border border-slate-800/90">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-800/80 mb-2.5">
           <div class="flex items-center gap-2">
@@ -433,69 +499,6 @@ body {
             ↺ 전체 필터 초기화
           </button>
         </div>
-      </div>
-
-      <!-- 3. SEARCH & DETAILED SELECT BAR -->
-      <div class="glass-card p-4 rounded-2xl mb-6 flex flex-col md:flex-row items-center justify-between gap-3">
-        
-        <!-- Search Input -->
-        <div class="relative w-full md:w-80">
-          <input type="text" id="search-input" class="w-full bg-slate-900/90 border border-slate-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-colors" placeholder="건담 이름, 초성, 줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...">
-          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        </div>
-
-        <!-- Filter Selects (Year, Grade, Series, Run, Sort, Image Mode) -->
-        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
-          
-          <!-- Image View Mode Switcher (Product / Boxart) -->
-          <div class="flex items-center bg-slate-900/90 p-0.5 rounded-xl border border-slate-800 text-xs">
-            <button id="img-mode-product" class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center gap-1" onclick="window.setImageMode('product')" title="완성품 전신 스튜디오 사진으로 보기">
-              🤖 완성품 뷰
-            </button>
-            <button id="img-mode-boxart" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1" onclick="window.setImageMode('boxart')" title="박스 패키지 일러스트로 보기">
-              📦 박스아트 뷰
-            </button>
-          </div>
-
-          <select id="filter-year-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">모든 연도 (All Years)</option>
-          </select>
-
-          <select id="filter-grade" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">모든 등급 (All Grades)</option>
-            <option value="HG">HG / HGUC (High Grade)</option>
-            <option value="MG">MG / MGEX / MGSD (Master Grade)</option>
-            <option value="RG">RG (Real Grade)</option>
-            <option value="PG">PG (Perfect Grade)</option>
-            <option value="EG">ENTRY GRADE (EG)</option>
-            <option value="FM">Full Mechanics / RE/100</option>
-            <option value="SD">SD / SDCS / BB전사</option>
-            <option value="Mega">Mega Size (1/48)</option>
-            <option value="30MM">30 MINUTES (30MM/30MS)</option>
-            <option value="Pokemon">포켓몬 프라모델</option>
-            <option value="Other">기타 반다이 프라</option>
-          </select>
-
-          <select id="filter-series-select" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400 max-w-[150px] truncate">
-            <option value="all">모든 시리즈 (All Series)</option>
-          </select>
-
-          <select id="filter-run" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="all">모든 발매구분</option>
-            <option value="Standard">일반 발매판 (Standard)</option>
-            <option value="P-Bandai">한정판 / 클럽G (P-Bandai)</option>
-          </select>
-
-          <select id="sort-by" class="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400">
-            <option value="release_desc">최신 출시순 (Newest)</option>
-            <option value="release_asc">오래된 출시순 (Oldest)</option>
-            <option value="name_asc">이름 가나다순 (A-Z)</option>
-            <option value="msrp_desc">가격 높은순 (Price: High)</option>
-            <option value="msrp_asc">가격 낮은순 (Price: Low)</option>
-            <option value="owned_desc">내 보유 많은순</option>
-          </select>
-        </div>
-
       </div>
 
       <!-- KITS GRID -->
@@ -47616,7 +47619,7 @@ window.GUNPLA_MASTER_DATA = [
           clearFilters: '↺ 전체 필터 초기화',
           allSeriesPill: (n) => '전체 시리즈 (' + n.toLocaleString() + ')',
           allGradesPill: (n) => '전체 등급 (' + n.toLocaleString() + ')',
-          searchPlaceholder: '건담 이름, 등급, 시리즈 검색 (예: z, seed, mg)...',
+          searchPlaceholder: '건담 이름, 등급, 시리즈, 초성/줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...',
           imgModeProduct: '🤖 완성품 뷰',
           imgModeBoxart: '📦 박스아트 뷰',
           optAllYears: '모든 연도 (All Years)',
@@ -47715,7 +47718,7 @@ window.GUNPLA_MASTER_DATA = [
           clearFilters: '↺ フィルター初期化',
           allSeriesPill: (n) => '全シリーズ (' + n.toLocaleString() + ')',
           allGradesPill: (n) => '全グレード (' + n.toLocaleString() + ')',
-          searchPlaceholder: '機体名、グレード、シリーズを検索...',
+          searchPlaceholder: 'キット名、グレード、シリーズ、略称検索 (例: フリーダム, エアリアル, RG)...',
           imgModeProduct: '🤖 完成品表示',
           imgModeBoxart: '📦 パッケージ表示',
           optAllYears: '全ての年代 (All Years)',
@@ -47814,7 +47817,7 @@ window.GUNPLA_MASTER_DATA = [
           clearFilters: '↺ Clear Filters',
           allSeriesPill: (n) => 'All Series (' + n.toLocaleString() + ')',
           allGradesPill: (n) => 'All Grades (' + n.toLocaleString() + ')',
-          searchPlaceholder: 'Search Gunpla by name, grade, series...',
+          searchPlaceholder: 'Search by kit name, grade, series, slang (e.g. Aerial, Strike, MG)...',
           imgModeProduct: '🤖 Product View',
           imgModeBoxart: '📦 Box Art View',
           optAllYears: 'All Years',
@@ -50822,6 +50825,8 @@ window.GUNPLA_MASTER_DATA = [
         if (searchInput) {
           let debounceTimer;
           searchInput.addEventListener('input', (e) => {
+            const clearBtn = document.getElementById('btn-search-clear');
+            if (clearBtn) clearBtn.classList.toggle('hidden', !e.target.value);
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
               state.searchQuery = e.target.value;

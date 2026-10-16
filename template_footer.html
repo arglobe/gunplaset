@@ -1208,8 +1208,8 @@
         const isWeb = typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http');
         const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
         const defaultBoxartCdn = 'https://gunpla.fyi/images/boxarts/' + kit.id + '.jpeg';
-        const boxartCdn = (dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn;
-        const productCdn = (dbEntry && dbEntry.product_cdn_url) || boxartCdn;
+        const boxartCdn = (dbEntry && (dbEntry.boxart_url || dbEntry.boxart_cdn_url)) || defaultBoxartCdn;
+        const productCdn = (dbEntry && (dbEntry.product_url || dbEntry.product_cdn_url)) || boxartCdn;
 
         // Proactively set high-speed global CDN as universal default for 0ms loading!
         kit.boxart_url = boxartCdn;
@@ -1220,14 +1220,14 @@
         if (dbEntry && dbEntry.gallery && Array.isArray(dbEntry.gallery) && dbEntry.gallery.length > 0) {
           kit.gallery = dbEntry.gallery.map(g => {
             if (typeof g === 'object' && g !== null && g.url) {
-              const u = isWeb && g.cdn_url ? g.cdn_url : (g.url || g.cdn_url || kit.product_url);
+              const u = g.url || g.cdn_url || kit.product_url;
               return { url: u, cdn_url: g.cdn_url || u, is_boxart: !!g.is_boxart };
             }
             if (typeof g === 'string') {
               const m = g.match(/url=([^;\s]+)/);
               const c = g.match(/cdn_url=([^;\s]+)/);
               const rawUrl = m ? m[1] : g;
-              const rawCdn = c ? c[1] : (rawUrl.startsWith('http') ? rawUrl : defaultBoxartCdn);
+              const rawCdn = c ? c[1] : ((rawUrl.startsWith('http') || rawUrl.startsWith('images/')) ? rawUrl : defaultBoxartCdn);
               return { url: isWeb ? rawCdn : rawUrl, cdn_url: rawCdn, is_boxart: g.includes('is_boxart=True') };
             }
             return { url: kit.product_url, cdn_url: kit.product_url, is_boxart: false };
@@ -1849,8 +1849,8 @@
           const isWeb = window.location.protocol.startsWith('http');
           const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
 
-          const boxartUrl = isWeb ? ((dbEntry && dbEntry.boxart_cdn_url) || defaultBoxartCdn) : (kit.boxart_url || defaultBoxartCdn);
-          const productUrl = isWeb ? ((dbEntry && dbEntry.product_cdn_url) || boxartUrl) : (kit.product_url || boxartUrl);
+          const boxartUrl = isWeb ? ((dbEntry && (dbEntry.boxart_url || dbEntry.boxart_cdn_url)) || defaultBoxartCdn) : (kit.boxart_url || defaultBoxartCdn);
+          const productUrl = isWeb ? ((dbEntry && (dbEntry.product_url || dbEntry.product_cdn_url)) || boxartUrl) : (kit.product_url || boxartUrl);
 
           const imgUrl = (state.cardImageMode === 'boxart' ? boxartUrl : productUrl) || boxartUrl;
           const cdnFallback = (imgUrl !== boxartUrl && boxartUrl) ? boxartUrl : ((defaultBoxartCdn && defaultBoxartCdn !== imgUrl) ? defaultBoxartCdn : '');
@@ -4143,10 +4143,7 @@
             const defaultBoxartCdn = (itemIdNum < 5000) ? ('https://gunpla.fyi/images/boxarts/' + item.id + '.jpeg') : (item.img || '');
             const isWeb = window.location.protocol.startsWith('http');
             const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[item.id];
-            let radarImgUrl = item.img || defaultBoxartCdn;
-            if (isWeb && dbEntry && dbEntry.boxart_cdn_url) {
-              radarImgUrl = dbEntry.boxart_cdn_url;
-            }
+            let radarImgUrl = item.img || (dbEntry && (dbEntry.product_url || dbEntry.product_cdn_url)) || defaultBoxartCdn;
 
             html += '<div class="group p-2.5 rounded-xl border transition-all flex items-center justify-between gap-3 ' + cardBg + '">' +
               '<div class="flex items-center gap-3 min-w-0">' +

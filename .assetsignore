@@ -1,4 +1,3 @@
-# Exclude non-public build scripts, source templates, and raw data tables from Cloudflare Static Assets upload
 src/
 scripts/
 *.ps1
@@ -15,8 +14,6 @@ kit_image_db.js
 kit_price_db.js
 master_kits.json
 lqa_glossary.json
-
-# Exclude unreferenced archive images from static asset bundle
 images/4200_2.jpg
 images/4200_3.jpg
 images/4200_4.jpg
@@ -40,3 +37,33 @@ images/5249_1.jpg
 images/5250_1.jpg
 images/5251_1.jpg
 images/5254_1.jpg
+images/4919_3.jpg
+images/4919_4.jpg
+images/4919_5.jpg
+images/4919_6.jpg
+images/4919_7.jpg
+images/4919_8.jpg
+images/4919_9.jpg
+images/4921_2.jpg
+images/4921_3.jpg
+images/4921_4.jpg
+images/4921_5.jpg
+images/4921_6.jpg
+images/4921_7.jpg
+images/4921_8.jpg
+images/4924_2.jpg
+images/4924_3.jpg
+images/4924_4.jpg
+images/4924_5.jpg
+images/4556_1.jpg
+images/4556_2.jpg
+images/4556_3.jpg
+images/4556_4.jpg
+images/4556_5.jpg
+images/4556_6.jpg
+images/4556_7.jpg
+images/4556_8.jpg
+images/4556_9.jpg
+images/4556_10.jpg
+images/4556_11.jpg
+images/4556_12.jpg

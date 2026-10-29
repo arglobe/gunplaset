@@ -10418,16 +10418,11 @@ window.KIT_IMAGE_DB = {
                             ]
             },
     "1948":  {
-                 "product_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
-                 "product_cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
+                 "product_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_1.jpg",
+                 "product_cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_1.jpg",
                  "boxart_url":  "https://gunpla.fyi/images/boxarts/1948.jpeg",
                  "boxart_cdn_url":  "https://gunpla.fyi/images/boxarts/1948.jpeg",
                  "gallery":  [
-                                 {
-                                     "url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
-                                     "cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
-                                     "is_boxart":  false
-                                 },
                                  {
                                      "url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_1.jpg",
                                      "cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_1.jpg",
@@ -10436,6 +10431,11 @@ window.KIT_IMAGE_DB = {
                                  {
                                      "url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_2.jpg",
                                      "cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_2.jpg",
+                                     "is_boxart":  false
+                                 },
+                                 {
+                                     "url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
+                                     "cdn_url":  "https://bandai-a.akamaihd.net/bc/img/model/xl/1000220938_3.jpg",
                                      "is_boxart":  false
                                  },
                                  {

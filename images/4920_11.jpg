@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 NOT FOUND｜バンダイホビーサイト</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      position: relative;
+      /* min-height: 100vh; */
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #003464;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle
+    }
+
+    header {
+      background-color: #00213F;
+      border-bottom: 1px solid #ccc
+    }
+
+    header .upper {
+      margin: 0 auto;
+      width: 98%;
+      padding: 0 1%;
+      max-width: 825pt
+    }
+
+    header .upper:after {
+      content: "";
+      display: block;
+      clear: both
+    }
+
+    header .upper .logo {
+      padding: 20px 0
+    }
+
+    header .upper .logo img {
+      width: 300px;
+      height: auto
+    }
+
+    header .upper .banner {
+      *zoom: 1;
+      float: right;
+      padding: 8px 0 9px
+    }
+
+    header .upper .banner:after {
+      content: "";
+      display: block;
+      clear: both
+    }
+
+    header .upper .banner div {
+      float: left;
+      margin-left: 8px
+    }
+
+    header .upper .banner .shop {
+      padding-top: 4px
+    }
+
+    #breadcrumb {
+      padding: 10px 1%;
+      width: 98%;
+      font-size: 10px;
+      color: #666;
+      background-color: #fff
+    }
+
+    #breadcrumb div {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 825pt
+    }
+
+    #breadcrumb div a {
+      text-decoration: none;
+      color: #005fb2
+    }
+
+    footer {
+      margin-top: 0;
+      bottom: 0;
+      width: 100%
+    }
+
+    footer .upper {
+      border-bottom: 1px solid #333
+    }
+
+    footer .rights {
+      font-size: 84%;
+      background-color: #00213F;
+      color: #fff;
+    }
+
+    footer .rights .row {
+      margin: 0 auto;
+      padding: 25px 1%;
+      width: 98%;
+      max-width: 990px
+    }
+
+    footer .rights .row:after {
+      content: "";
+      display: block;
+      clear: both
+    }
+
+    footer .rights .row .col div {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px
+    }
+
+    footer .rights .row .col p {
+      display: inline-block;
+      font-size: 10px;
+      vertical-align: middle
+    }
+
+    #container {
+      max-width: 750pt;
+      padding: 50px 40px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      margin: 0 auto;
+      width: 100%
+    }
+
+    h2 {
+      text-align: center;
+      margin: 0 auto 40px;
+      width: 80%;
+    }
+
+    h3 {
+      font-size: 30px
+    }
+
+    .mainTxt {
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .ta-r {
+      text-align: right
+    }
+
+    .ta-l {
+      text-align: left
+    }
+
+    table td:first-child {
+      width: 300px
+    }
+
+    .flex {
+      display: -webkit-inline-box;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      margin: 0 auto
+    }
+
+    .note {
+      text-align: center;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 25px
+    }
+
+    .sp-ttl {
+      display: none
+    }
+
+    .p-btn {
+      position: relative;
+      display: block;
+      background-color: #fff;
+      color: #00213f;
+      border: 1px solid #003464;
+      border-radius: 100vh;
+      box-shadow: 5px 5px 0px 0px rgba(0, 17, 32, 1);
+      padding: 0.5em 3.5em 0.5em 3em;
+      transition: 0.3s !important;
+      max-width: 370px;
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 500;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: -0.05em;
+      text-decoration: none;
+      font-weight: normal;
+      margin-bottom: 20px;
+      transition: 0.3s !important;
+    }
+
+    .p-btn:before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0.5em;
+      transform: translateY(-50%);
+      width: 1.2em;
+      height: 1.2em;
+      background-image: url(/sorry/404/ico_arrow_l.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    .p-btn:hover {
+      transform: translate(5px, 5px);
+      box-shadow: none;
+      opacity: 1 !important;
+
+    }
+
+    .spOnly {
+      display: none;
+    }
+
+    @media screen and (max-width:980px) {
+      header .upper .logo {
+        width: 40%;
+        min-width: 180px;
+        padding: 10px 0
+      }
+
+      h2 {
+        font-size: 60px
+      }
+
+      h3 {
+        font-size: 23px
+      }
+
+      .mainTxt {
+        font-size: 14px;
+        text-align: left;
+        margin-bottom: 30px;
+        color: #fff;
+      }
+
+      table td:first-child {
+        width: 150px
+      }
+
+      .note {
+        font-size: 1pc
+      }
+
+      #breadcrumb {
+        padding: 5px 1%
+      }
+
+      footer .rights .row {
+        padding: 10px 1%
+      }
+
+      footer .rights .row .col div {
+        margin-right: 2%;
+        display: inline-block;
+        width: 40px
+      }
+
+      footer .rights .row .col:first-child p {
+        padding-right: 0;
+        display: inline-block;
+        width: calc(98% - 60px)
+      }
+    }
+
+    @media screen and (max-width:760px) {
+      h2 {
+        font-size: 30px;
+        margin: 0 auto 10px
+      }
+
+      .p-btn:hover {
+        transform: none;
+        box-shadow: 5px 5px 0px 0px rgba(0, 17, 32, 1);
+      }
+
+      .mainTxt {
+        text-align: center;
+      }
+
+      .pc-ttl {
+        display: none
+      }
+
+      .sp-ttl {
+        display: block;
+        text-align: center
+      }
+
+      table td:first-child {
+        width: 100%
+      }
+
+      .flex {
+        display: block
+      }
+
+      .wrapper {
+        font-size: 18px;
+        padding: 10px
+      }
+
+      .ta-l,
+      .ta-r {
+        text-align: center
+      }
+
+      #container {
+        padding: 30px
+      }
+
+      p {
+        font-size: 14px
+      }
+
+      .spOnly {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="upper">
+      <div class="logo">
+        <a>
+          <img src="/sorry/404/logo_title.png" alt="BANDAI HOBBY SITE バンダイ ホビーサイト" />
+        </a>
+      </div>
+    </div>
+  </header>
+  <div id="container">
+    <h2><img src="/sorry/404/img_404.png" alt="404 NOT FOUND The page you're looking for can't be found."></h2>
+    <p class="mainTxt">
+      いつもバンダイホビーサイトをご利用いただき、<br class="spOnly">ありがとうございます。 <br>
+      誠に申し訳ございませんが、<br class="spOnly">アクセスいただいたURLが見つかりません。 <br>
+      TOPページから再度アクセスしてください。
+    </p>
+    <a href="https://bandai-hobby.net/" class="p-btn -right">TOPにもどる</a>
+  </div>
+  <footer>
+    <div class="rights">
+      <div class="upper">
+        <div class="row">
+          <div class="col">
+            <div>
+              <a href="//www.bandaispirits.co.jp/" target="_blank">
+                <img src="/sorry/404/ft_logo.png" alt="BANDAI SPIRITS">
+              </a>
+            </div>
+            <p>
+              © BANDAI SPIRITS CO.,LTD. 2020 ALL Rights Reserved.
+              このホームページに掲載されている全ての画像、文章、データなどの無断転用、転載をお断りします。<br>
+              Unauthorized use or reproduction of materials contained in this page is strictly
+              prohibited.<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+        const urlMapping = {
+            "/news/detail/3741/": "/news/01_6640/",
+            "/news/detail/3740/": "/news/01_6634/",
+            "/news/detail/3739/": "/news/01_6633/",
+            "/news/detail/3738/": "/news/01_6632/",
+            "/news/detail/3737/": "/news/01_6631/",
+            "/news/detail/3736/": "/news/01_6630/",
+            "/news/detail/3735/": "/news/01_6629/",
+            "/news/detail/3729/": "/news/01_6623/",
+            "/news/detail/3723/": "/news/01_6620/",
+            "/news/detail/3718/": "/news/01_6612/",
+            "/news/detail/3715/": "/news/01_6610/",
+            "/notices/detail/102/" : "/notice/01_6676/",
+            "/notices/detail/108/" : "/notice/01_6673/",
+            "/notices/detail/107/" : "/notice/01_6672/",
+            "/notices/detail/106/" : "/notice/01_6671/",
+            "/notices/detail/105/" : "/notice/01_6670/",
+            "/notices/detail/104/" : "/notice/01_6669/",
+            "/notices/detail/103/" : "/notice/01_6668/",
+            "/notices/detail/91/" : "/notice/01_6641/",
+            "/notices/detail/86/" : "/notice/01_6642/",
+            "/schedule/202201/" : "/schedule/index.php?saledate=202201",
+            "/schedule/202202/" : "/schedule/index.php?saledate=202202",
+            "/schedule/202203/" : "/schedule/index.php?saledate=202203",
+            "/schedule/202204/" : "/schedule/index.php?saledate=202204",
+            "/schedule/202205/" : "/schedule/index.php?saledate=202205",
+            "/schedule/202206/" : "/schedule/index.php?saledate=202206",
+            "/schedule/202207/" : "/schedule/index.php?saledate=202207",
+            "/schedule/202208/" : "/schedule/index.php?saledate=202208",
+            "/schedule/202209/" : "/schedule/index.php?saledate=202209",
+            "/schedule/202210/" : "/schedule/index.php?saledate=202210",
+            "/schedule/202211/" : "/schedule/index.php?saledate=202211",
+            "/schedule/202212/" : "/schedule/index.php?saledate=202212",
+            "/schedule/202301/" : "/schedule/index.php?saledate=202301",
+            "/schedule/202302/" : "/schedule/index.php?saledate=202302",
+            "/schedule/202303/" : "/schedule/index.php?saledate=202303",
+            "/schedule/202304/" : "/schedule/index.php?saledate=202304",
+            "/schedule/202305/" : "/schedule/index.php?saledate=202305",
+            "/schedule/202306/" : "/schedule/index.php?saledate=202306",
+            "/schedule/202307/" : "/schedule/index.php?saledate=202307",
+            "/schedule/202308/" : "/schedule/index.php?saledate=202308",
+            "/schedule/202309/" : "/schedule/index.php?saledate=202309",
+            "/schedule/202310/" : "/schedule/index.php?saledate=202310",
+            "/schedule/202311/" : "/schedule/index.php?saledate=202311",
+            "/schedule/202312/" : "/schedule/index.php?saledate=202312",
+            "/schedule/202401/" : "/schedule/index.php?saledate=202401",
+            "/schedule/202402/" : "/schedule/index.php?saledate=202402",
+            "/schedule/202403/" : "/schedule/index.php?saledate=202403",
+            "/schedule/202404/" : "/schedule/index.php?saledate=202404",
+            "/schedule/202405/" : "/schedule/index.php?saledate=202405",
+            "/schedule/202406/" : "/schedule/index.php?saledate=202406",
+            "/schedule/202407/" : "/schedule/index.php?saledate=202407",
+            "/schedule/202408/" : "/schedule/index.php?saledate=202408",
+            "/schedule/202409/" : "/schedule/index.php?saledate=202409",
+            "/schedule/202410/" : "/schedule/index.php?saledate=202410",
+            "/schedule/202411/" : "/schedule/index.php?saledate=202411",
+            "/schedule/202412/" : "/schedule/index.php?saledate=202412",
+            "/schedule/202501/" : "/schedule/index.php?saledate=202501",
+            "/schedule/202502/" : "/schedule/index.php?saledate=202502",
+            "/schedule/202503/" : "/schedule/index.php?saledate=202503",
+            "/schedule/202504/" : "/schedule/index.php?saledate=202504",
+            "/schedule/202505/" : "/schedule/index.php?saledate=202505",
+            "/schedule/202506/" : "/schedule/index.php?saledate=202506",
+            "/schedule/202507/" : "/schedule/index.php?saledate=202507",
+            "/schedule/202508/" : "/schedule/index.php?saledate=202508",
+            "/schedule/202509/" : "/schedule/index.php?saledate=202509",
+            "/schedule/202510/" : "/schedule/index.php?saledate=202510",
+            "/schedule/202511/" : "/schedule/index.php?saledate=202511",
+            "/schedule/202512/" : "/schedule/index.php?saledate=202512",
+        };
+
+        const currentPath = window.location.pathname;
+        const baseUrl = window.location.origin;
+
+        if (urlMapping[currentPath]) {
+            window.location.href = urlMapping[currentPath];
+        }
+
+        if (/^\/news\/detail\/(\d+)\/?$/.test(currentPath)) {
+            const id = parseInt(currentPath.match(/^\/news\/detail\/(\d+)\/?$/)[1], 10);
+            if (id >= 1 && id <= 3714) {
+                window.location.href = baseUrl + "/news/";
+            }
+        }
+        if (/^\/notices\/detail\/(\d+)\/?$/.test(currentPath)) {
+            const id = parseInt(currentPath.match(/^\/notices\/detail\/(\d+)\/?$/)[1], 10);
+            if ((id >= 1 && id <= 85) || (id >= 87 && id <= 90) || (id >= 92 && id <= 101)) {
+                window.location.href = baseUrl + "/notice/";
+            }
+        }
+        if (/^\/schedule\/(\d+)\/?$/.test(currentPath)) {
+            const id = parseInt(currentPath.match(/^\/schedule\/(\d+)\/?$/)[1], 10);
+            if (id >= 198007 && id <= 202112) {
+                window.location.href = baseUrl + "/schedule/";
+            }
+        }
+        if (currentPath === "/site/attention.html") {
+            window.location.href = baseUrl + "/notice/";
+        }
+
+  </script>
+</body>
+
+</html>

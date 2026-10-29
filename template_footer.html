@@ -954,7 +954,7 @@
       const IMAGE_OVERRIDES = {
         '4918': 'https://gunpla.fyi/images/boxarts/248.jpeg',
         '4919': 'https://gunpla.fyi/images/boxarts/2591.jpeg', // MG Sandrock EW Armadillo
-        '4920': 'https://gunpla.fyi/images/boxarts/2506.jpeg', // MG F90 Cluster Gundam Mission Pack
+        '4920': 'images/4920_0.jpg', // MG F90 Cluster Gundam Mission Pack X-Type
         '4921': 'https://gunpla.fyi/images/boxarts/2734.jpeg', // HG Hazel Custom
         '4922': 'https://gunpla.fyi/images/boxarts/4951.jpeg', // HG Strike Freedom Type II
         '4923': 'https://gunpla.fyi/images/boxarts/1097.jpeg', // RG Gundam Epyon
@@ -1245,11 +1245,29 @@
           const y = parseInt(kit.release_date.substring(0, 4), 10);
           kit.year = !isNaN(y) ? y : 2022;
         }
+        if (!kit.scale) {
+          const allNames = (kit.name || '') + ' ' + (kit.nameEn || '') + ' ' + (kit.nameJp || '') + ' ' + (kit.nameKo || '');
+          const scaleMatch = allNames.match(/\b(1\/(?:144|100|60|48|72|35|12|550|1200|2400|1700|400))\b/);
+          if (scaleMatch) {
+            kit.scale = scaleMatch[1];
+          } else if (bu === 'MGSD' || kit.gradeKey === 'SD' || kit.gradeKey === 'Pokemon' || bu.includes('30MS') || bu.includes('30MF')) {
+            kit.scale = 'Non-Scale';
+          } else if (kit.gradeKey === 'PG') {
+            kit.scale = '1/60';
+          } else if (kit.gradeKey === 'Mega') {
+            kit.scale = '1/48';
+          } else if (kit.gradeKey === 'MG' || kit.gradeKey === 'FM') {
+            kit.scale = '1/100';
+          } else {
+            kit.scale = '1/144';
+          }
+        }
         if (!kit.run) {
           const rawName = (kit.name || kit.nameEn || kit.nameJp || '');
           const idNum = parseInt(kit.id, 10);
           const isDalongClubG = (idNum >= 2000 && idNum < 3000);
           const isL = kit.is_limited || 
+                      kit.isClubG ||
                       isDalongClubG ||
                       rawName.includes('プレミアムバンダイ') || 
                       rawName.includes('プレバン') || 
@@ -1267,6 +1285,9 @@
                       rawName.includes('TITANIUM FINISH') || 
                       rawName.includes('クリアカラー') || 
                       rawName.includes('CLEAR COLOR') || 
+                      rawName.includes('MISSION PACK') ||
+                      rawName.includes('MIRAGE FRAME') ||
+                      rawName.includes('DEN’AN-GEI') ||
                       rawName.includes('클럽G');
           kit.run = isL ? 'P-Bandai' : 'Standard';
         }

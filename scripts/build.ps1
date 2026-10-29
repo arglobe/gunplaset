@@ -244,6 +244,10 @@ if ($rIdx -ge 0) {
 # 🛡️ Image Integrity & Zero-Mismatch Gate
 Write-Output "🔍 Verifying Kit Image DB integrity and Zero-Mismatch compliance..."
 $imgDbRaw = [System.IO.File]::ReadAllText($imgDbPath, [System.Text.Encoding]::UTF8)
+if (-not $imgDbRaw.TrimStart().StartsWith("window.KIT_IMAGE_DB =")) {
+    Write-Error "🚨 BUILD REJECTED: kit_image_db.js must start with 'window.KIT_IMAGE_DB ='!"
+    exit 1
+}
 $imgDbJson = $imgDbRaw.Substring($imgDbRaw.IndexOf('{')).Trim().TrimEnd(';')
 $imgDbObj = $imgDbJson | ConvertFrom-Json
 
@@ -263,6 +267,15 @@ $pilotConflictPairs = @(
     @("tri-stars", "char")
 )
 
+$assetsIgnorePath = Join-Path $rootDir ".assetsignore"
+$assetsIgnoreSet = New-Object System.Collections.Generic.HashSet[string]
+if (Test-Path $assetsIgnorePath) {
+    Get-Content $assetsIgnorePath -Encoding UTF8 | ForEach-Object {
+        $t = $_.Trim()
+        if ($t) { [void]$assetsIgnoreSet.Add($t) }
+    }
+}
+
 foreach ($mk in $kitsObj) {
     $id = [string]$mk.id
     $entry = $imgDbObj.$id
@@ -273,30 +286,44 @@ foreach ($mk in $kitsObj) {
     $pUrlLower = $entry.product_url.ToLower()
     $kNameLower = $mk.name.ToLower()
 
-    # 1. Local Image verification (Strict Magic Bytes & Soft-404 Gate)
-    if ($entry.product_url.StartsWith("images/")) {
-        $localImgPath = Join-Path $rootDir ($entry.product_url -replace '/', '\')
-        if (-not (Test-Path $localImgPath)) {
-            $imgLocalMissing += "$id ($($entry.product_url) does not exist)"
-        } else {
-            $fileLen = (Get-Item $localImgPath).Length
-            if ($fileLen -lt 3000) {
-                $imgLocalMissing += "$id ($($entry.product_url) too small: $fileLen bytes)"
-            } elseif ($fileLen -eq 13464) {
-                $imgLocalMissing += "$id ($($entry.product_url) is Bandai Soft-404 HTML: 13,464 bytes)"
+    # 1. Local Image verification (Strict Magic Bytes, Soft-404 & .assetsignore Gate across product_url, boxart_url & gallery)
+    $allKitUrls = @($entry.product_url, $entry.product_cdn_url, $entry.boxart_url, $entry.boxart_cdn_url)
+    if ($entry.gallery) {
+        foreach ($gItem in $entry.gallery) {
+            if ($gItem -is [string]) { $allKitUrls += $gItem }
+            elseif ($gItem.url) { $allKitUrls += $gItem.url; if ($gItem.cdn_url) { $allKitUrls += $gItem.cdn_url } }
+        }
+    }
+    $allKitUrls = $allKitUrls | Where-Object { $_ } | Select-Object -Unique
+
+    foreach ($uCheck in $allKitUrls) {
+        if ($uCheck.StartsWith("images/")) {
+            if ($assetsIgnoreSet.Contains($uCheck)) {
+                $imgLocalMissing += "$id ($uCheck is blocked by .assetsignore!)"
+            }
+            $localImgPath = Join-Path $rootDir ($uCheck -replace '/', '\')
+            if (-not (Test-Path $localImgPath)) {
+                $imgLocalMissing += "$id ($uCheck does not exist)"
             } else {
-                # Validate Magic Bytes (JPEG: FF D8 FF, PNG: 89 50 4E 47, WEBP: 52 49 46 46)
-                $fs = [System.IO.File]::OpenRead($localImgPath)
-                $headerBytes = New-Object byte[] 4
-                $fs.Read($headerBytes, 0, 4) | Out-Null
-                $fs.Close()
-                
-                $isJpeg = ($headerBytes[0] -eq 0xFF -and $headerBytes[1] -eq 0xD8 -and $headerBytes[2] -eq 0xFF)
-                $isPng  = ($headerBytes[0] -eq 0x89 -and $headerBytes[1] -eq 0x50 -and $headerBytes[2] -eq 0x4E -and $headerBytes[3] -eq 0x47)
-                $isWebp = ($headerBytes[0] -eq 0x52 -and $headerBytes[1] -eq 0x49 -and $headerBytes[2] -eq 0x46 -and $headerBytes[3] -eq 0x46)
-                
-                if (-not ($isJpeg -or $isPng -or $isWebp)) {
-                    $imgLocalMissing += "$id ($($entry.product_url) invalid magic bytes - not a valid image)"
+                $fileLen = (Get-Item $localImgPath).Length
+                if ($fileLen -lt 3000) {
+                    $imgLocalMissing += "$id ($uCheck too small: $fileLen bytes)"
+                } elseif ($fileLen -eq 13464) {
+                    $imgLocalMissing += "$id ($uCheck is Bandai Soft-404 HTML: 13,464 bytes)"
+                } else {
+                    # Validate Magic Bytes (JPEG: FF D8 FF, PNG: 89 50 4E 47, WEBP: 52 49 46 46)
+                    $fs = [System.IO.File]::OpenRead($localImgPath)
+                    $headerBytes = New-Object byte[] 4
+                    $fs.Read($headerBytes, 0, 4) | Out-Null
+                    $fs.Close()
+                    
+                    $isJpeg = ($headerBytes[0] -eq 0xFF -and $headerBytes[1] -eq 0xD8 -and $headerBytes[2] -eq 0xFF)
+                    $isPng  = ($headerBytes[0] -eq 0x89 -and $headerBytes[1] -eq 0x50 -and $headerBytes[2] -eq 0x4E -and $headerBytes[3] -eq 0x47)
+                    $isWebp = ($headerBytes[0] -eq 0x52 -and $headerBytes[1] -eq 0x49 -and $headerBytes[2] -eq 0x46 -and $headerBytes[3] -eq 0x46)
+                    
+                    if (-not ($isJpeg -or $isPng -or $isWebp)) {
+                        $imgLocalMissing += "$id ($uCheck invalid magic bytes - not a valid image)"
+                    }
                 }
             }
         }
@@ -304,7 +331,7 @@ foreach ($mk in $kitsObj) {
 
     # 2. Strict Soft-404 & Unverified Fallback Elimination Gate
     # Any 2026 kit (ID >= 5280) or known broken/pruned kit MUST use verified local or high-res assets!
-    $knownBrokenFyiIds = @("184", "4432", "4722", "4724", "4763", "4852", "4853", "4854", "4855", "4856", "4918", "4919", "4921", "4922", "4923", "4924")
+    $knownBrokenFyiIds = @("184", "4432", "4722", "4724", "4763", "4852", "4853", "4854", "4855", "4856", "4918", "4919", "4920", "4921", "4922", "4923", "4924")
     $idInt = 0
     [int]::TryParse($id, [ref]$idInt) | Out-Null
     if ($pUrlLower.Contains("gunpla.fyi/images/boxarts/$id.jpeg")) {

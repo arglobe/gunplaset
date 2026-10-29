@@ -19712,7 +19712,7 @@
         "isClubG":  false,
         "release_date":  "2025-06",
         "year":  2025,
-        "nameKo":  "HG 1/144 레온"
+        "nameKo":  "HG 1/144 리오-N"
     },
     {
         "id":  "3209",
@@ -36724,7 +36724,8 @@
         "isVerifiedKrw":  false,
         "isClubG":  false,
         "release_date":  "2026-05",
-        "year":  2026
+        "year":  2026,
+        "nameKo":  "30MM 1/144 EXM-H15X 아체르비 (TYPE-X)"
     },
     {
         "id":  "5087",

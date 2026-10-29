@@ -6452,19 +6452,19 @@ window.KIT_IMAGE_DB = {
                             ]
             },
     "1321":  {
-                 "product_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
-                 "product_cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
+                 "product_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
+                 "product_cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
                  "boxart_url":  "https://gunpla.fyi/images/boxarts/1321.jpeg",
                  "boxart_cdn_url":  "https://gunpla.fyi/images/boxarts/1321.jpeg",
                  "gallery":  [
                                  {
-                                     "url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
-                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
+                                     "url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
+                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
                                      "is_boxart":  false
                                  },
                                  {
-                                     "url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
-                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645338616-ad5a824a.jpg",
+                                     "url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
+                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/gfas-x1-destroy-gundam/stock/gfas-x1-destroy-gundam-stock-1758645318347-9da37747.jpg",
                                      "is_boxart":  false
                                  },
                                  {
@@ -55395,19 +55395,19 @@ window.KIT_IMAGE_DB = {
                              ]
              },
     "4522":  {
-                 "product_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
-                 "product_cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
+                 "product_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
+                 "product_cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
                  "boxart_url":  "https://gunpla.fyi/images/boxarts/4522.jpeg",
                  "boxart_cdn_url":  "https://gunpla.fyi/images/boxarts/4522.jpeg",
                  "gallery":  [
                                  {
-                                     "url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
-                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
+                                     "url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
+                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
                                      "is_boxart":  false
                                  },
                                  {
-                                     "url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
-                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720190-fb61cc9c.jpg",
+                                     "url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
+                                     "cdn_url":  "https://images.gunplacentral.com/prod/data/images/rg-gundam-base-limited-zeong-special-coating/stock/rg-gundam-base-limited-zeong-special-coating-stock-1753671720510-95dd0d76.jpg",
                                      "is_boxart":  false
                                  },
                                  {

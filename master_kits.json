@@ -6648,7 +6648,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01-17",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "옵션 파츠 세트 건프라 14 (건배럴 스트라이커)"
     },
     {
         "id":  "2081",
@@ -6665,7 +6666,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01-17",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 지쿠악스 (GQuuuuuuX)"
     },
     {
         "id":  "2082",
@@ -6682,7 +6684,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01-17",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 스트라이크 루즈"
     },
     {
         "id":  "209",
@@ -7328,7 +7331,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "Figure-rise Standard 플 투"
     },
     {
         "id":  "215",
@@ -9539,7 +9543,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 자쿠 II F형 르숀기 \u0026 무식별형 자쿠 II 르숀기 (복수의 레퀴엠)"
     },
     {
         "id":  "2312",
@@ -9556,7 +9561,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 리오-R"
     },
     {
         "id":  "2313",
@@ -9573,7 +9579,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-01",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담 아스트레아 + 프로토 GN 트윈 브로드 블레이드"
     },
     {
         "id":  "2314",
@@ -15476,7 +15483,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 즈고크 (SEED FREEDOM Ver.)"
     },
     {
         "id":  "2668",
@@ -15493,7 +15501,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "옵션 파츠 세트 건프라 15 (카발리에 아이프리드)"
     },
     {
         "id":  "2669",
@@ -18385,7 +18394,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 유니콘 건담 2호기 밴시 노른 (최종결전 사양) [스페셜 코팅]"
     },
     {
         "id":  "2906",
@@ -18419,7 +18429,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 델타 자인"
     },
     {
         "id":  "2908",
@@ -18436,7 +18447,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 자쿠 II F형 첩스 \u0026 케일기 + 무식별형 자쿠 II 솔라리기 재현 파츠 세트 (복수의 레퀴엠)"
     },
     {
         "id":  "2909",
@@ -18453,7 +18465,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 D 건담 퍼스트"
     },
     {
         "id":  "291",
@@ -18487,7 +18500,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 데절터"
     },
     {
         "id":  "292",
@@ -18538,7 +18552,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-03-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담 비다르"
     },
     {
         "id":  "2939",
@@ -18555,7 +18570,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-03-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 사이코 건담 Mk-II"
     },
     {
         "id":  "294",
@@ -18640,7 +18656,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-12",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 군경 자쿠"
     },
     {
         "id":  "2972",
@@ -18657,7 +18674,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-26",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "옵션 파츠 세트 건프라 16 (미티어 호퍼)"
     },
     {
         "id":  "298",
@@ -18759,7 +18777,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-23",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MGSD 건담 에어리얼"
     },
     {
         "id":  "301",
@@ -18827,7 +18846,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "1/144 RX-78F00/E 건담 (EX-001 글래스 페더 장비)"
     },
     {
         "id":  "3038",
@@ -18844,7 +18864,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 RX-78F00/E 건담"
     },
     {
         "id":  "3039",
@@ -18861,7 +18882,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 RX-78F00/E 건담용 옵션 파츠 세트 (EX-001 글래스 페더 장비)"
     },
     {
         "id":  "304",
@@ -18946,7 +18968,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-05-03",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "액션베이스 7 [클리어 컬러] 기동전사 건담 지쿠악스 씰 세트"
     },
     {
         "id":  "3071",
@@ -18963,7 +18986,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-05-03",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 스가이 전용 겔구그 (GQ)"
     },
     {
         "id":  "308",
@@ -19048,7 +19072,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-05-31",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 붉은 건담"
     },
     {
         "id":  "311",
@@ -19439,7 +19464,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06-28",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 샤이닝 건담"
     },
     {
         "id":  "317",
@@ -19473,7 +19499,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06-07",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 보카타 전용 겔구그 (GQ)"
     },
     {
         "id":  "3171",
@@ -19490,7 +19517,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-06-07",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "Figure-rise Standard 아마테 유즈리하 (마츄)"
     },
     {
         "id":  "318",
@@ -19575,7 +19603,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-03",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 고기동형 자쿠 지상용 (산호기)"
     },
     {
         "id":  "3203",
@@ -19592,7 +19621,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-03",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 소드 임펄스 건담 SpecII"
     },
     {
         "id":  "3204",
@@ -19609,7 +19639,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 자쿠 데저트 타입 핑크 팬더 부대기"
     },
     {
         "id":  "3205",
@@ -19626,7 +19657,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-04",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 지라인 라이트 아머"
     },
     {
         "id":  "3206",
@@ -19643,7 +19675,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-05",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 레벤 볼프 (A.O.Z RE-BOOT 버전)"
     },
     {
         "id":  "3207",
@@ -19783,7 +19816,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07-05",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 경캐논"
     },
     {
         "id":  "3236",
@@ -19800,7 +19834,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07-05",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 이그자베 전용 걍 (하쿠지 장비)"
     },
     {
         "id":  "3237",
@@ -19817,7 +19852,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07-12",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "옵션 파츠 세트 건프라 17 (바인더 건)"
     },
     {
         "id":  "3238",
@@ -19834,7 +19870,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07-26",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "Figure-rise Standard 냐안"
     },
     {
         "id":  "324",
@@ -19902,7 +19939,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 Ex-S 건담 / S 건담 (태스크포스 α Ver.)"
     },
     {
         "id":  "3269",
@@ -19919,7 +19957,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 지리우스"
     },
     {
         "id":  "327",
@@ -19953,7 +19992,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 제노아스 O 커스텀"
     },
     {
         "id":  "328",
@@ -20038,7 +20078,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 갈루스-J"
     },
     {
         "id":  "3303",
@@ -20055,7 +20096,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08-02",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 지프레드 (GFreD)"
     },
     {
         "id":  "331",
@@ -20123,7 +20165,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 데스티니 건담 SpecII [최종결전 이미지 컬러]"
     },
     {
         "id":  "3335",
@@ -20140,7 +20183,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 블레이즈 자쿠 팬텀 (디아카 엘스먼 전용기)"
     },
     {
         "id":  "3336",
@@ -20157,7 +20201,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 MS-06S 자쿠 II [하츠네 미쿠 Ver.]"
     },
     {
         "id":  "3337",
@@ -27027,7 +27072,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09-20",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 가이아 전용 / 오르테가 전용 릭 돔 (GQ)"
     },
     {
         "id":  "3897",
@@ -27044,7 +27090,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09-27",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 윙 건담 제로"
     },
     {
         "id":  "3898",
@@ -27061,7 +27108,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 나이온"
     },
     {
         "id":  "3899",
@@ -27078,7 +27126,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 유니온 플래그 커스텀 II (GN 플래그)"
     },
     {
         "id":  "39",
@@ -27129,7 +27178,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-09",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 G-3 건담 Ver.2.0"
     },
     {
         "id":  "391",
@@ -27180,7 +27230,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 윙 건담"
     },
     {
         "id":  "3929",
@@ -27231,7 +27282,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 세이라 전용 경캐논"
     },
     {
         "id":  "3931",
@@ -27248,7 +27300,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RE/100 1/100 데난 게"
     },
     {
         "id":  "3932",
@@ -27265,7 +27318,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-10",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 짐 슬로프"
     },
     {
         "id":  "394",
@@ -27334,7 +27388,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11-01",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 598 전용 몽키 로디 / 몽키 크랩 로디"
     },
     {
         "id":  "3962",
@@ -27351,7 +27406,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11-08",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 자쿠 (GQ)"
     },
     {
         "id":  "397",
@@ -27419,7 +27475,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담 발바토스 루푸스"
     },
     {
         "id":  "3995",
@@ -27436,7 +27493,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11-22",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "옵션 파츠 세트 건프라 18 (빌드 부스터 세트)"
     },
     {
         "id":  "3996",
@@ -27606,7 +27664,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 만도르 건담"
     },
     {
         "id":  "4003",
@@ -27623,7 +27682,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "MG 1/100 건담 아스트레이 미라쥬 프레임 세컨드 이슈"
     },
     {
         "id":  "4004",
@@ -27640,7 +27700,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-11",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "RG 1/144 하이뉴 건담용 하이퍼 메가 바주카 런처 \u0026 핀 판넬 디스플레이 세트"
     },
     {
         "id":  "401",
@@ -27691,7 +27752,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 자간"
     },
     {
         "id":  "4028",
@@ -27708,7 +27770,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 하얀 건담"
     },
     {
         "id":  "4029",
@@ -27725,7 +27788,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12-06",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 샤아 전용 자쿠 (GQ)"
     },
     {
         "id":  "403",
@@ -27810,7 +27874,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 7호기"
     },
     {
         "id":  "4061",
@@ -27827,7 +27892,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-12",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "HG 1/144 건담 그리에프"
     },
     {
         "id":  "4062",
@@ -33163,7 +33229,8 @@
         "isVerifiedKrw":  true,
         "isClubG":  false,
         "release_date":  "2025-07-26",
-        "year":  2025
+        "year":  2025,
+        "nameKo":  "ENTRY GRADE 1/144 뉴 건담 (액시즈 쇼크 이미지 컬러)"
     },
     {
         "id":  "466",

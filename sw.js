@@ -1,5 +1,5 @@
-﻿// GunplaSet PWA Service Worker v2.0
-const CACHE_NAME = 'gunplaset-core-v2.0';
+// GunplaSet PWA Service Worker v2.5
+const CACHE_NAME = 'gunplaset-core-v2.5';
 const STATIC_ASSETS = [
   './',
   './index.html',

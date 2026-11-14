@@ -1,8 +1,22 @@
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+﻿$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $rootDir = Split-Path -Parent $scriptDir
 
 if (Test-Path (Join-Path $rootDir "src\template_header.html")) {
-    $srcDir = Join-Path $rootDir "src"
+    $srcSub = Join-Path $rootDir "src"
+    foreach ($syncFile in @("template_header.html", "template_footer.html", "kit_image_db.js", "kit_price_db.js", "master_kits.json", "lqa_glossary.json")) {
+        $pRoot = Join-Path $rootDir $syncFile
+        $pSrc  = Join-Path $srcSub $syncFile
+        if ((Test-Path $pRoot) -and (Test-Path $pSrc)) {
+            $tRoot = (Get-Item $pRoot).LastWriteTimeUtc
+            $tSrc  = (Get-Item $pSrc).LastWriteTimeUtc
+            if ($tRoot -gt $tSrc) {
+                Copy-Item $pRoot $pSrc -Force
+            } elseif ($tSrc -gt $tRoot) {
+                Copy-Item $pSrc $pRoot -Force
+            }
+        }
+    }
+    $srcDir = $srcSub
 } elseif (Test-Path (Join-Path $rootDir "template_header.html")) {
     $srcDir = $rootDir
 } else {
@@ -165,7 +179,11 @@ Write-Output "✅ 100% Kit Count Auto-Sync Gate: All catalog descriptions dynami
 
 # 🛡️ RADAR STRICT PROVENANCE & ZERO-FAKE DATA GATE
 $masterIdSet = New-Object System.Collections.Generic.HashSet[string]
-foreach ($k in $kitsObj) { [void]$masterIdSet.Add([string]$k.id) }
+$masterKitMap = @{}
+foreach ($k in $kitsObj) {
+    [void]$masterIdSet.Add([string]$k.id)
+    $masterKitMap[[string]$k.id] = $k
+}
 
 $radarPrefix = "window.GUNPLA_RELEASE_RADAR_DATA = "
 $rIdx = $fullHtml.IndexOf($radarPrefix)
@@ -185,6 +203,7 @@ if ($rIdx -ge 0) {
         $missingRadarIds = @()
         $unverifiedProvenance = @()
         $airGapViolations = @()
+        $priceCrossViolations = @()
         $whitelistedDomains = @("bandai-hobby.net", "bnkrmall.co.kr", "p-bandai.jp", "gundam-base.net", "gundam-side-f.net", "p-bandai.com", "bandai.com")
         $totalItemsCount = 0
 
@@ -193,9 +212,19 @@ if ($rIdx -ge 0) {
             foreach ($m in $months) {
                 foreach ($item in $m.Value.items) {
                     $totalItemsCount++
+                    $kIdStr = [string]$item.id
                     # 1. Master ID Existence Check
-                    if (-not $masterIdSet.Contains([string]$item.id)) {
-                        $missingRadarIds += "$lang - $($m.Name): ID $($item.id) ($($item.name))"
+                    if (-not $masterIdSet.Contains($kIdStr)) {
+                        $missingRadarIds += "$lang - $($m.Name): ID $kIdStr ($($item.name))"
+                    } else {
+                        # 1-B. Radar <-> Master Catalog Price Cross-Consistency Check
+                        $mkRef = $masterKitMap[$kIdStr]
+                        if ($mkRef.yenTaxIn -and $item.jpy -ne $mkRef.yenTaxIn) {
+                            $priceCrossViolations += "$lang - $($m.Name) #$kIdStr ($($item.name)): Radar jpy=$($item.jpy) != Master yenTaxIn=$($mkRef.yenTaxIn)"
+                        }
+                        if ($mkRef.isVerifiedKrw -and $mkRef.krw -and $item.krw -ne $mkRef.krw) {
+                            $priceCrossViolations += "$lang - $($m.Name) #$kIdStr ($($item.name)): Radar krw=$($item.krw) != Master krw=$($mkRef.krw)"
+                        }
                     }
                     # 2. Strict Provenance Mandate: Every listed item MUST have an official source URL & verification date
                     if (-not $item.officialSourceUrl) {
@@ -229,6 +258,10 @@ if ($rIdx -ge 0) {
             Write-Error "🚨 BUILD REJECTED: Radar contains IDs not present in master_kits.json! Discrepancies: $($missingRadarIds -join ', ')"
             exit 1
         }
+        if ($priceCrossViolations.Count -gt 0) {
+            Write-Error "🚨 BUILD REJECTED: Radar <-> Master Catalog price mismatch detected!`n$($priceCrossViolations -join "`n")"
+            exit 1
+        }
         if ($unverifiedProvenance.Count -gt 0) {
             Write-Error "🚨 BUILD REJECTED: Unverified/Mockup items detected without official provenance! Violations:`n$($unverifiedProvenance -join "`n")"
             exit 1
@@ -237,7 +270,7 @@ if ($rIdx -ge 0) {
             Write-Error "🚨 BUILD REJECTED: Air-Gap language isolation violated in Radar! Discrepancies: $($airGapViolations -join ', ')"
             exit 1
         }
-        Write-Output "✅ 100% Radar Strict Provenance Gate: $totalItemsCount verified official items (0 unverified/mockup items)."
+        Write-Output "✅ 100% Radar Strict Provenance & Catalog Cross-Consistency Gate: $totalItemsCount verified official items (0 unverified/mockup items, 0 price discrepancies)."
     }
 }
 

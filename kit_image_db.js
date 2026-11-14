@@ -108274,5 +108274,51 @@ window.KIT_IMAGE_DB = {
                                      "is_boxart":  false
                                  }
                              ]
+             },
+    "5295":  {
+                 "product_url":  "images/5295_1.jpg",
+                 "product_cdn_url":  "https://cdn.bnkrmall.co.kr/live/data/base/goods/big/20261112/28fe85ce70fc4303a2cb2055181b47c1.jpg",
+                 "boxart_url":  "images/5295_1.jpg",
+                 "boxart_cdn_url":  "https://cdn.bnkrmall.co.kr/live/data/base/goods/big/20261112/28fe85ce70fc4303a2cb2055181b47c1.jpg",
+                 "gallery":  [
+                                 {
+                                     "url":  "images/5295_1.jpg",
+                                     "cdn_url":  "https://cdn.bnkrmall.co.kr/live/data/base/goods/big/20261112/28fe85ce70fc4303a2cb2055181b47c1.jpg",
+                                     "is_boxart":  false
+                                 }
+                             ]
+             },
+    "5296":  {
+                 "product_url":  "images/5296_1.jpg",
+                 "product_cdn_url":  "images/5296_1.jpg",
+                 "boxart_url":  "images/5296_5.jpg",
+                 "boxart_cdn_url":  "images/5296_5.jpg",
+                 "gallery":  [
+                                 {
+                                     "url":  "images/5296_1.jpg",
+                                     "cdn_url":  "images/5296_1.jpg",
+                                     "is_boxart":  false
+                                 },
+                                 {
+                                     "url":  "images/5296_2.jpg",
+                                     "cdn_url":  "images/5296_2.jpg",
+                                     "is_boxart":  false
+                                 },
+                                 {
+                                     "url":  "images/5296_3.jpg",
+                                     "cdn_url":  "images/5296_3.jpg",
+                                     "is_boxart":  false
+                                 },
+                                 {
+                                     "url":  "images/5296_4.jpg",
+                                     "cdn_url":  "images/5296_4.jpg",
+                                     "is_boxart":  false
+                                 },
+                                 {
+                                     "url":  "images/5296_5.jpg",
+                                     "cdn_url":  "images/5296_5.jpg",
+                                     "is_boxart":  true
+                                 }
+                             ]
              }
 };

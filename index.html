@@ -375,6 +375,12 @@ body {
           
           <!-- Compact Scrollable Rows -->
           <div id="radar-list-container" class="space-y-2.5 max-h-[295px] overflow-y-auto custom-scroll pr-1"></div>
+
+          <!-- Radar Update Cycle & Accuracy Disclaimer -->
+          <div id="radar-disclaimer-bar" class="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start sm:items-center gap-1.5 leading-snug">
+            <span class="text-amber-400 shrink-0">ℹ️</span>
+            <span id="radar-disclaimer-text">본 출하·예약·입고 일정은 정기 업데이트 주기에 따라 공지 반영에 시차(지연)가 있거나 일부 오차가 있을 수 있으며, 제조사·유통사 사정으로 예고 없이 변동될 수 있으므로 방문 및 구매 전 반드시 공식 판매처 공지를 확인하시기 바랍니다.</span>
+          </div>
         </div>
 
         <!-- Collapsed Summary Bar (1-Line View when collapsed) -->
@@ -758,34 +764,37 @@ body {
         <!-- Right: Policy Navigation Links (Preserving all click handlers) -->
         <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-300 font-medium">
           <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>🤖</span> <span>서비스 소개</span>
+            <span>🤖</span> <span id="footer-lbl-about">서비스 소개</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>🔒</span> <span>개인정보처리방침</span>
+            <span>🔒</span> <span id="footer-lbl-privacy">개인정보처리방침</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>📜</span> <span>이용약관</span>
+            <span>📜</span> <span id="footer-lbl-terms">이용약관 및 면책고지</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>📬</span> <span>문의 및 제보</span>
+            <span>📬</span> <span id="footer-lbl-contact">문의 및 제보</span>
           </button>
         </div>
       </div>
 
       <!-- Legal Disclaimer Box -->
-      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center md:text-left space-y-2 text-[11px] text-slate-400 leading-relaxed">
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center md:text-left space-y-2.5 text-[11px] text-slate-400 leading-relaxed">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
           <span class="text-amber-400/90 font-mono font-semibold flex items-center gap-1.5">
-            <span>❖</span> <span>Unofficial Fan-Made Model Kit Archive & Asset Management Tool</span>
+            <span>❖</span> <span>Unofficial Fan-Made Model Kit Archive &amp; Asset Management Tool</span>
           </span>
           <span class="text-slate-500 font-mono text-[10px]">&copy; 2026 GunplaSet. All Rights Reserved.</span>
         </div>
-        <p class="text-slate-400">
+        <p id="footer-disclaimer-copyright" class="text-slate-400">
           본 웹사이트는 건프라 팬 및 모형 제작 수집가를 위한 비영리 팬 아카이브이자 개인 컬렉션 포트폴리오 관리 도구입니다.<br class="hidden sm:inline">
           모든 건담 및 건프라 관련 상표 및 저작권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속되며, 본 서비스는 반다이남코와 공식 제휴 관계가 없습니다.
+        </p>
+        <p id="footer-disclaimer-accuracy" class="text-slate-400 pt-2 border-t border-slate-800/60">
+          <b class="text-amber-300/90">⚠️ 정보 정확성 및 업데이트 주기 면책 고지 (Disclaimer)</b>: 본 사이트에 수록된 제품 정보, 공식 정가(MSRP), 출시일 및 출하·재입고 일정은 정기 업데이트 주기에 따라 공지 반영이 지연(시차 발생)되거나 실제 정보와 일부 오차·오류가 있을 수 있습니다. 모든 데이터는 단순 참고용으로만 제공되며 제조사·유통사 사정에 따라 예고 없이 변경될 수 있으므로, 실제 구매 및 매장 방문 전 반드시 공식 판매처(반다이남코코리아몰, 건담베이스 등)의 최신 공지를 직접 확인하시기 바랍니다. 본 사이트의 정보를 신뢰하여 발생한 직·간접적 손해에 대해 운영진은 법적 책임을 지지 않습니다.
         </p>
       </div>
     </div>
@@ -159284,6 +159293,41 @@ window.GUNPLA_MASTER_DATA = [
           gradeSelect.innerHTML = gHtml;
           gradeSelect.value = Array.from(gradeSelect.options).some(o => o.value === curVal) ? curVal : 'all';
         }
+
+        // 7. Legal Disclaimers & Update Cycle Notices (Radar Bar & Footer)
+        const radarDiscEl = document.getElementById('radar-disclaimer-text');
+        const fLblAbout = document.getElementById('footer-lbl-about');
+        const fLblPrivacy = document.getElementById('footer-lbl-privacy');
+        const fLblTerms = document.getElementById('footer-lbl-terms');
+        const fLblContact = document.getElementById('footer-lbl-contact');
+        const fDiscCopy = document.getElementById('footer-disclaimer-copyright');
+        const fDiscAcc = document.getElementById('footer-disclaimer-accuracy');
+
+        if (state.currency === 'USD') {
+          if (radarDiscEl) radarDiscEl.textContent = 'Release, pre-order, and restock schedules may be delayed or contain discrepancies due to periodic update cycles, and are subject to change without notice by the manufacturer/distributor. Always verify the latest official notice before visiting stores or purchasing.';
+          if (fLblAbout) fLblAbout.textContent = 'About';
+          if (fLblPrivacy) fLblPrivacy.textContent = 'Privacy Policy';
+          if (fLblTerms) fLblTerms.textContent = 'Terms & Disclaimer';
+          if (fLblContact) fLblContact.textContent = 'Contact & Report';
+          if (fDiscCopy) fDiscCopy.innerHTML = 'This website is a non-profit fan-made archive and personal collection portfolio tracker for Gunpla and scale model collectors.<br class="hidden sm:inline"> All Gundam and Gunpla trademarks and copyrights belong to <b>BANDAI SPIRITS CO., LTD.</b> and <b>&copy;SOTSU &bull; SUNRISE</b>. This service is not officially affiliated with Bandai Namco.';
+          if (fDiscAcc) fDiscAcc.innerHTML = '<b class="text-amber-300/90">⚠️ Data Accuracy &amp; Update Cycle Disclaimer</b>: Product specifications, official retail prices (MSRP), release dates, and shipment/restock schedules listed on this site may experience reflection delays due to periodic update cycles or contain unintentional errors/discrepancies. All information is provided strictly for reference and may change without notice by the manufacturer or distributor. Always verify final details with official retailers before making a purchase or visiting a store. The operators assume no legal liability for any direct or indirect damages arising from reliance on this information.';
+        } else if (state.currency === 'JPY') {
+          if (radarDiscEl) radarDiscEl.textContent = '本出荷・予約・再入荷日程は定期更新サイクルにより反映に時差が生じる場合や一部誤差が含まれる可能性があり、メーカー・流通の都合により予告なく変更される場合があります。ご来店・ご購入前に必ず公式販売元の最新告知をご確認ください。';
+          if (fLblAbout) fLblAbout.textContent = 'サービス紹介';
+          if (fLblPrivacy) fLblPrivacy.textContent = 'プライバシーポリシー';
+          if (fLblTerms) fLblTerms.textContent = '利用規約・免責事項';
+          if (fLblContact) fLblContact.textContent = 'お問い合わせ・情報提供';
+          if (fDiscCopy) fDiscCopy.innerHTML = '本ウェブサイトはガンプラおよびプラモデル愛好家のための非営利ファンアーカイブ兼コレクション管理ツールです。<br class="hidden sm:inline"> ガンダムおよびガンプラに関するすべての商標および著作権は <b>株式会社BANDAI SPIRITS</b> および <b>&copy;創通・サンライズ</b> に帰属し、本サービスは公式提携関係にはありません。';
+          if (fDiscAcc) fDiscAcc.innerHTML = '<b class="text-amber-300/90">⚠️ 情報の正確性および更新周期に関する免責事項 (Disclaimer)</b>: 本サイトに掲載されている製品情報、メーカー希望小売価格(MSRP)、発売日、および出荷・再入荷日程は、定期更新サイクルにより反映が遅れる場合や、実際の情報と一部誤差・誤記が生じる可能性があります。すべてのデータは参考用としてのみ提供され、メーカー・流通事情により予告なく変更される場合があるため、実際の購入や店舗訪問の前には必ず公式販売元（バンダイホビーサイト、プレミアムバンダイ、ガンダムベース等）の最新発表をご確認ください。本サイトの情報に依拠して生じた直接的・間接的損害について、運営者は一切の法的責任を負いません。';
+        } else {
+          if (radarDiscEl) radarDiscEl.textContent = '본 출하·예약·입고 일정은 정기 업데이트 주기에 따라 공지 반영에 시차(지연)가 있거나 일부 오차가 있을 수 있으며, 제조사·유통사 사정으로 예고 없이 변동될 수 있으므로 방문 및 구매 전 반드시 공식 판매처 공지를 확인하시기 바랍니다.';
+          if (fLblAbout) fLblAbout.textContent = '서비스 소개';
+          if (fLblPrivacy) fLblPrivacy.textContent = '개인정보처리방침';
+          if (fLblTerms) fLblTerms.textContent = '이용약관 및 면책고지';
+          if (fLblContact) fLblContact.textContent = '문의 및 제보';
+          if (fDiscCopy) fDiscCopy.innerHTML = '본 웹사이트는 건프라 팬 및 모형 제작 수집가를 위한 비영리 팬 아카이브이자 개인 컬렉션 포트폴리오 관리 도구입니다.<br class="hidden sm:inline"> 모든 건담 및 건프라 관련 상표 및 저작권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속되며, 본 서비스는 반다이남코와 공식 제휴 관계가 없습니다.';
+          if (fDiscAcc) fDiscAcc.innerHTML = '<b class="text-amber-300/90">⚠️ 정보 정확성 및 업데이트 주기 면책 고지 (Disclaimer)</b>: 본 사이트에 수록된 제품 정보, 공식 정가(MSRP), 출시일 및 출하·재입고 일정은 정기 업데이트 주기에 따라 공지 반영이 지연(시차 발생)되거나 실제 정보와 일부 오차·오류가 있을 수 있습니다. 모든 데이터는 단순 참고용으로만 제공되며 제조사·유통사 사정에 따라 예고 없이 변경될 수 있으므로, 실제 구매 및 매장 방문 전 반드시 공식 판매처(반다이남코코리아몰, 건담베이스 등)의 최신 공지를 직접 확인하시기 바랍니다. 본 사이트의 정보를 신뢰하여 발생한 직·간접적 손해에 대해 운영진은 법적 책임을 지지 않습니다.';
+        }
       }
 
       const IMAGE_OVERRIDES = {
@@ -160509,14 +160553,17 @@ window.GUNPLA_MASTER_DATA = [
         if (!modal || !content) return;
 
         if (type === 'about') {
-          const totalKitsCount = (window.GUNPLA_MASTER_DATA ? window.GUNPLA_MASTER_DATA.length.toLocaleString() : '2,723');
+          const totalKitsCount = (window.GUNPLA_MASTER_DATA ? window.GUNPLA_MASTER_DATA.length.toLocaleString() : '2,729');
           content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">🤖 GunplaSet 서비스 소개</h2>' +
             '<p class="mb-2"><b>GunplaSet (건프라셋)</b>은 1980년부터 현재까지 출시된 ' + totalKitsCount + '종 이상의 반다이 정품 건프라 및 프라모델을 한눈에 조회하고, 나만의 프라모델 수집/조립 상태(새것/조립중/조립완료)와 자산 가치를 체계적으로 관리할 수 있는 글로벌 팬 아카이브 도구입니다.</p>' +
             '<div class="bg-slate-950/60 p-3.5 rounded-2xl border border-cyan-500/20 space-y-1.5 mt-3">' +
               '<div class="text-cyan-400 font-bold">✨ 주요 핵심 기능</div>' +
-              '<div>&bull; ' + totalKitsCount + '종 전 테마 반다이남코코리아 공식 등록 정가 100% 반영 및 실시간 조회</div>' +
+              '<div>&bull; ' + totalKitsCount + '종 전 테마 반다이남코코리아 공식 등록 정가 100% 반영 및 실시간 조회 (정기 업데이트 기준 참고용 제공)</div>' +
               '<div>&bull; 새것(미개봉), 조립중/부품, 조립완료 3단계 실시간 보유 현황 및 자산 가치 포트폴리오</div>' +
               '<div>&bull; 한국어, 일본어, 영어 3개국어 검색 및 KRW, JPY, USD 3대 통화 지원</div>' +
+            '</div>' +
+            '<div class="bg-amber-950/30 p-3 rounded-xl border border-amber-500/30 text-[11px] text-amber-200/90 mt-3">' +
+              '⚠️ <b>안내</b>: 수록된 가격, 출시일 및 출하·재입고 일정은 정기 업데이트 주기에 따라 실제 공식 발표와 시차(지연)가 발생하거나 일부 오차가 있을 수 있으므로 단순 참고용으로만 활용해 주시기 바랍니다.' +
             '</div>';
         } else if (type === 'privacy') {
           content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">🔒 개인정보처리방침 (Privacy Policy)</h2>' +
@@ -160527,12 +160574,13 @@ window.GUNPLA_MASTER_DATA = [
               '<div><b>3. 쿠키 및 광고</b>: 본 사이트는 사용자 환경 개선 및 서비스 유지를 위해 구글 애드센스 등 표준 광고 쿠키를 사용할 수 있습니다.</div>' +
             '</div>';
         } else if (type === 'terms') {
-          content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">📜 서비스 이용약관 (Terms of Service)</h2>' +
-            '<p class="mb-2">본 약관은 GunplaSet 서비스의 이용 조건 및 절차에 관한 기본 사항을 정합니다.</p>' +
-            '<div class="space-y-2 mt-3">' +
-              '<div><b>1. 서비스 목적</b>: 본 사이트는 건프라 애호가를 위한 비영리 정보 제공 및 컬렉션 관리 플랫폼입니다.</div>' +
-              '<div><b>2. 저작권 면책</b>: 건담 및 건프라 관련 모든 상표권 및 저작권은 BANDAI SPIRITS 및 SOTSU/SUNRISE에 있습니다. 본 사이트는 공식 제휴사가 아니며 정보 제공 목적으로 공정 이용(Fair Use) 원칙을 준수합니다.</div>' +
-              '<div><b>3. 서비스 변경</b>: 서비스는 사전 공지 후 성능 개선 및 데이터 갱신을 위해 업데이트될 수 있습니다.</div>' +
+          content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">📜 서비스 이용약관 및 법적 면책고지 (Terms &amp; Disclaimer)</h2>' +
+            '<p class="mb-2">본 약관은 GunplaSet 서비스의 이용 조건, 절차 및 법적 책임의 한계에 관한 기본 사항을 정합니다.</p>' +
+            '<div class="space-y-2.5 mt-3">' +
+              '<div><b>1. 서비스 목적 및 비제휴 고지</b>: 본 사이트는 건프라 및 프라모델 애호가를 위한 비영리 정보 제공 및 컬렉션 관리 플랫폼입니다. 건담 및 건프라 관련 모든 상표권·저작권은 BANDAI SPIRITS 및 SOTSU/SUNRISE 등 원권리자에 귀속되며, 본 사이트는 공식 제휴사가 아닙니다.</div>' +
+              '<div><b>2. 정보의 정확성 및 업데이트 지연 가능성</b>: 본 사이트에 수록된 제품 사양, 공식 정가(MSRP), 출시일, 출하·예약·재입고 일정 및 자산 가치 산정액은 정기 업데이트 주기에 따라 최신 공식 정보 대비 반영이 늦어질 수 있으며(시차 발생), 데이터 수집·변환 과정에서 의도치 않은 오류나 오기입이 포함될 수 있습니다.</div>' +
+              '<div><b>3. 구매·방문 전 공식 확인 의무 및 손해 면책 (Limitation of Liability)</b>: 본 사이트의 모든 정보는 어떠한 보증도 없는 &ldquo;있는 그대로(AS-IS)&rdquo; 단순 참고용으로만 제공됩니다. 제조사 및 유통사 사정에 따라 실제 가격·출하일·재고는 예고 없이 변경될 수 있으므로, 이용자는 실제 상품 구매나 매장 방문 전 반드시 공식 판매처(반다이남코코리아몰, 건담베이스 등)의 공지를 직접 확인해야 합니다. 본 사이트의 정보 오류나 업데이트 지연으로 인해 발생한 직·간접적 손해에 대하여 운영진은 어떠한 법적 책임도 지지 않습니다.</div>' +
+              '<div><b>4. 서비스 변경 및 중단</b>: 서비스는 성능 개선 및 데이터 정기 갱신을 위해 사전 예고 없이 수정·업데이트될 수 있습니다.</div>' +
             '</div>';
         } else if (type === 'contact') {
           content.innerHTML = '<h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">📬 문의 및 오류 제보 (Contact)</h2>' +
@@ -160540,7 +160588,7 @@ window.GUNPLA_MASTER_DATA = [
             '<div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800 space-y-2 mt-3">' +
               '<div><b>📧 공식 문의 이메일</b>: <a href="mailto:support@gunplaset.com" class="text-cyan-400 underline font-mono">support@gunplaset.com</a></div>' +
               '<div><b>💬 GitHub Issues</b>: <a href="https://github.com" target="_blank" class="text-cyan-400 underline">공식 GitHub 저장소 이슈 트래커</a></div>' +
-              '<div class="text-[11px] text-slate-500 pt-2 border-t border-slate-800">제보해 주신 공식 가격 및 신제품 정보는 매주 정기 업데이트 검증 시 신속하게 반영됩니다.</div>' +
+              '<div class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">※ 본 서비스의 카탈로그 및 출하 일정은 정기 업데이트 주기에 따라 갱신되므로 실시간 공지 반영에 다소 시차가 발생할 수 있습니다. 제보해 주신 오류 및 신제품 정보는 정기 검증 시 신속하게 반영됩니다.</div>' +
             '</div>';
         }
         modal.classList.remove('hidden');
@@ -160694,6 +160742,13 @@ window.GUNPLA_MASTER_DATA = [
                 '<div>' + lblScale + ': <span class="font-mono text-white">' + (kit.scale || '1/144') + '</span></div>' +
                 '<div>' + lblRelease + ': <span class="font-mono text-white">' + (kit.release_date || kit.year) + '</span></div>' +
                 '<div>' + lblRun + ': <span class="text-white">' + valRun + '</span></div>' +
+                '<div class="col-span-2 pt-1.5 border-t border-slate-800/60 text-[10px] text-slate-400">' +
+                  (state.currency === 'USD'
+                    ? '※ Listed MSRP and release info are for reference only and may differ from actual retail prices due to restock price adjustments, exchange rates, or update cycles.'
+                    : (state.currency === 'JPY'
+                      ? '※ 表記の価格および発売情報は参考用であり、再販時の価格改定や定期更新サイクルにより実際の販売情報と異なる場合があります。'
+                      : '※ 표기된 가격 및 발매 정보는 단순 참고용이며, 재판 시점 가격 변동·환율 및 업데이트 주기에 따라 실제 판매 정보와 다를 수 있습니다.')) +
+                '</div>' +
               '</div>' +
               (krwInfo.isPromo ? '<div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-purple-300 flex items-center gap-2"><span>🎁 본 상품은 반다이 조립체험회 및 공식 이벤트에서 배포된 비매품(Not for Sale) 증정 키트입니다.</span></div>' : (!jpyInfo.isVerified ? '<div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-amber-300 flex items-center gap-2"><span>⚠️ 본 상품은 반다이 공식 카탈로그에 가격이 등재되어 있지 않은 단종/구판/미등록 품목입니다.</span></div>' : (!krwInfo.isVerified ? '<div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-[11px] text-amber-300 flex items-center gap-2"><span>ℹ️ 본 상품은 반다이남코코리아 공식몰(bnkrmall.co.kr)에 국내 정가가 등록되지 않은 품목입니다. (일본 공식 정가 기준 안내)</span></div>' : ''))) +
               (isKitUnreleased(kit) ?

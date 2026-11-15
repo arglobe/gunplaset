@@ -375,6 +375,12 @@ body {
           
           <!-- Compact Scrollable Rows -->
           <div id="radar-list-container" class="space-y-2.5 max-h-[295px] overflow-y-auto custom-scroll pr-1"></div>
+
+          <!-- Radar Update Cycle & Accuracy Disclaimer -->
+          <div id="radar-disclaimer-bar" class="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-start sm:items-center gap-1.5 leading-snug">
+            <span class="text-amber-400 shrink-0">ℹ️</span>
+            <span id="radar-disclaimer-text">본 출하·예약·입고 일정은 정기 업데이트 주기에 따라 공지 반영에 시차(지연)가 있거나 일부 오차가 있을 수 있으며, 제조사·유통사 사정으로 예고 없이 변동될 수 있으므로 방문 및 구매 전 반드시 공식 판매처 공지를 확인하시기 바랍니다.</span>
+          </div>
         </div>
 
         <!-- Collapsed Summary Bar (1-Line View when collapsed) -->
@@ -758,34 +764,37 @@ body {
         <!-- Right: Policy Navigation Links (Preserving all click handlers) -->
         <div class="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-300 font-medium">
           <button onclick="window.openPolicyModal('about')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>🤖</span> <span>서비스 소개</span>
+            <span>🤖</span> <span id="footer-lbl-about">서비스 소개</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('privacy')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>🔒</span> <span>개인정보처리방침</span>
+            <span>🔒</span> <span id="footer-lbl-privacy">개인정보처리방침</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('terms')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>📜</span> <span>이용약관</span>
+            <span>📜</span> <span id="footer-lbl-terms">이용약관 및 면책고지</span>
           </button>
           <span class="text-slate-700">&bull;</span>
           <button onclick="window.openPolicyModal('contact')" class="hover:text-cyan-400 transition-colors flex items-center gap-1">
-            <span>📬</span> <span>문의 및 제보</span>
+            <span>📬</span> <span id="footer-lbl-contact">문의 및 제보</span>
           </button>
         </div>
       </div>
 
       <!-- Legal Disclaimer Box -->
-      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center md:text-left space-y-2 text-[11px] text-slate-400 leading-relaxed">
+      <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center md:text-left space-y-2.5 text-[11px] text-slate-400 leading-relaxed">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-800/60 pb-2">
           <span class="text-amber-400/90 font-mono font-semibold flex items-center gap-1.5">
-            <span>❖</span> <span>Unofficial Fan-Made Model Kit Archive & Asset Management Tool</span>
+            <span>❖</span> <span>Unofficial Fan-Made Model Kit Archive &amp; Asset Management Tool</span>
           </span>
           <span class="text-slate-500 font-mono text-[10px]">&copy; 2026 GunplaSet. All Rights Reserved.</span>
         </div>
-        <p class="text-slate-400">
+        <p id="footer-disclaimer-copyright" class="text-slate-400">
           본 웹사이트는 건프라 팬 및 모형 제작 수집가를 위한 비영리 팬 아카이브이자 개인 컬렉션 포트폴리오 관리 도구입니다.<br class="hidden sm:inline">
           모든 건담 및 건프라 관련 상표 및 저작권은 <b>(주)반다이남코 엔터테인먼트 (BANDAI SPIRITS CO., LTD.)</b> 및 <b>&copy;SOTSU &bull; SUNRISE (소츠 &bull; 선라이즈)</b>에 귀속되며, 본 서비스는 반다이남코와 공식 제휴 관계가 없습니다.
+        </p>
+        <p id="footer-disclaimer-accuracy" class="text-slate-400 pt-2 border-t border-slate-800/60">
+          <b class="text-amber-300/90">⚠️ 정보 정확성 및 업데이트 주기 면책 고지 (Disclaimer)</b>: 본 사이트에 수록된 제품 정보, 공식 정가(MSRP), 출시일 및 출하·재입고 일정은 정기 업데이트 주기에 따라 공지 반영이 지연(시차 발생)되거나 실제 정보와 일부 오차·오류가 있을 수 있습니다. 모든 데이터는 단순 참고용으로만 제공되며 제조사·유통사 사정에 따라 예고 없이 변경될 수 있으므로, 실제 구매 및 매장 방문 전 반드시 공식 판매처(반다이남코코리아몰, 건담베이스 등)의 최신 공지를 직접 확인하시기 바랍니다. 본 사이트의 정보를 신뢰하여 발생한 직·간접적 손해에 대해 운영진은 법적 책임을 지지 않습니다.
         </p>
       </div>
     </div>

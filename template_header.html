@@ -391,6 +391,34 @@ body {
 
       <!-- 1. PRIMARY SEARCH & EXPLORATION BAR (Top-level, full-width, high-visibility) -->
       <div class="glass-card p-3 sm:p-4 rounded-2xl mb-4 border border-cyan-500/40 shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
+        <!-- Top-Level Plamo Category Switcher (Default: Gunpla Only) -->
+        <div id="main-category-bar" class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-800/90">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="label-main-category" class="text-xs font-extrabold text-cyan-400 tracking-wide px-1 whitespace-nowrap shrink-0">📂 프라모델 대분류:</span>
+            <div id="main-category-tabs" class="flex flex-wrap items-center gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl border border-slate-800/90">
+              <button id="cat-tab-gunpla" onclick="window.switchMainCategory('gunpla')" class="main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 border border-cyan-300/40 flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-gunpla">🤖 건프라 (GUNPLA)</span>
+                <span id="cat-cnt-gunpla" class="px-1.5 py-0.5 rounded-md bg-slate-950/45 text-cyan-100 font-mono text-[11px]">2,223</span>
+              </button>
+              <button id="cat-tab-30m" onclick="window.switchMainCategory('30m')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-30m">⚙️ 30 MINUTES (30MM·30MS·30MF)</span>
+                <span id="cat-cnt-30m" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">389</span>
+              </button>
+              <button id="cat-tab-pokemon" onclick="window.switchMainCategory('pokemon')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-pokemon">⚡ 포켓몬 프라모</span>
+                <span id="cat-cnt-pokemon" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">117</span>
+              </button>
+              <button id="cat-tab-all" onclick="window.switchMainCategory('all')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-all">🌐 전체 통합</span>
+                <span id="cat-cnt-all" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">2,729</span>
+              </button>
+            </div>
+          </div>
+          <div id="main-category-status" class="text-[11px] text-emerald-300 font-mono bg-emerald-950/50 border border-emerald-500/30 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap">
+            ✓ 기본 화면: 순수 건프라 2,223종 전용 모드
+          </div>
+        </div>
+
         <!-- Top Row: Large Prominent Full-Width Search Input -->
         <div class="relative w-full mb-3">
           <input type="text" id="search-input" class="w-full bg-slate-900/95 border-2 border-slate-700/80 hover:border-cyan-500/60 focus:border-cyan-400 rounded-xl pl-11 pr-10 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 transition-all shadow-inner" placeholder="건담 이름, 등급, 시리즈, 초성/줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...">

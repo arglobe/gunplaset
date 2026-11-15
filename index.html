@@ -391,6 +391,34 @@ body {
 
       <!-- 1. PRIMARY SEARCH & EXPLORATION BAR (Top-level, full-width, high-visibility) -->
       <div class="glass-card p-3 sm:p-4 rounded-2xl mb-4 border border-cyan-500/40 shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
+        <!-- Top-Level Plamo Category Switcher (Default: Gunpla Only) -->
+        <div id="main-category-bar" class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-800/90">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="label-main-category" class="text-xs font-extrabold text-cyan-400 tracking-wide px-1 whitespace-nowrap shrink-0">📂 프라모델 대분류:</span>
+            <div id="main-category-tabs" class="flex flex-wrap items-center gap-1.5 bg-slate-950/90 p-1.5 rounded-2xl border border-slate-800/90">
+              <button id="cat-tab-gunpla" onclick="window.switchMainCategory('gunpla')" class="main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 border border-cyan-300/40 flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-gunpla">🤖 건프라 (GUNPLA)</span>
+                <span id="cat-cnt-gunpla" class="px-1.5 py-0.5 rounded-md bg-slate-950/45 text-cyan-100 font-mono text-[11px]">2,223</span>
+              </button>
+              <button id="cat-tab-30m" onclick="window.switchMainCategory('30m')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-30m">⚙️ 30 MINUTES (30MM·30MS·30MF)</span>
+                <span id="cat-cnt-30m" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">389</span>
+              </button>
+              <button id="cat-tab-pokemon" onclick="window.switchMainCategory('pokemon')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-pokemon">⚡ 포켓몬 프라모</span>
+                <span id="cat-cnt-pokemon" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">117</span>
+              </button>
+              <button id="cat-tab-all" onclick="window.switchMainCategory('all')" class="main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap">
+                <span id="cat-lbl-all">🌐 전체 통합</span>
+                <span id="cat-cnt-all" class="px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]">2,729</span>
+              </button>
+            </div>
+          </div>
+          <div id="main-category-status" class="text-[11px] text-emerald-300 font-mono bg-emerald-950/50 border border-emerald-500/30 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap">
+            ✓ 기본 화면: 순수 건프라 2,223종 전용 모드
+          </div>
+        </div>
+
         <!-- Top Row: Large Prominent Full-Width Search Input -->
         <div class="relative w-full mb-3">
           <input type="text" id="search-input" class="w-full bg-slate-900/95 border-2 border-slate-700/80 hover:border-cyan-500/60 focus:border-cyan-400 rounded-xl pl-11 pr-10 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/30 transition-all shadow-inner" placeholder="건담 이름, 등급, 시리즈, 초성/줄임말 검색 (예: 퍼건, ㅍㄱ, 크샤, 스리덤, 버카)...">
@@ -158231,6 +158259,7 @@ window.GUNPLA_MASTER_DATA = [
 
       let state = {
         activeView: 'all',
+        mainCategory: 'gunpla',  // 'gunpla' | '30m' | 'pokemon' | 'all' (Default: pure Gunpla)
         subfacetMode: 'grade',   // 'grade' | 'series'
         cardImageMode: 'product', // 'product' | 'boxart'
         searchQuery: '',
@@ -159121,9 +159150,86 @@ window.GUNPLA_MASTER_DATA = [
         const btnReset = document.getElementById('btn-reset-filters');
         if (btnReset) btnReset.textContent = t.clearFilters;
 
-        // 5. Search & Mode Switchers
+        // 5. Search & Mode Switchers + Top-Level Category Switcher
+        const gunplaCnt = KITS.filter(k => k.mainCategory === 'gunpla').length || 2223;
+        const m30Cnt = KITS.filter(k => k.mainCategory === '30m').length || 389;
+        const pokeCnt = KITS.filter(k => k.mainCategory === 'pokemon').length || 117;
+        const allCnt = KITS.length || 2729;
+
+        const elMainCatLbl = document.getElementById('label-main-category');
+        const elCatGunpla = document.getElementById('cat-lbl-gunpla');
+        const elCat30m = document.getElementById('cat-lbl-30m');
+        const elCatPoke = document.getElementById('cat-lbl-pokemon');
+        const elCatAll = document.getElementById('cat-lbl-all');
+        const elCntGunpla = document.getElementById('cat-cnt-gunpla');
+        const elCnt30m = document.getElementById('cat-cnt-30m');
+        const elCntPoke = document.getElementById('cat-cnt-pokemon');
+        const elCntAll = document.getElementById('cat-cnt-all');
+        const elCatStatus = document.getElementById('main-category-status');
+
+        if (elCntGunpla) elCntGunpla.textContent = gunplaCnt.toLocaleString();
+        if (elCnt30m) elCnt30m.textContent = m30Cnt.toLocaleString();
+        if (elCntPoke) elCntPoke.textContent = pokeCnt.toLocaleString();
+        if (elCntAll) elCntAll.textContent = allCnt.toLocaleString();
+
+        if (state.currency === 'USD') {
+          if (elMainCatLbl) elMainCatLbl.textContent = '📂 Plamo Category:';
+          if (elCatGunpla) elCatGunpla.textContent = '🤖 GUNPLA';
+          if (elCat30m) elCat30m.textContent = '⚙️ 30 MINUTES (30MM·30MS·30MF)';
+          if (elCatPoke) elCatPoke.textContent = '⚡ Pokemon Plamo';
+          if (elCatAll) elCatAll.textContent = '🌐 All Combined';
+        } else if (state.currency === 'JPY') {
+          if (elMainCatLbl) elMainCatLbl.textContent = '📂 プラモデル分類:';
+          if (elCatGunpla) elCatGunpla.textContent = '🤖 ガンプラ (GUNPLA)';
+          if (elCat30m) elCat30m.textContent = '⚙️ 30 MINUTES (30MM·30MS·30MF)';
+          if (elCatPoke) elCatPoke.textContent = '⚡ ポケプラ';
+          if (elCatAll) elCatAll.textContent = '🌐 総合カタログ';
+        } else {
+          if (elMainCatLbl) elMainCatLbl.textContent = '📂 프라모델 대분류:';
+          if (elCatGunpla) elCatGunpla.textContent = '🤖 건프라 (GUNPLA)';
+          if (elCat30m) elCat30m.textContent = '⚙️ 30 MINUTES (30MM·30MS·30MF)';
+          if (elCatPoke) elCatPoke.textContent = '⚡ 포켓몬 프라모';
+          if (elCatAll) elCatAll.textContent = '🌐 전체 통합';
+        }
+
+        if (elCatStatus) {
+          if (state.mainCategory === 'gunpla') {
+            elCatStatus.className = 'text-[11px] text-emerald-300 font-mono bg-emerald-950/50 border border-emerald-500/30 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap';
+            elCatStatus.textContent = state.currency === 'USD'
+              ? ('✓ Pure Gunpla Mode (' + gunplaCnt.toLocaleString() + ' kits)')
+              : (state.currency === 'JPY' ? ('✓ ガンプラ専用モード (' + gunplaCnt.toLocaleString() + '種)') : ('✓ 기본 화면: 순수 건프라 ' + gunplaCnt.toLocaleString() + '종 전용 모드'));
+          } else if (state.mainCategory === '30m') {
+            elCatStatus.className = 'text-[11px] text-indigo-300 font-mono bg-indigo-950/60 border border-indigo-500/40 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap';
+            elCatStatus.textContent = state.currency === 'USD'
+              ? ('⚙️ 30 MINUTES Dedicated Mode (' + m30Cnt.toLocaleString() + ' kits)')
+              : (state.currency === 'JPY' ? ('⚙️ 30 MINUTES 専用モード (' + m30Cnt.toLocaleString() + '種)') : ('⚙️ 30 MINUTES 전용 탐색 모드 (' + m30Cnt.toLocaleString() + '종)'));
+          } else if (state.mainCategory === 'pokemon') {
+            elCatStatus.className = 'text-[11px] text-amber-300 font-mono bg-amber-950/60 border border-amber-500/40 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap';
+            elCatStatus.textContent = state.currency === 'USD'
+              ? ('⚡ Pokemon Plamo Mode (' + pokeCnt.toLocaleString() + ' kits)')
+              : (state.currency === 'JPY' ? ('⚡ ポケプラ専用モード (' + pokeCnt.toLocaleString() + '種)') : ('⚡ 포켓몬 프라모 전용 탐색 모드 (' + pokeCnt.toLocaleString() + '종)'));
+          } else {
+            elCatStatus.className = 'text-[11px] text-cyan-300 font-mono bg-cyan-950/50 border border-cyan-500/30 px-2.5 py-1 rounded-xl font-semibold whitespace-nowrap';
+            elCatStatus.textContent = state.currency === 'USD'
+              ? ('🌐 All Plamo Combined (' + allCnt.toLocaleString() + ' kits)')
+              : (state.currency === 'JPY' ? ('🌐 全プラモデル統合表示 (' + allCnt.toLocaleString() + '種)') : ('🌐 건프라 + 30M + 포켓프라 전체 통합 (' + allCnt.toLocaleString() + '종)'));
+          }
+        }
+
         const searchInput = document.getElementById('search-input');
-        if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+        if (searchInput) {
+          if (state.mainCategory === '30m') {
+            searchInput.placeholder = state.currency === 'USD'
+              ? 'Search 30MM, 30MS, 30MF kits & option parts (e.g., Alto, Rishetta, Acerby, Knight)...'
+              : (state.currency === 'JPY' ? '30MM・30MS・30MF 機体・シスター・オプション検索 (例: アルト, リシェッタ, アチェルビー)...' : '30MM, 30MS, 30MF 기체/캐릭터/옵션파츠 검색 (예: 알토, 리세타, 아체르비, 나이트)...');
+          } else if (state.mainCategory === 'pokemon') {
+            searchInput.placeholder = state.currency === 'USD'
+              ? 'Search Pokemon Plamo kits (e.g., Pikachu, Rayquaza, Charizard, Kyogre, Quick!!)...'
+              : (state.currency === 'JPY' ? 'ポケプラ検索 (例: ピカチュウ, レックウザ, リザードン, カイオーガ, クイック!!)...' : '포켓몬 프라모 이름, 시리즈 검색 (예: 피카츄, 레쿠쟈, 리자몽, 가이오가, 퀵!!)...');
+          } else {
+            searchInput.placeholder = t.searchPlaceholder;
+          }
+        }
         const imgProd = document.getElementById('img-mode-product');
         if (imgProd) imgProd.textContent = t.imgModeProduct;
         const imgBox = document.getElementById('img-mode-boxart');
@@ -159155,19 +159261,28 @@ window.GUNPLA_MASTER_DATA = [
         if (gradeSelect) {
           const curVal = gradeSelect.value || 'all';
           const gAll = (state.currency === 'USD' ? 'All Grades' : (state.currency === 'JPY' ? '全グレード' : '모든 등급 (All Grades)'));
-          gradeSelect.innerHTML = '<option value="all">' + gAll + '</option>' +
-            '<option value="HG">HG (High Grade)</option>' +
-            '<option value="MG">MG / MGEX / MGSD (Master Grade)</option>' +
-            '<option value="RG">RG (Real Grade)</option>' +
-            '<option value="PG">PG (Perfect Grade)</option>' +
-            '<option value="EG">ENTRY GRADE (EG)</option>' +
-            '<option value="FM">' + (state.currency === 'KRW' ? '풀 메카닉스' : (state.currency === 'JPY' ? 'フルメカニクス' : 'Full Mechanics')) + ' / RE/100</option>' +
-            '<option value="SD">SD / SDCS / BB' + (state.currency === 'JPY' ? '戦士' : '전사') + '</option>' +
-            '<option value="Mega">' + (state.currency === 'KRW' ? '메가사이즈' : (state.currency === 'JPY' ? 'メガサイズ' : 'Mega Size')) + ' (1/48)</option>' +
-            '<option value="30MM">30 MINUTES (30MM/30MS)</option>' +
-            '<option value="Pokemon">' + (state.currency === 'KRW' ? '포켓몬 프라모' : (state.currency === 'JPY' ? 'ポケプラ' : 'Pokemon Plamo')) + '</option>' +
-            '<option value="Other">' + (state.currency === 'USD' ? 'Others' : (state.currency === 'JPY' ? 'その他' : '기타 반다이 프라')) + '</option>';
-          gradeSelect.value = curVal;
+          let gHtml = '<option value="all">' + gAll + '</option>';
+          if (state.mainCategory === 'gunpla' || state.mainCategory === 'all') {
+            gHtml += '<option value="HG">HG (High Grade)</option>' +
+              '<option value="MG">MG / MGEX / MGSD (Master Grade)</option>' +
+              '<option value="RG">RG (Real Grade)</option>' +
+              '<option value="PG">PG (Perfect Grade)</option>' +
+              '<option value="EG">ENTRY GRADE (EG)</option>' +
+              '<option value="FM">' + (state.currency === 'KRW' ? '풀 메카닉스' : (state.currency === 'JPY' ? 'フルメカニクス' : 'Full Mechanics')) + ' / RE/100</option>' +
+              '<option value="SD">SD / SDCS / BB' + (state.currency === 'JPY' ? '戦士' : '전사') + '</option>' +
+              '<option value="Mega">' + (state.currency === 'KRW' ? '메가사이즈' : (state.currency === 'JPY' ? 'メガサイズ' : 'Mega Size')) + ' (1/48)</option>';
+          }
+          if (state.mainCategory === '30m' || state.mainCategory === 'all') {
+            gHtml += '<option value="30MM">30 MINUTES (30MM/30MS/30MF)</option>';
+          }
+          if (state.mainCategory === 'pokemon' || state.mainCategory === 'all') {
+            gHtml += '<option value="Pokemon">' + (state.currency === 'KRW' ? '포켓몬 프라모' : (state.currency === 'JPY' ? 'ポケプラ' : 'Pokemon Plamo')) + '</option>';
+          }
+          if (state.mainCategory === 'gunpla' || state.mainCategory === 'all') {
+            gHtml += '<option value="Other">' + (state.currency === 'USD' ? 'Others' : (state.currency === 'JPY' ? 'その他' : '기타 반다이 프라')) + '</option>';
+          }
+          gradeSelect.innerHTML = gHtml;
+          gradeSelect.value = Array.from(gradeSelect.options).some(o => o.value === curVal) ? curVal : 'all';
         }
       }
 
@@ -159468,13 +159583,17 @@ window.GUNPLA_MASTER_DATA = [
         } else if (bu.includes('30 MINUTES') || bu.includes('30MM') || bu.includes('30MS') || bu.includes('30MF')) {
           kit.classification = '30 MINUTES';
           kit.gradeKey = '30MM';
+          kit.mainCategory = '30m';
         } else if (bu.includes('ポケモン') || (kit.series || '').includes('ポケモン')) {
           kit.classification = '포켓몬 프라모';
           kit.gradeKey = 'Pokemon';
+          kit.mainCategory = 'pokemon';
         } else {
           kit.classification = kit.brand || 'Other';
           kit.gradeKey = 'Other';
+          kit.mainCategory = 'gunpla';
         }
+        if (!kit.mainCategory) kit.mainCategory = 'gunpla';
 
         const isWeb = typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http');
         const dbEntry = window.KIT_IMAGE_DB && window.KIT_IMAGE_DB[kit.id];
@@ -159708,10 +159827,69 @@ window.GUNPLA_MASTER_DATA = [
         return false;
       }
 
+      // TOP-LEVEL PLAMO CATEGORY ENGINE (Gunpla / 30 MINUTES / Pokemon / All)
+      function getCategoryBaseKits() {
+        if (!state.mainCategory || state.mainCategory === 'all') return KITS;
+        return KITS.filter(k => k.mainCategory === state.mainCategory);
+      }
+
+      window.switchMainCategory = function(cat) {
+        state.mainCategory = cat || 'gunpla';
+        state.selectedGrades = [];
+        state.selectedSeries = [];
+
+        // Update Top-Level Category Tab Button Styles
+        const tabThemes = {
+          gunpla:  'main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 border border-cyan-300/40 flex items-center gap-1.5 whitespace-nowrap',
+          '30m':   'main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25 border border-indigo-300/40 flex items-center gap-1.5 whitespace-nowrap',
+          pokemon: 'main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/25 border border-amber-300/50 flex items-center gap-1.5 whitespace-nowrap',
+          all:     'main-cat-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/25 border border-emerald-300/40 flex items-center gap-1.5 whitespace-nowrap'
+        };
+        const inactiveClass = 'main-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition-all border border-transparent flex items-center gap-1.5 whitespace-nowrap';
+
+        ['gunpla', '30m', 'pokemon', 'all'].forEach(k => {
+          const btn = document.getElementById('cat-tab-' + k);
+          const cnt = document.getElementById('cat-cnt-' + k);
+          if (btn) {
+            btn.className = (k === state.mainCategory) ? tabThemes[k] : inactiveClass;
+          }
+          if (cnt) {
+            cnt.className = (k === state.mainCategory)
+              ? (k === 'pokemon' ? 'px-1.5 py-0.5 rounded-md bg-slate-950/30 text-slate-950 font-mono text-[11px] font-black' : 'px-1.5 py-0.5 rounded-md bg-slate-950/45 text-white font-mono text-[11px]')
+              : 'px-1.5 py-0.5 rounded-md bg-slate-800/80 text-slate-400 font-mono text-[11px]';
+          }
+        });
+
+        // Ensure active decade has kits in the newly selected category
+        const baseKits = getCategoryBaseKits();
+        const activeDec = DECADES.find(d => d.key === state.selectedDecade);
+        if (activeDec && activeDec.key !== 'all') {
+          const hasInDec = baseKits.some(k => Number(k.year) >= activeDec.min && Number(k.year) <= activeDec.max);
+          if (!hasInDec) {
+            state.selectedDecade = '2020s';
+            state.selectedYears = [];
+          }
+        }
+
+        const gradeSelect = document.getElementById('filter-grade');
+        const seriesSelect = document.getElementById('filter-series-select');
+        if (gradeSelect) gradeSelect.value = 'all';
+        if (seriesSelect) seriesSelect.value = 'all';
+
+        populateDropdownSelects();
+        updateAllUILocalization();
+        applyFilters();
+      };
+
       // MULTI-SELECT COMPOUND FILTERING
       function getFilteredKits() {
         const q = (state.searchQuery || '').toLowerCase().trim();
         return KITS.filter(kit => {
+          // 0. Main Plamo Category filter ('gunpla' | '30m' | 'pokemon' | 'all')
+          if (state.mainCategory && state.mainCategory !== 'all') {
+            if (kit.mainCategory !== state.mainCategory) return false;
+          }
+
           const item = getItem(kit.id);
           const b = item.backlog || 0;
           const p = item.inProgress || 0;
@@ -159842,8 +160020,9 @@ window.GUNPLA_MASTER_DATA = [
         if (!yearContainer) return;
 
         const lang = state.currency || 'KRW';
+        const baseKits = getCategoryBaseKits();
         const yearCounts = {};
-        KITS.forEach(k => {
+        baseKits.forEach(k => {
           const y = k.year || 'Unknown';
           yearCounts[y] = (yearCounts[y] || 0) + 1;
         });
@@ -159926,25 +160105,53 @@ window.GUNPLA_MASTER_DATA = [
         if (!sliderContainer) return;
 
         const t = UI_I18N[state.currency] || UI_I18N.KRW;
+        const baseKits = getCategoryBaseKits();
         let html = '';
 
+        // Dedicated Sub-Line Filters when 30 MINUTES or Pokemon Plamo category is active
+        if (state.mainCategory === '30m' || state.mainCategory === 'pokemon') {
+          const seriesCounts = {};
+          baseKits.forEach(k => {
+            const s = k.series || '기타';
+            seriesCounts[s] = (seriesCounts[s] || 0) + 1;
+          });
+          const sortedSeries = Object.entries(seriesCounts).sort((a,b) => b[1] - a[1]);
+          const isAllActive = state.selectedSeries.length === 0;
+          const allLabel = state.mainCategory === '30m'
+            ? (state.currency === 'USD' ? ('All 30 MINUTES (' + baseKits.length + ')') : (state.currency === 'JPY' ? ('全 30 MINUTES (' + baseKits.length + ')') : ('전체 30 MINUTES (' + baseKits.length + ')')))
+            : (state.currency === 'USD' ? ('All Pokemon Plamo (' + baseKits.length + ')') : (state.currency === 'JPY' ? ('全 ポケプラ (' + baseKits.length + ')') : ('전체 포켓프라 (' + baseKits.length + ')')));
+
+          html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 whitespace-nowrap ' + (isAllActive ? 'active' : '') + '" onclick="window.toggleSeries(\'all\')">' + allLabel + '</button>';
+
+          sortedSeries.forEach(([sName, count]) => {
+            const isActive = state.selectedSeries.includes(sName);
+            const locName = getLocalizedSeries(sName, state.currency);
+            html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-medium border border-slate-800 bg-slate-900/90 hover:bg-slate-800 text-slate-300 whitespace-nowrap ' + (isActive ? 'active' : '') + '" onclick="window.toggleSeries(\'' + sName.replace(/'/g, "\\'") + '\')">' + locName + ' <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-slate-800/80 text-cyan-400 font-mono">' + count + '</span></button>';
+          });
+
+          sliderContainer.innerHTML = html;
+          return;
+        }
+
         if (state.subfacetMode === 'grade') {
-          const gradeDefs = [
-            { key: 'HG', label: 'HG / HGUC', count: KITS.filter(k => k.gradeKey === 'HG').length },
-            { key: 'MG', label: 'MG / MGEX / MGSD', count: KITS.filter(k => k.gradeKey === 'MG').length },
-            { key: 'RG', label: 'RG (Real Grade)', count: KITS.filter(k => k.gradeKey === 'RG').length },
-            { key: 'PG', label: 'PG (Perfect Grade)', count: KITS.filter(k => k.gradeKey === 'PG').length },
-            { key: 'EG', label: 'ENTRY GRADE', count: KITS.filter(k => k.gradeKey === 'EG').length },
-            { key: 'FM', label: (state.currency === 'KRW' ? '풀 메카닉스 / RE' : (state.currency === 'JPY' ? 'フルメカニクス / RE' : 'Full Mechanics / RE')), count: KITS.filter(k => k.gradeKey === 'FM').length },
-            { key: 'SD', label: 'SD / SDCS / BB' + (state.currency === 'JPY' ? '戦士' : (state.currency === 'USD' ? ' Senshi' : '전사')), count: KITS.filter(k => k.gradeKey === 'SD').length },
-            { key: 'Mega', label: (state.currency === 'KRW' ? '메가사이즈 (1/48)' : (state.currency === 'JPY' ? 'メガサイズ (1/48)' : 'Mega Size (1/48)')), count: KITS.filter(k => k.gradeKey === 'Mega').length },
-            { key: '30MM', label: '30 MINUTES', count: KITS.filter(k => k.gradeKey === '30MM').length },
-            { key: 'Pokemon', label: (state.currency === 'KRW' ? '포켓몬 프라모' : (state.currency === 'JPY' ? 'ポケプラ' : 'Pokemon Plamo')), count: KITS.filter(k => k.gradeKey === 'Pokemon').length },
-            { key: 'Other', label: (state.currency === 'USD' ? 'Others' : (state.currency === 'JPY' ? 'その他' : '기타 프라모델')), count: KITS.filter(k => k.gradeKey === 'Other').length }
+          let gradeDefs = [
+            { key: 'HG', label: 'HG / HGUC', count: baseKits.filter(k => k.gradeKey === 'HG').length },
+            { key: 'MG', label: 'MG / MGEX / MGSD', count: baseKits.filter(k => k.gradeKey === 'MG').length },
+            { key: 'RG', label: 'RG (Real Grade)', count: baseKits.filter(k => k.gradeKey === 'RG').length },
+            { key: 'PG', label: 'PG (Perfect Grade)', count: baseKits.filter(k => k.gradeKey === 'PG').length },
+            { key: 'EG', label: 'ENTRY GRADE', count: baseKits.filter(k => k.gradeKey === 'EG').length },
+            { key: 'FM', label: (state.currency === 'KRW' ? '풀 메카닉스 / RE' : (state.currency === 'JPY' ? 'フルメカニクス / RE' : 'Full Mechanics / RE')), count: baseKits.filter(k => k.gradeKey === 'FM').length },
+            { key: 'SD', label: 'SD / SDCS / BB' + (state.currency === 'JPY' ? '戦士' : (state.currency === 'USD' ? ' Senshi' : '전사')), count: baseKits.filter(k => k.gradeKey === 'SD').length },
+            { key: 'Mega', label: (state.currency === 'KRW' ? '메가사이즈 (1/48)' : (state.currency === 'JPY' ? 'メガサイズ (1/48)' : 'Mega Size (1/48)')), count: baseKits.filter(k => k.gradeKey === 'Mega').length }
           ];
+          if (state.mainCategory === 'all') {
+            gradeDefs.push({ key: '30MM', label: '30 MINUTES', count: baseKits.filter(k => k.gradeKey === '30MM').length });
+            gradeDefs.push({ key: 'Pokemon', label: (state.currency === 'KRW' ? '포켓몬 프라모' : (state.currency === 'JPY' ? 'ポケプラ' : 'Pokemon Plamo')), count: baseKits.filter(k => k.gradeKey === 'Pokemon').length });
+          }
+          gradeDefs.push({ key: 'Other', label: (state.currency === 'USD' ? 'Others' : (state.currency === 'JPY' ? 'その他' : '기타 건담 프라·옵션')), count: baseKits.filter(k => k.gradeKey === 'Other').length });
 
           const isAllActive = state.selectedGrades.length === 0;
-          html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 whitespace-nowrap ' + (isAllActive ? 'active' : '') + '" onclick="window.toggleGrade(\'all\')">' + t.allGradesPill(KITS.length) + '</button>';
+          html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 whitespace-nowrap ' + (isAllActive ? 'active' : '') + '" onclick="window.toggleGrade(\'all\')">' + t.allGradesPill(baseKits.length) + '</button>';
 
           gradeDefs.forEach(g => {
             const isActive = state.selectedGrades.includes(g.key);
@@ -159953,14 +160160,14 @@ window.GUNPLA_MASTER_DATA = [
 
         } else if (state.subfacetMode === 'series') {
           const seriesCounts = {};
-          KITS.forEach(k => {
+          baseKits.forEach(k => {
             const s = k.series || '기타';
             seriesCounts[s] = (seriesCounts[s] || 0) + 1;
           });
           const sortedSeries = Object.entries(seriesCounts).sort((a,b) => b[1] - a[1]);
 
           const isAllActive = state.selectedSeries.length === 0;
-          html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 whitespace-nowrap ' + (isAllActive ? 'active' : '') + '" onclick="window.toggleSeries(\'all\')">' + t.allSeriesPill(KITS.length) + '</button>';
+          html += '<button class="subfacet-pill px-3.5 py-1.5 rounded-full text-xs font-semibold border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-slate-300 whitespace-nowrap ' + (isAllActive ? 'active' : '') + '" onclick="window.toggleSeries(\'all\')">' + t.allSeriesPill(baseKits.length) + '</button>';
 
           sortedSeries.forEach(([sName, count]) => {
             const isActive = state.selectedSeries.includes(sName);
@@ -160125,9 +160332,22 @@ window.GUNPLA_MASTER_DATA = [
         const visibleKits = filtered.slice(0, state.page * state.pageSize);
 
         if (visibleKits.length === 0) {
-          const emptyTitle = state.currency === 'USD' ? 'No Gunpla kits matched your filters.' : (state.currency === 'JPY' ? '条件に一致するガンプラが見つかりませんでした。' : '선택하신 조건에 일치하는 건프라가 없습니다.');
-          const emptySub = state.currency === 'USD' ? 'Try adjusting your search terms or filter tags above.' : (state.currency === 'JPY' ? '上部のフィルターや検索語を変更してお試しください。' : '상단의 필터 태그나 검색어를 변경해 보세요.');
-          container.innerHTML = '<div class="col-span-full py-20 text-center text-slate-400"><p class="text-lg font-medium text-slate-300">' + emptyTitle + '</p><p class="text-sm text-slate-500 mt-1">' + emptySub + '</p></div>';
+          const emptyTitle = state.currency === 'USD' ? 'No kits matched your filters in this category.' : (state.currency === 'JPY' ? '現在のカテゴリで条件に一致するキットが見つかりませんでした。' : '현재 선택된 대분류에서 조건에 일치하는 프라모델이 없습니다.');
+          const emptySub = state.currency === 'USD' ? 'Try adjusting your search terms or switching top-level categories above.' : (state.currency === 'JPY' ? '上部の大分類タブまたは検索語を変更してお試しください。' : '상단 대분류 탭(건프라 / 30 MINUTES / 포켓몬 / 전체 통합)이나 검색어를 변경해 보세요.');
+          let crossCategoryBtn = '';
+          const q = (state.searchQuery || '').toLowerCase().trim();
+          if (q && state.mainCategory !== 'all') {
+            const otherMatches = KITS.filter(k => k.mainCategory !== state.mainCategory && (matchKitQueryTerm(k, q) || q.split(/\s+/).filter(Boolean).every(tok => matchKitQueryTerm(k, tok))));
+            if (otherMatches.length > 0) {
+              const btnTxt = state.currency === 'USD'
+                ? ('🌐 View ' + otherMatches.length + ' matching kits in other categories (All Combined)')
+                : (state.currency === 'JPY'
+                  ? ('🌐 他のカテゴリで一致した ' + otherMatches.length + ' 件を「総合カタログ」で見る')
+                  : ('🌐 다른 대분류(30 MINUTES / 포켓몬 등)에서 검색된 ' + otherMatches.length + '건 바로 보기'));
+              crossCategoryBtn = '<div class="mt-4"><button onclick="window.switchMainCategory(\'all\')" class="px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-cyan-300 text-xs font-bold transition-all shadow-lg">' + btnTxt + '</button></div>';
+            }
+          }
+          container.innerHTML = '<div class="col-span-full py-20 text-center text-slate-400"><p class="text-lg font-medium text-slate-300">' + emptyTitle + '</p><p class="text-sm text-slate-500 mt-1">' + emptySub + '</p>' + crossCategoryBtn + '</div>';
           return;
         }
 
@@ -160650,11 +160870,12 @@ window.GUNPLA_MASTER_DATA = [
       }
 
       function populateDropdownSelects() {
+        const baseKits = getCategoryBaseKits();
         const yearSelect = document.getElementById('filter-year-select');
         if (yearSelect) {
           const currentVal = yearSelect.value || 'all';
           const yearCounts = {};
-          KITS.forEach(k => { yearCounts[k.year] = (yearCounts[k.year] || 0) + 1; });
+          baseKits.forEach(k => { yearCounts[k.year] = (yearCounts[k.year] || 0) + 1; });
           const sortedYears = Object.keys(yearCounts).filter(y => y !== 'Unknown').sort((a,b) => b - a);
           const allYearsLabel = state.currency === 'USD' ? 'All Years' : (state.currency === 'JPY' ? '全発売年' : '모든 연도 (All Years)');
           const yearSuffix = state.currency === 'USD' ? '' : (state.currency === 'JPY' ? '年' : '년');
@@ -160670,7 +160891,7 @@ window.GUNPLA_MASTER_DATA = [
         if (seriesSelect) {
           const currentVal = seriesSelect.value || 'all';
           const seriesCounts = {};
-          KITS.forEach(k => { const s = k.series || '기타'; seriesCounts[s] = (seriesCounts[s] || 0) + 1; });
+          baseKits.forEach(k => { const s = k.series || '기타'; seriesCounts[s] = (seriesCounts[s] || 0) + 1; });
           const sortedSeries = Object.entries(seriesCounts).sort((a,b) => b[1] - a[1]);
           const allSeriesLabel = state.currency === 'USD' ? 'All Series' : (state.currency === 'JPY' ? '全シリーズ' : '모든 시리즈 (All Series)');
           let sHtml = '<option value="all">' + allSeriesLabel + '</option>';
